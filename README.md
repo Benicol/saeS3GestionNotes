@@ -1,5 +1,5 @@
 # saeS3GestionNotes
-Ce projet est une application de gestion de notes pour des étudiants de BUT,
+Ce projet est une application de gestion de notes pour des étudiants de BUT,\n
 Ce projet existe car c'est un projet SAE d'étudiants informatiques en deuxième année
 tous les collabarateurs font parties de l'IUT de Rodez en deuxième année de BUT Informatique
 Lien vers le google drive : https://drive.google.com/drive/folders/0ABeoKr1061DbUk9PVA
