@@ -14,6 +14,7 @@ import java.io.IOException;
  * Classe outil permettant de manipuler des fichiers soit dans le but de :
  * - lire le contenu du fichier
  * - écrire dans le fichier.
+ * @author groupe XXX FIXME : c'est quoi le nom du groupe ?
  */
 public class OutilFichier {
     
@@ -37,7 +38,7 @@ public class OutilFichier {
             bufferedReader.close();
         } catch (IOException e) {
             return "Une erreur s'est produite lors de la lecture du fichier : " 
-                   + e.getMessage();
+                   + "fichier introuvable";
         }
         return message.toString();
     }
