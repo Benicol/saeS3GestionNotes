@@ -9,9 +9,9 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import modele.OutilFichier;
 
@@ -21,6 +21,7 @@ import modele.OutilFichier;
  */
 public class TestOutilFichier {
 
+    /* Déclaration des variables */
     private String cheminValide = "D:\\fichier.txt";
     private String cheminInvalide = "chemin/invalide/vers/le/fichier.txt";
     private File fichier;
@@ -29,7 +30,7 @@ public class TestOutilFichier {
      * Création d'un fichier avant l'execution de chaque test.
      * @throws java.lang.Exception
      */
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // Crée le fichier avant chaque test
         fichier = new File(cheminValide);
@@ -44,7 +45,7 @@ public class TestOutilFichier {
      * Suppression du fichier précédemment crée après l'exécution de chaque test.
      * @throws java.lang.Exception
      */
-    @After
+    @AfterEach
     public void tearDown() throws Exception {
         // Supprime le fichier après chaque test
         if (fichier.exists()) {
