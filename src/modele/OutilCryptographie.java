@@ -1,27 +1,31 @@
-/**
- * OutilCryptographiz.java                                                                                 21/10/2015
- * No copyright.
+/*
+ * OutilCryptographie.java                                               31 oct 2023                                                                                21/10/2015
+ * IUT de Rodez, pas de copyright
  */
 
 package modele;
 
 
 /** Classe outil permettant de : 
- * - encoder un message a l'aide de l'algorithme de vigenere et une cle fournis, en utilisant l'alphabet de la classe
- * - decoder un message a l'aide de l'algorithme de vigenere et une cle fournis, en utilisant l'alphabet de la classe
+ * - encoder un message à l'aide de l'algorithme de Vigenère et une clé fournie, 
+ * en utilisant l'alphabet de la classe.
+ * - decoder un message à l'aide de l'algorithme de Vigenère et une clé fournie, 
+ * en utilisant l'alphabet de la classe.
  * @author Benjamin Nicol
  */
 public class OutilCryptographie {
-    /**
-     * Alphabet utilise pour le chiffrement.
-     */
-    private static final String alphabet = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZàâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸ0123456789.,:;!?()[]{}'\"-/_=+*%";
+    
+    /* Alphabet utilisé pour le chiffrement. */
+    private static final String alphabet = " abcdefghijklmnopqrstuvwxyz"
+                                         + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                         + "àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸ"
+                                         + "0123456789.,:;!?()[]{}'\"-/_=+*%";
     
     /**
-     * Methode qui permet de chiffrer un message.
-     * @param cle la cle de chiffrement.
-     * @param message le message a chiffrer.
-     * @return le message chiffre.
+     * Méthode qui permet de chiffrer un message.
+     * @param cle la clé de chiffrement.
+     * @param message le message à chiffrer.
+     * @return le message chiffré.
      */
     public static String encoder(String cle, String message) {
         StringBuilder sb = new StringBuilder();
@@ -34,17 +38,18 @@ public class OutilCryptographie {
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
             } else {
-                throw new IllegalArgumentException("Un caractère de l'alphabet n'est pas dans l'alphabet");
+                throw new IllegalArgumentException(c + " ne fait pas partie de "
+                                                     + "l'alphabet autorisé");
             }
         }
         return sb.toString();
     }
 
     /**
-     * Methode qui permet de dechiffrer un message.
-     * @param cle la cle de dechiffrement.
-     * @param message le message a dechiffrer.
-     * @return le message dechiffre.
+     * Méthode qui permet de dechiffrer un message.
+     * @param cle la clé de déchiffrement.
+     * @param message le message a déchiffrer.
+     * @return le message dechiffré.
      */
     public static String decoder(String cle, String message) {
         StringBuilder sb = new StringBuilder();
@@ -58,25 +63,28 @@ public class OutilCryptographie {
                 j = (j + 1) % cle.length();
             }
             else {
-                throw new IllegalArgumentException("Un caractère de l'alphabet n'est pas dans l'alphabet");
+                throw new IllegalArgumentException(c + " ne fait pas partie de "
+                                                     + "l'alphabet autorisé");
             }
         }
         return sb.toString();
     }
 
     /**
-     * Verifie si un caractere est valide
-     * @param c Caractere a verifier
-     * @return true si le caractere est valide, false sinon
+     * Vérifie si un caractère est valide, c'est à dire qu'il est présent dans
+     * l'alphabet de la classe.
+     * @param c caractère à vérifier.
+     * @return true si le caractère est valide, false sinon.
      */
     private static boolean isCaractereValide(char c) {
         return alphabet.indexOf(c) != -1;
     }
 
     /**
-     * Retourne le decalage pour un caractere
-     * @param index Index du caractere dans la cle
-     * @return Decalage
+     * Classe permettant de connaître quel est le décalage pour le caractère à 
+     * l'index donné.
+     * @param index Index du caractère dans la clé.
+     * @return Decalage le décalage pour un caractère.
      */
     private static int getDecalage(String cle, int index) {
         char c = cle.charAt(index);
@@ -85,10 +93,11 @@ public class OutilCryptographie {
     }
 
     /**
-     * Encode un caractere
-     * @param c Caractere a encoder
-     * @param decalage Decalage
-     * @return Caractere encode
+     * Méthode permettant d'encoder un caractère selon le décalage passé en 
+     * paramètre.
+     * @param c le caractère à encoder.
+     * @param decalage le nombre associé au décalage du caractère.
+     * @return le caractère une fois encodé en fonction du décalage.
      */
     private static char encoderCaractere(char c, int decalage) {
         int index = alphabet.indexOf(c);
@@ -97,10 +106,12 @@ public class OutilCryptographie {
     }
 
     /**
-     * Decode un caractere
-     * @param c Caractere a decoder
-     * @param decalage Decalage
-     * @return Caractere decode
+     * Méthode permettant de décoder un caractère selon le décalage passé en 
+     * paramètre.
+     * @param c le caractère à décoder.
+     * @param decalage le nombre associé au décalage du caractère (pour retrouver 
+     * le caractère d'origine).
+     * @return le caractère une fois décodé en fonction du décalage.
      */
     private static char decoderCaractere(char c, int decalage) {
         int index = alphabet.indexOf(c);
