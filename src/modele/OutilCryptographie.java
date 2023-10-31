@@ -11,7 +11,7 @@ package modele;
  * en utilisant l'alphabet de la classe.
  * - decoder un message à l'aide de l'algorithme de Vigenère et une clé fournie, 
  * en utilisant l'alphabet de la classe.
- * @author Benjamin Nicol
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class OutilCryptographie {
     

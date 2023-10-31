@@ -1,6 +1,6 @@
-/**
- * TestOutilCryptographie.java                                  31/10/2023
- * No copyright
+/*
+ * TestOutilCryptographie.java                                           31 oct 2023
+ * IUT de Rodez, pas de copyright
  */
 package modele.test;
 
@@ -8,13 +8,14 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import modele.OutilCryptographie;
 
-/** classe de test de la classe outilCryptographie.java
- * @author Benjamin Nicol
+/** 
+ * Classe de test de la classe outilCryptographie.java
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class TestOutilCryptographique {
 
     /** 
-     * test la methode encoder() de la classe outilCryptographie
+     * Teste de la methode encoder() de la classe outilCryptographie
      */
     @Test
     public void testEncoder() {
@@ -36,7 +37,7 @@ public class TestOutilCryptographique {
     }
     
     /** 
-     * test la methode decoder() de la classe outilCryptographie
+     * Teste la methode decoder() de la classe outilCryptographie
      */
     @Test
     public void testDecoder() {
