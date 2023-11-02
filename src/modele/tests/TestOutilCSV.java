@@ -6,7 +6,7 @@ package modele.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import modele.OutilCSV;
@@ -18,15 +18,16 @@ import modele.exceptions.MissingDataException;
  */
 class TestOutilCSV {
     
-    private static String[][] donneesCorrectes = creerDonneesCorrectes();
-    private static String[][] donneesIncorrectes = null;
+    private static String[][] donneesCorrectes;
+    private static String[][] donneesIncorrectes;
     
-    private static String donneesCSVCorrectes = "test1;test2;test3;\n;test4;test5;test6;\n;test7;test8;test9;\n;";
-    private static String donneesCSVIncorrectes1 = null;
-    private static String donneesCSVIncorrectes2 = "";
+    private static String donneesCSVCorrectes;
+    private static String donneesCSVIncorrectes1;
+    private static String donneesCSVIncorrectes2;
     
-    private static String[][] creerDonneesCorrectes() {
-        String[][] donneesCorrectes = new String[3][3];
+    @BeforeAll
+    public static void initialisation() {
+        donneesCorrectes = new String[3][3];
         int i = 1;
         for (int j = 0; j < 3; j++) {
             for (int k = 0; k < 3; k++) {
@@ -34,11 +35,15 @@ class TestOutilCSV {
                 i++;
             }
         }
-        return donneesCorrectes;
+        donneesIncorrectes = null;
+        
+        donneesCSVCorrectes = "test1;test2;test3;\n;test4;test5;test6;\n;test7;test8;test9;\n;";
+        donneesCSVIncorrectes1 = null;
+        donneesCSVIncorrectes2 = "";
     }
     
     @Test
-    static void testFormaterToCSV() {
+    public void testFormaterToCSV() {
         assertDoesNotThrow(() -> OutilCSV.formaterToCSV(donneesCorrectes));
         try {
             assertEquals(OutilCSV.formaterToCSV(donneesCorrectes), donneesCSVCorrectes);
@@ -50,7 +55,7 @@ class TestOutilCSV {
     }
     
     @Test
-    static void testFormaterToDonnees() {
+    public void testFormaterToDonnees() {
         assertDoesNotThrow(() -> OutilCSV.formaterToDonnees(donneesCSVCorrectes));
         try {
             OutilCSV.formaterToDonnees(donneesCSVCorrectes).equals(donneesCorrectes);
@@ -61,11 +66,4 @@ class TestOutilCSV {
         assertThrows(MissingDataException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes1));
         assertThrows(MissingDataException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes2));
     }
-    
-    @AfterAll
-    static void main() {
-        testFormaterToCSV();
-        testFormaterToDonnees();
-    }
-
 }
