@@ -4,13 +4,12 @@
  */
 package modele.exceptions;
 
-/** TODO comment class responsibility (SRP)
- * @author Ugo Schardt
- *
+/** Exception de la classe OutilCSV
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class MissingDataException extends Throwable {
 
-    /** TODO comment field role (attribute, association role) */
+    /** ID de l'exception par défaut */
     private static final long serialVersionUID = 1L;
 
 }
