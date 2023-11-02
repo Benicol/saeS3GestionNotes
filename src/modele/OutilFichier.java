@@ -14,7 +14,7 @@ import java.io.IOException;
  * Classe outil permettant de manipuler des fichiers soit dans le but de :
  * - lire le contenu du fichier
  * - écrire dans le fichier.
- * @author groupe XXX FIXME : c'est quoi le nom du groupe ?
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class OutilFichier {
     
