@@ -2,7 +2,7 @@
  * TestOutilCSV.java                                  2 nov. 2023
  * IUT Rodez, info1 2022-2023, ni copyright ni "copyleft"
  */
-package modele.tests;
+package modele.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,9 +12,8 @@ import org.junit.jupiter.api.Test;
 import modele.OutilCSV;
 import modele.exceptions.MissingDataException;
 
-/** TODO comment class responsibility (SRP)
- * @author Ugo Schardt
- *
+/** Classe de test de la classe OutilCSV
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 class TestOutilCSV {
     

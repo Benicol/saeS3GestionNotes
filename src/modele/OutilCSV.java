@@ -1,10 +1,15 @@
+/*
+ * OutilCSV.java                                  2 nov. 2023
+ * IUT Rodez, info1 2022-2023, ni copyright ni "copyleft"
+ */
 package modele;
 
 import modele.exceptions.MissingDataException;
 
 /**
- * OutilCSV.java                                                                                 21/10/2015
- * No copyright.
+ * Classe outil permettant de :
+ * - Convertir un tableau de données en une String au format CSV
+ * - Convertir une string au format CSV en un tableau de données
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class OutilCSV {
