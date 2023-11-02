@@ -1,46 +1,61 @@
-package modele;
-
 /**
  * Modele.java                                                                                 21/10/2015
  * No copyright.
  */
+package modele;
+
+/**
+ * Classe Utilisateur.
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
+ */
 public class Utilisateur {
+    
     /**
-     * //TODO
+     * Pseudo de l'utilisateur.
      */
     private String pseudo;
 
     /**
-     * //TODO
+     * Pseudo par defaut.
      */
     private static final String PSEUDO_PAR_DEFAUT = "Utilisateur";
 
     /**
-     * //TODO
+     * Constructeur de la classe Utilisateur avec un pseudo.
+     * Si le pseudo est null ou vide, le pseudo par defaut est attribue.
+     * @param pseudo le pseudo de l'utilisateur.
      */
     public Utilisateur(String pseudo) {
-        this.pseudo = pseudo;
+        if (pseudo == null || pseudo == "") {
+            this.pseudo = PSEUDO_PAR_DEFAUT;
+        } else {
+            this.pseudo = pseudo;
+        }
     }
 
     /**
-     * //TODO
+     * Constructeur de la classe Utilisateur sans pseudo.
      */
     public Utilisateur() {
-        this(PSEUDO_PAR_DEFAUT);
+        this.pseudo = PSEUDO_PAR_DEFAUT;
     }
 
     /**
-     * //TODO
+     * Getter du pseudo.
+     * @return le pseudo de l'utilisateur.
      */
     public String getPseudo() {
-        return pseudo;
+        return this.pseudo;
     }
 
     /**
-     * //TODO
+     * Setter du pseudo. Si le pseudo est null ou vide, le changement n'est pas effectue.
+     * @param pseudo le pseudo de l'utilisateur.
      */
     public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+        if (!(pseudo == null || pseudo.isEmpty())) {
+            this.pseudo = pseudo;
+        }
     }
 
 }
