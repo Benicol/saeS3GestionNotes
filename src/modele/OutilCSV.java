@@ -1,18 +1,56 @@
+/*
+ * OutilCSV.java                                  2 nov. 2023
+ * IUT Rodez, info1 2022-2023, ni copyright ni "copyleft"
+ */
 package modele;
 
+
 /**
- * OutilCSV.java                                                                                 21/10/2015
- * No copyright.
+ * Classe outil permettant de :
+ * - Convertir un tableau de données en une String au format CSV
+ * - Convertir une string au format CSV en un tableau de données
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class OutilCSV {
     
-    public String formaterToCSV(String[][] donnees) {
-        //TODO
-        return "message"; //STUB
+    /** Prend en argument un tableau de données et le converti en une String au format CSV;
+     * @param donnees fournis pour être transformer au format CSV
+     * @return String contenant les donnees dans le tableau donnees formater en csv
+     * @throws IllegalArgumentException si les donnees son null 
+     */
+    public static String formaterToCSV(String[][] donnees) throws IllegalArgumentException {
+        if (donnees == null) {
+            throw new IllegalArgumentException("donnees vides");
+        }
+        StringBuilder donneesCSV = new StringBuilder();
+        for (String[] ligne : donnees) {
+            int i = 0;
+            for (String element : ligne) {
+                donneesCSV.append(element + ";");
+                if (i == ligne.length - 1) {
+                    donneesCSV.append("\n;");
+                }
+                i++;
+            }
+        }
+        return donneesCSV.toString();
     }
 
-    public String[][] formaterToDonnees(String donneesCSV) {
-        //TODO
-        return new String[0][0]; //STUB
+    /** Prend en argument une String au format CSV et la converti en un tableau de données.
+     * @param donneesCSV donnees formater en csv
+     * @return String[][] donnees formater en tableau de tableau
+     * @throws IllegalArgumentException si les donnees son null
+     */
+    public static String[][] formaterToDonnees(String donneesCSV) throws IllegalArgumentException {
+        if (donneesCSV == null || donneesCSV.equals("")) {
+            throw new IllegalArgumentException("donnees vides");
+        }
+        String[] lignes = donneesCSV.split("\n;");
+        String[][] donnees = new String[lignes.length][0];
+        
+        for (int i = 0; i < lignes.length; i++) {
+            donnees[i] = lignes[i].split(";");
+        }
+        return donnees;
     }
 }
