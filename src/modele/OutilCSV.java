@@ -4,7 +4,6 @@
  */
 package modele;
 
-import modele.exceptions.MissingDataException;
 
 /**
  * Classe outil permettant de :
@@ -14,49 +13,43 @@ import modele.exceptions.MissingDataException;
  */
 public class OutilCSV {
     
-    private final static int TAILLE_PAR_DEFAUT = 100;
-    
     /** Prend en argument un tableau de données et le converti en une String au format CSV;
-     * @param donnees
-     * @return String donneesCSV
-     * @throws MissingDataException 
+     * @param donnees fournis pour être transformer au format CSV
+     * @return String contenant les donnees dans le tableau donnees formater en csv
+     * @throws IllegalArgumentException si les donnees son null 
      */
-    public static String formaterToCSV(String[][] donnees) throws MissingDataException {
+    public static String formaterToCSV(String[][] donnees) throws IllegalArgumentException {
         if (donnees == null) {
-            throw new MissingDataException();
+            throw new IllegalArgumentException("donnees vides");
         }
-        String donneesCSV = "";
+        StringBuilder donneesCSV = new StringBuilder();
         for (String[] ligne : donnees) {
             int i = 0;
             for (String element : ligne) {
-                donneesCSV += element + ";";
+                donneesCSV.append(element + ";");
                 if (i == ligne.length - 1) {
-                    donneesCSV += "\n;";
+                    donneesCSV.append("\n;");
                 }
                 i++;
             }
         }
-        return donneesCSV;
+        return donneesCSV.toString();
     }
 
     /** Prend en argument une String au format CSV et la converti en un tableau de données.
-     * @param donneesCSV
-     * @return String[][] donnees
-     * @throws MissingDataException 
+     * @param donneesCSV donnees formater en csv
+     * @return String[][] donnees formater en tableau de tableau
+     * @throws IllegalArgumentException si les donnees son null
      */
-    public static String[][] formaterToDonnees(String donneesCSV) throws MissingDataException {
+    public static String[][] formaterToDonnees(String donneesCSV) throws IllegalArgumentException {
         if (donneesCSV == null || donneesCSV.equals("")) {
-            throw new MissingDataException();
+            throw new IllegalArgumentException("donnees vides");
         }
-        String[][] donnees = new String[TAILLE_PAR_DEFAUT][TAILLE_PAR_DEFAUT];
         String[] lignes = donneesCSV.split("\n;");
-        int i = 0;
-        for (String ligne : lignes) {
-            String[] elements = ligne.split(";");
-            for (int j = 0; j < elements.length; j++) {
-                donnees[i][j] = elements[j];
-            }
-            i++;
+        String[][] donnees = new String[lignes.length][0];
+        
+        for (int i = 0; i < lignes.length; i++) {
+            donnees[i] = lignes[i].split(";");
         }
         return donnees;
     }
