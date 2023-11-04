@@ -10,7 +10,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import modele.OutilCSV;
-import modele.exceptions.MissingDataException;
 
 /** Classe de test de la classe OutilCSV
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
@@ -46,11 +45,11 @@ class TestOutilCSV {
         assertDoesNotThrow(() -> OutilCSV.formaterToCSV(donneesCorrectes));
         try {
             assertEquals(OutilCSV.formaterToCSV(donneesCorrectes), donneesCSVCorrectes);
-        } catch (MissingDataException e) {
-            
+        } catch (IllegalArgumentException e) {
+            System.out.println("erreur de donnees");
         }
         
-        assertThrows(MissingDataException.class, () -> OutilCSV.formaterToCSV(donneesIncorrectes));
+        assertThrows(IllegalArgumentException.class, () -> OutilCSV.formaterToCSV(donneesIncorrectes));
     }
     
     @Test
@@ -58,11 +57,11 @@ class TestOutilCSV {
         assertDoesNotThrow(() -> OutilCSV.formaterToDonnees(donneesCSVCorrectes));
         try {
             OutilCSV.formaterToDonnees(donneesCSVCorrectes).equals(donneesCorrectes);
-        } catch (MissingDataException e1) {
-
+        } catch (IllegalArgumentException e) {
+            System.out.println("erreur de donnees");
         }
         
-        assertThrows(MissingDataException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes1));
-        assertThrows(MissingDataException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes2));
+        assertThrows(IllegalArgumentException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes1));
+        assertThrows(IllegalArgumentException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes2));
     }
 }
