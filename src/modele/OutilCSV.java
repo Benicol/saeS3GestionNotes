@@ -28,7 +28,7 @@ public class OutilCSV {
             for (String element : ligne) {
                 donneesCSV.append(element + ";");
                 if (i == ligne.length - 1) {
-                    donneesCSV.append("\n;");
+                    donneesCSV.append("\n");
                 }
                 i++;
             }
