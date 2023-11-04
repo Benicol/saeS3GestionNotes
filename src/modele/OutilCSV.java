@@ -45,7 +45,7 @@ public class OutilCSV {
         if (donneesCSV == null || donneesCSV.equals("")) {
             throw new IllegalArgumentException("donnees vides");
         }
-        String[] lignes = donneesCSV.split("\n;");
+        String[] lignes = donneesCSV.split("\n");
         String[][] donnees = new String[lignes.length][0];
         
         for (int i = 0; i < lignes.length; i++) {
