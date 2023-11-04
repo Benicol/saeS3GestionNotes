@@ -2,7 +2,7 @@
  * TestOutilFichier.java                                      31 Oct 2023
  * IUT Rodez, pas de copyright ni "copyleft" 
  */
-package modele.tests;
+package modele.test;
 
 import static org.junit.Assert.*;
 
