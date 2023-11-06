@@ -30,9 +30,9 @@ public class Evaluation {
      * sous différente forme : 10/05/2023, ou encore "mi-mai", ...)
      */
     public Evaluation(String nom, int poids, String date) {
-        this.nom = nom;
-        this.poids = poids;
-        this.date = date;
+        setNom(nom);
+        setPoids(poids);
+        setDate(date);
         this.note = null;
     }
     
@@ -74,7 +74,12 @@ public class Evaluation {
      * @param nom le nouveau nom choisi pour l'évaluation
      */
     public void setNom(String nom) {
-        this.nom = nom;
+        if (isNomValide(nom)) {
+            this.nom = nom;
+        } else {
+            throw new IllegalArgumentException("Le nom choisi pour l'évaluation est"
+                    + " incorrect");
+        }
     }
     
     /**
@@ -82,7 +87,12 @@ public class Evaluation {
      * @param poids le nouveau poids choisi pour l'évaluation
      */
     public void setPoids(int poids) {
-        this.poids = poids;
+        if (isPoidsValide(poids)) {
+            this.poids = poids;        
+        } else {
+            throw new IllegalArgumentException("Le poids choisi pour l'évaluation "
+                    + "est incorrect");
+        }
     }
     
     /**
@@ -90,7 +100,12 @@ public class Evaluation {
      * @param date la nouvelle date choisie pour l'évaluation
      */
     public void setDate(String date) {
-        this.date = date;
+        if (isDateValide(date)) {
+            this.date = date; 
+        } else {
+            throw new IllegalArgumentException("La date choisie pour l'évaluation "
+                    + "est incorrecte");
+        }
     }
     
     /**
@@ -98,7 +113,48 @@ public class Evaluation {
      * @param note la nouvelle note choisie pour l'évaluation
      */
     public void setNote(double note) {
-        this.note = note;
+        if (isNoteValide(note)) {
+            this.note = note;
+        } else {
+            throw new IllegalArgumentException("La note choisie pour l'évaluation "
+                                              + "est incorrecte");
+        }
+    }
+    
+    /**
+     * Méthode permettant de vérifier le nom d'une évaluation.
+     * @param nom le nom à vérifier.
+     * @return false si le nom n'est pas correct ("" ou null), true sinon.
+     */
+    private static boolean isNomValide(String nom) {
+        return !nom.isBlank();
+    }
+    
+    /**
+     * Méthode permettant de vérifier le poids d'une évaluation.
+     * @param poids le poids à vérifier.
+     * @return false si le poids n'est pas correct (<0 ou >100), true sinon.
+     */
+    private static boolean isPoidsValide(int poids) {
+        return poids > 0 && poids <= 100;
+    }
+    
+    /**
+     * Méthode permettant de vérifier la date d'une évaluation.
+     * @param date la date à vérifier.
+     * @return false si la date n'est pas correct (""), true sinon.
+     */
+    private static boolean isDateValide(String date) {
+        return !date.equals("");
+    }
+    
+    /**
+     * Méthode permettant de vérifier la date d'une évaluation.
+     * @param note la note à vérifier.
+     * @return false si la note n'est pas correct (<0 ou >20), true sinon.
+     */
+    private static boolean isNoteValide(Double note) {
+        return note >= 0 && note <= 20;
     }
 
 }
