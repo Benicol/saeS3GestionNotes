@@ -6,6 +6,9 @@
 package modele.test;
 
 import modele.Parametrage;
+import modele.Ressource;
+import modele.Sae;
+import modele.Competence;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -28,9 +31,15 @@ public class TestParametrage {
         // Initialise un objet Parametrage avec des valeurs valides
         String semestre = "2";
         String parcours = "A";
-        String[][][] donneesCompetences = new String[2][2][2];
+        String[][][] donneesCompetences = {{{"C2.1","Compétence de test 1"},{"R2.01", "60"}, {"S2.01", "38"}, {"P2.01", "2"}},
+                                          {{"C2.2","Compétence de test 2"},{"R2.01", "30"},{"R2.02", "30"}, {"S2.02", "38"}, {"P2.01", "2"}}};
         HashMap<String, String> donneesSaes = new HashMap<>();
+        donneesSaes.put("S2.01", "sae de test 1");
+        donneesSaes.put("S2.02", "sae de test 2");
+        donneesSaes.put("P2.01", "Portfolio");
         HashMap<String, String> donneesRessources = new HashMap<>();
+        donneesRessources.put("R2.01", "ressource de test 1");
+        donneesRessources.put("R2.02", "ressource de test 2");
         
         parametrage = new Parametrage(semestre, parcours, donneesCompetences, donneesSaes, donneesRessources);
     }
@@ -102,9 +111,11 @@ public class TestParametrage {
      */
     @Test
     public void testGetListeRessources() {
-        HashMap<String, String> ressources = parametrage.getListeRessources();
+        HashMap<String, Ressource> ressources = parametrage.getListeRessources();
         assertNotNull(ressources);
-        assertTrue(ressources.isEmpty());
+        assertFalse(ressources.isEmpty());
+        assertEquals("R2.01", ressources.get("R2.01").getIdentifiant());
+        assertEquals("ressource de test 2", ressources.get("R2.02").getLibelle());
     }
 
     /**
@@ -112,9 +123,10 @@ public class TestParametrage {
      */
     @Test
     public void testGetListeCompetences() {
-        String[][][] competences = parametrage.getListeCompetences();
+        HashMap<String, Competence> competences = parametrage.getListeCompetences();
         assertNotNull(competences);
-        assertEquals(2, competences.length);
+        assertFalse(competences.isEmpty());
+        //TODO : autre test quand o nsait exactement comment fonctionne l'autre là
     }
 
     /**
@@ -122,8 +134,11 @@ public class TestParametrage {
      */
     @Test
     public void testGetListeSaes() {
-        HashMap<String, String> saes = parametrage.getListeSaes();
+        HashMap<String, Sae> saes = parametrage.getListeSaes();
         assertNotNull(saes);
-        assertTrue(saes.isEmpty());
+        assertFalse(saes.isEmpty());
+        assertEquals("S2.01", saes.get("S2.01").getIdentifiant());
+        assertEquals("sa de test 2", saes.get("S2.02").getLibelle());
+        assertEquals("Portfolio", saes.get("P2.01").getLibelle());
     }
 }

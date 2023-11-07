@@ -5,6 +5,10 @@
 package modele;
 
 import java.util.HashMap;
+import modele.Ressource;
+import modele.Sae;
+import modele.Competence;
+
 
 /**
  * La classe Parametrage représente un paramétrage associé à un semestre dans un 
@@ -23,9 +27,9 @@ public class Parametrage {
     /* Déclaration des variables qui composent le paramétrage */
     private String semestre;
     private String parcours;
-    private HashMap<String, String> listeRessources;
-    private String[][][] listeCompetences;
-    private HashMap<String, String> listeSaes;
+    private HashMap<String,Ressource> listeRessources;
+    private HashMap<String,Competence> listeCompetences;
+    private HashMap<String,Sae> listeSaes;
 
     /**
      * Constructeur de la classe Paramétrage, qui utilise les données passées en 
@@ -48,9 +52,28 @@ public class Parametrage {
 
         this.semestre = semestre;
         this.parcours = parcours;
-        this.listeCompetences = donneesCompetences;
-        this.listeSaes = new HashMap<>(donneesSaes);
-        this.listeRessources = new HashMap<>(donneesRessources);
+        this.listeRessources = new HashMap<>();
+        for (String identifiant : donneesRessources.keySet()) {
+            listeRessources.put(identifiant, new Ressource(identifiant, donneesRessources.get(identifiant)));
+        }
+        this.listeSaes = new HashMap<>();
+        for (String identifiant : donneesSaes.keySet()) {
+            listeSaes.put(identifiant, new Sae(identifiant, donneesSaes.get(identifiant)));
+        }
+        this.listeCompetences = new HashMap<>();
+        for (String[][] competence : donneesCompetences) {
+            String identifiant = competence[0][0];
+            listeCompetences.put(identifiant, new Competence(identifiant, competence[0][1]));
+            for (int i = 1; i < competence.length; i++) {
+                if (competence[i][0].charAt(0) == 'R') {
+                    listeCompetences.get(identifiant).getListeRessources().put(listeRessources.get(competence[i][0]), Double.parseDouble(competence[i][1]));
+                } else if (competence[i][0].charAt(0) == 'S' || competence[i][0].charAt(0) == 'P') {
+                    listeCompetences.get(identifiant).getListeSaes().put(listeSaes.get(competence[i][0]), Double.parseDouble(competence[i][1]));
+                } else {
+                    throw new IllegalArgumentException("Le type est inconnu.");
+                }
+            }
+        }
     }
 
     
@@ -71,27 +94,27 @@ public class Parametrage {
     }
     
     /**
-     * Retourne la liste des ressources associées au semestre.
+     * Retourne la table de hachage des ressources associées au semestre.
      * @return La liste des ressources associées.
      */
-    public HashMap<String, String> getListeRessources() {
+    public HashMap<String, Ressource> getListeRessources() {
         return listeRessources;
     }
     
     /**
-     * Retourne la liste des compétences associées au semestre.
+     * Retourne la ta le de hachage des compétences associées au semestre.
      * @return La liste des compétences associées.
      */
-    public String[][][] getListeCompetences() {
+    public HashMap<String, Competence> getListeCompetences() {
         return listeCompetences;
     }
     
     /**
-     * Retourne la liste des SAE (Situations d'Apprentissage et d'Évaluation) 
+     * Retourne la table de hachage des SAE (Situations d'Apprentissage et d'Évaluation) 
      * associées au semestre.
      * @return La liste des SAE associées.
      */
-    public HashMap<String, String> getListeSaes() {
+    public HashMap<String, Sae> getListeSaes() {
         return listeSaes;
     }
 }
