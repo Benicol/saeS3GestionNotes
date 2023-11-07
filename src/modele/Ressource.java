@@ -119,9 +119,12 @@ public class Ressource implements Enseignement{
     	boolean calculOk;
     	calculOk = false;
     	if(verifierPonderation(this.getPonderations())) {
-    		
+    		calculOk=true;
+    		for(int i =0;i<this.listeEvaluations.size();i++) {
+    			
+    		}
     	}
-        return false; 
+        return calculOk; 
     }
     
     /**
