@@ -12,7 +12,7 @@ package modele;
 public class Sae implements Enseignement{
     private String libelle;
     private String identifiant;
-    private double note;
+    private Double note;
 
     /** Constructeur de la classe Sae
      * @param identifiant
@@ -24,19 +24,20 @@ public class Sae implements Enseignement{
         }
         this.libelle = libelle;
         this.identifiant = identifiant;
+        this.note = null;
     }
     
     /** Getter de l'attribut note
      * @return note
      */
-    public double getNote() {
+    public Double getNote() {
         return note;
     }
     
     /** Setter de l'attribut note
      * @param note
      */
-    public void setNote(double note) {
+    public void setNote(Double note) {
         if (note < 0 || note > 20) {
             throw new IllegalArgumentException();
         }
