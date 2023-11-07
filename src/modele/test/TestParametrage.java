@@ -31,8 +31,19 @@ public class TestParametrage {
         // Initialise un objet Parametrage avec des valeurs valides
         String semestre = "2";
         String parcours = "A";
-        String[][][] donneesCompetences = {{{"C2.1","Compétence de test 1"},{"R2.01", "60"}, {"S2.01", "38"}, {"P2.01", "2"}},
-                                          {{"C2.2","Compétence de test 2"},{"R2.01", "30"},{"R2.02", "30"}, {"S2.02", "38"}, {"P2.01", "2"}}};
+        String[][][] donneesCompetences = {{
+                                            {"C2.1","Compétence de test 1"},
+                                            {"R2.01", "60"}, 
+                                            {"S2.01", "38"}, 
+                                            {"P2.01", "2"}
+                                            },
+                                           {
+                                            {"C2.2","Compétence de test 2"},
+                                            {"R2.01", "30"},
+                                            {"R2.02", "30"},
+                                            {"S2.02", "38"}, 
+                                            {"P2.01", "2"}
+                                           }};
         HashMap<String, String> donneesSaes = new HashMap<>();
         donneesSaes.put("S2.01", "sae de test 1");
         donneesSaes.put("S2.02", "sae de test 2");
@@ -126,7 +137,9 @@ public class TestParametrage {
         HashMap<String, Competence> competences = parametrage.getListeCompetences();
         assertNotNull(competences);
         assertFalse(competences.isEmpty());
-        //TODO : autre test quand o nsait exactement comment fonctionne l'autre là
+        assertEquals("C2.1", competences.get("C2.1").getIdentifiant());
+        assertTrue(competences.get("C2.1").getListeRessources()
+                .containsKey(parametrage.getListeRessources().get("R2.01")));
     }
 
     /**

@@ -5,10 +5,6 @@
 package modele;
 
 import java.util.HashMap;
-import modele.Ressource;
-import modele.Sae;
-import modele.Competence;
-
 
 /**
  * La classe Parametrage représente un paramétrage associé à un semestre dans un 
@@ -66,9 +62,9 @@ public class Parametrage {
             listeCompetences.put(identifiant, new Competence(identifiant, competence[0][1]));
             for (int i = 1; i < competence.length; i++) {
                 if (competence[i][0].charAt(0) == 'R') {
-                    listeCompetences.get(identifiant).getListeRessources().put(listeRessources.get(competence[i][0]), Double.parseDouble(competence[i][1]));
+                    listeCompetences.get(identifiant).getListeRessources().put(listeRessources.get(competence[i][0]), Double.parseDouble(competence[i][1])/100);
                 } else if (competence[i][0].charAt(0) == 'S' || competence[i][0].charAt(0) == 'P') {
-                    listeCompetences.get(identifiant).getListeSaes().put(listeSaes.get(competence[i][0]), Double.parseDouble(competence[i][1]));
+                    listeCompetences.get(identifiant).getListeSaes().put(listeSaes.get(competence[i][0]), Double.parseDouble(competence[i][1])/100);
                 } else {
                     throw new IllegalArgumentException("Le type est inconnu.");
                 }
