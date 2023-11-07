@@ -31,11 +31,11 @@ public class Ressource implements Enseignement{
      */
     public boolean ajouterEvaluation(Evaluation aAjouter) {
         boolean ajoutOk;
-        ajoutOk=false;
-        
-        if(verifierPonderation(this.getPonderations())){
-        	listeEvaluations.add(aAjouter);
-        	ajoutOk= true;
+        ajoutOk=true;
+        listeEvaluations.add(aAjouter);
+        if(!verifierPonderation(this.getPonderations())){
+        	listeEvaluations.remove(aAjouter);
+        	ajoutOk = false;
         }
         return ajoutOk; 
     }
@@ -44,11 +44,48 @@ public class Ressource implements Enseignement{
      * @param idEvaluation
      * @param idChamps
      * @param donnee
-     * @return
+     * @return true
      */
     public boolean modifierEvaluation(int idEvaluation, int idChamps, String donnee) {
-        
-        return false; //STUB
+        boolean modifOk;
+        modifOk = false;
+        if(idEvaluation <= listeEvaluations.size() && idEvaluation >= 0) {
+            switch(idChamps) {
+                case 1:
+                    try {
+                        listeEvaluations.get(idEvaluation).setNom(donnee);
+                        modifOk = true;
+                        break;
+                    }catch(IllegalArgumentException erreur) {
+                        System.out.print(erreur.getMessage());
+                    }
+                case 2:
+                    try {
+                        listeEvaluations.get(idEvaluation).setDate(donnee);
+                        modifOk = true;
+                        break;
+                    }catch(IllegalArgumentException erreur) {
+                        System.out.print(erreur.getMessage());
+                    }   
+                case 3:
+                    try {
+                        listeEvaluations.get(idEvaluation).setNote(Double.parseDouble(donnee));
+                        modifOk = true;
+                        break;
+                    }catch(IllegalArgumentException erreur) {
+                        System.out.print(erreur.getMessage());
+                    }              
+                case 4:
+                    try {
+                        listeEvaluations.get(idEvaluation).setPoids(Integer.parseInt(donnee));
+                        modifOk = true;
+                        break;
+                    }catch(IllegalArgumentException erreur) {
+                        System.out.print(erreur.getMessage());
+                    }
+            }
+        }
+        return modifOk; 
     }
     /**
      * 
@@ -58,7 +95,13 @@ public class Ressource implements Enseignement{
     public boolean supprimerEvaluation(int idEvaluation) {
         boolean suprOk;
         suprOk = false;
-        return false; //STUB
+        Evaluation sauvegarde;
+        if(idEvaluation <= listeEvaluations.size() && idEvaluation >= 0) {
+            suprOk = true;
+            sauvegarde = listeEvaluations.get(idEvaluation);
+            listeEvaluations.remove(idEvaluation);
+        }
+        return suprOk; 
     }
     /**
      * 
@@ -71,8 +114,8 @@ public class Ressource implements Enseignement{
         for(int i = 0;i<ponderations.size();i++) {
         	poidsTotal += ponderations.get(i);
         }
-        return     poidsTotal > 0
-        	    && poidsTotal <=100; 
+        return         poidsTotal >= 0
+        	    && poidsTotal <= 100; 
     }
     /**
      * 
@@ -90,14 +133,14 @@ public class Ressource implements Enseignement{
      * 
      */
     public String creerIntitule() {
-        return this.getLibelle() + this.getIdentifiant();
+        return this.getLibelle() +" "+ this.getIdentifiant();
     }
     /**
      * 
      * @return
      */
-    public ArrayList<Evaluation> getListeEvaluations() {
-        return listeEvaluations;
+    public String getListeEvaluations() {
+        return listeEvaluations.toString();
     }
     /**
      * 
@@ -106,8 +149,11 @@ public class Ressource implements Enseignement{
     public double calculerMoyenne() {
     	double moyenne;
     	moyenne = 0.0;
-        if(isCalculable()) {
-        	
+        if(isCalculable() && this.getPoidsTotal() == 100) {
+            for(int i = 0; i<listeEvaluations.size();i++) {
+                moyenne += listeEvaluations.get(i).getNote()*listeEvaluations.get(i).getPoids();
+            }
+            moyenne = moyenne / 100;
         }
         return moyenne; 
     }
@@ -119,10 +165,12 @@ public class Ressource implements Enseignement{
     	boolean calculOk;
     	calculOk = false;
     	if(verifierPonderation(this.getPonderations())) {
-    		calculOk=true;
-    		for(int i =0;i<this.listeEvaluations.size();i++) {
-    			
-    		}
+    	    calculOk=true;
+    	    for(int i =0;i<this.listeEvaluations.size() && calculOk;i++) {
+    	        if(listeEvaluations.get(i).getNote() == 0.0) {
+    	            calculOk = false;
+    	        }
+    	    }
     	}
         return calculOk; 
     }
@@ -131,15 +179,28 @@ public class Ressource implements Enseignement{
      * 
      * @return
      */
-    public ArrayList<Integer> getPonderations(){
+    private ArrayList<Integer> getPonderations(){
     	ArrayList<Integer> ponderations;
         ponderations = new ArrayList<>();
         
         for(int i = 0;i<listeEvaluations.size();i++){
         	ponderations.add(listeEvaluations.get(i).getPoids());
         }
-		return ponderations;
+	return ponderations;
     	
+    }
+    
+    /**
+     * TODO comment method role
+     * @return
+     */
+    private int getPoidsTotal() {
+        int poidsTotal;
+        poidsTotal = 0;
+        for (int i =0 ; i<this.getPonderations().size();i++) {
+            poidsTotal += this.getPonderations().get(i);
+        }
+        return poidsTotal;
     }
     
 }
