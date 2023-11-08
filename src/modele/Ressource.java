@@ -27,7 +27,7 @@ public class Ressource implements Enseignement{
     /**
      * 
      * @param aAjouter
-     * @return
+     * @return ajoutOk
      */
     public boolean ajouterEvaluation(Evaluation aAjouter) {
         boolean ajoutOk;
@@ -90,7 +90,7 @@ public class Ressource implements Enseignement{
     /**
      * 
      * @param idEvaluation
-     * @return
+     * @return suprOk
      */
     public boolean supprimerEvaluation(int idEvaluation) {
         boolean suprOk;
@@ -106,7 +106,7 @@ public class Ressource implements Enseignement{
     /**
      * 
      * @param ponderations
-     * @return
+     * @return boolean
      */
     private static boolean verifierPonderation(ArrayList<Integer> ponderations) {
         int poidsTotal;
@@ -137,14 +137,14 @@ public class Ressource implements Enseignement{
     }
     /**
      * 
-     * @return
+     * @return listeEvaluation
      */
     public String getListeEvaluations() {
         return listeEvaluations.toString();
     }
     /**
      * 
-     * @return
+     * @return moyenne
      */
     public double calculerMoyenne() {
     	double moyenne;
