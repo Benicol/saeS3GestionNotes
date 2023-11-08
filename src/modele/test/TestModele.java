@@ -16,7 +16,7 @@ import modele.Modele;
  */
 public class TestModele {
     /** 
-     * Teste de la methode verifierFormatDonnees() de la classe Modele
+     * Test de la méthode verifierFormatDonnees() de la classe Modèle
      */
     @Test
     public void testVerifierFormatDonnees() {
@@ -26,7 +26,7 @@ public class TestModele {
         String[][] donneesTests = OutilCSV.formaterToDonnees(fichier);
         String[][] donneesInvalides = donneesTests;
         //tests
-        assertTrue(Modele.verifierFormatDonnees(donneesTests));
+        assertTrue(Modele.verifierFormatDonnees(donneesTests)); 
         //test où il n'y a pas de Semestre
         donneesInvalides[1][1] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
