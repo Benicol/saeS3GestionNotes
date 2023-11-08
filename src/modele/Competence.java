@@ -100,17 +100,21 @@ public class Competence implements Enseignement{
      */
     public boolean isCalculable() {
         boolean calculable = true;
-        for (Ressource i : listeRessources.keySet()) {
-            if(!i.isCalculable()) {
-                calculable = false;
-                break;
-            }
-        }
-        if (calculable) {
-            for (Sae i : listeSaes.keySet()) {
-                if (i.getNote() == null) {
+        if (this.getListeRessources().isEmpty() && this.getListeSaes().isEmpty()) {
+            calculable = false;
+        } else {
+            for (Ressource i : listeRessources.keySet()) {
+                if(!i.isCalculable()) {
                     calculable = false;
                     break;
+                }
+            }
+            if (calculable) {
+                for (Sae i : listeSaes.keySet()) {
+                    if (i.getNote() == null) {
+                        calculable = false;
+                        break;
+                    }
                 }
             }
         }
