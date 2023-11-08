@@ -151,7 +151,7 @@ public class TestParametrage {
         assertNotNull(saes);
         assertFalse(saes.isEmpty());
         assertEquals("S2.01", saes.get("S2.01").getIdentifiant());
-        assertEquals("sa de test 2", saes.get("S2.02").getLibelle());
+        assertEquals("sae de test 2", saes.get("S2.02").getLibelle());
         assertEquals("Portfolio", saes.get("P2.01").getLibelle());
     }
 }
