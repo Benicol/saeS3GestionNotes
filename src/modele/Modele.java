@@ -1,13 +1,22 @@
 package modele;
 
+import java.util.HashMap;
+
 /**
  * Modele.java                                                                                 21/10/2015
  * No copyright.
  */
 public class Modele {
-    private Parametrage parametrage;
-    public void reset() {
-        //TODO
+	
+	
+    private static Parametrage parametrage;
+    private static Utilisateur utilisateur;
+    
+    /**
+     * Méthode qui mets paramétrage à null 
+     */
+    public static void reset() {
+        parametrage = null;
     }
     public void importer() {
         //TODO
@@ -92,25 +101,49 @@ public class Modele {
         }
         return valide;
     }
-
-    public Ressource[] getRessources() {
-        //TODO
-        return new Ressource[0]; //STUB
+    
+    /**
+     * Getter de listeRessource présent dans paramétrage
+     * @return listeRessources de paramétrage
+     */
+    public static HashMap<String, Ressource> getRessources() {
+        return parametrage.getListeRessources();
     }
-    public Competence[] getCompetences() {
-        //TODO
-        return new Competence[0]; //STUB
+    
+    /**
+     * Getter de listeCompétences présent dans paramétrage
+     * @return listeCompétences de paramétrage
+     */
+    public static HashMap<String, Competence> getCompetences() {
+      
+        return parametrage.getListeCompetences();
     }
-    public Sae[] getSae() {
-        //TODO
-        return new Sae[0]; //STUB
+    
+    /**
+     * Getter de listeSae présent dans paramétrage
+     * @return listeSae de paramétrage
+     */
+    public static HashMap<String, Sae> getSae() {
+        return parametrage.getListeSaes();
     }
-    public Utilisateur getUtilisateur() {
-        //TODO
-        return new Utilisateur(); //STUB
+    
+    /**
+     * Getter de l'utilisateur et si utilisateur est null 
+     * initialise utilisateur
+     * @return utilisateur 
+     */
+    public static Utilisateur getUtilisateur() {
+    	if(utilisateur == null) {
+    		utilisateur = new Utilisateur();
+    	}
+        return utilisateur;
     }
-    public String getIp() {
-        //TODO
-        return "adresse ip"; //STUB
+    
+    /**
+     * Getter de l'adresse ip de l'ordinateur 
+     * @return adresseIp présent dans outilReseaux
+     */
+    public static String getIp() {
+        return OutilReseau.getIp(); 
     }
 }
