@@ -17,7 +17,7 @@ public class Evaluation {
     
     /* Déclaration des variables */
     private String nom;
-    private int poids;
+    private Double poids;
     private String date;
     private Double note;
     
@@ -29,7 +29,7 @@ public class Evaluation {
      * @param date la date à laquelle doit se dérouler l'évaluation (peut s'écrire
      * sous différente forme : 10/05/2023, ou encore "mi-mai", ...)
      */
-    public Evaluation(String nom, int poids, String date) {
+    public Evaluation(String nom, Double poids, String date) {
         setNom(nom);
         setPoids(poids);
         setDate(date);
@@ -38,7 +38,7 @@ public class Evaluation {
     
     
     /**
-     * Getteur permettant d'obtenir le nom d'une évaluation
+     * Getter permettant d'obtenir le nom d'une évaluation
      * @return le nom de l'évaluation
      */
     public String getNom() {
@@ -46,15 +46,15 @@ public class Evaluation {
     }
     
     /**
-     * Getteur permettant d'obtenir le poids d'une évaluation
+     * Getter permettant d'obtenir le poids d'une évaluation
      * @return le poids de l'évaluation
      */
-    public int getPoids() {
+    public Double getPoids() {
         return poids;
     }
     
     /**
-     * Getteur permettant d'obtenir la date d'une évaluation
+     * Getter permettant d'obtenir la date d'une évaluation
      * @return la date de l'évaluation
      */
     public String getDate() {
@@ -62,15 +62,15 @@ public class Evaluation {
     }
     
     /**
-     * Getteur permettant d'obtenir la note associée à une évaluation
+     * Getter permettant d'obtenir la note associée à une évaluation
      * @return le note de l'évaluation
      */
-    public double getNote() {
+    public Double getNote() {
         return note;
     }
     
     /**
-     * Setteur permettant de modifier le nom d'une évaluation
+     * Setter permettant de modifier le nom d'une évaluation
      * @param nom le nouveau nom choisi pour l'évaluation
      */
     public void setNom(String nom) {
@@ -83,10 +83,10 @@ public class Evaluation {
     }
     
     /**
-     * Setteur permettant de modifier le poids d'une évaluation
+     * Setter permettant de modifier le poids d'une évaluation
      * @param poids le nouveau poids choisi pour l'évaluation
      */
-    public void setPoids(int poids) {
+    public void setPoids(Double poids) {
         if (isPoidsValide(poids)) {
             this.poids = poids;        
         } else {
@@ -96,7 +96,7 @@ public class Evaluation {
     }
     
     /**
-     * Setteur permettant de modifier la date d'une évaluation
+     * Setter permettant de modifier la date d'une évaluation
      * @param date la nouvelle date choisie pour l'évaluation
      */
     public void setDate(String date) {
@@ -109,10 +109,10 @@ public class Evaluation {
     }
     
     /**
-     * Setteur permettant de modifier (ou de saisir) la note d'une évaluation
+     * Setter permettant de modifier (ou de saisir) la note d'une évaluation
      * @param note la nouvelle note choisie pour l'évaluation
      */
-    public void setNote(double note) {
+    public void setNote(Double note) {
         if (isNoteValide(note)) {
             this.note = note;
         } else {
@@ -135,8 +135,8 @@ public class Evaluation {
      * @param poids le poids à vérifier.
      * @return false si le poids n'est pas correct (<0 ou >100), true sinon.
      */
-    private static boolean isPoidsValide(int poids) {
-        return poids > 0 && poids <= 100;
+    private static boolean isPoidsValide(Double poids) {
+        return poids > 0 && poids <= 1;
     }
     
     /**
