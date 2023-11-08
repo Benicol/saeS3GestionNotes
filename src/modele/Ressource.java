@@ -85,7 +85,7 @@ public class Ressource implements Enseignement {
                         break;         
                     case 4:
                      // Modification du poids de l'évaluation
-                        listeEvaluations.get(idEvaluation).setPoids(Integer.parseInt(donnee));
+                        listeEvaluations.get(idEvaluation).setPoids(Double.parseDouble(donnee));
                         modifOk = true;
                         break;
                 }
@@ -118,8 +118,8 @@ public class Ressource implements Enseignement {
      * @return true si les pondérations sont valides, sinon false.
      */
     private boolean verifierPonderation() {
-        int poidsTotal = getPoidsTotal();
-        return poidsTotal >= 0 && poidsTotal <= 100;
+        double poidsTotal = getPoidsTotal();
+        return poidsTotal >= 0 && poidsTotal <= 1;
     }
     /**
      * Vérifie si les pondérations des évaluations sont valides (somme entre 0 et 100).
@@ -128,7 +128,7 @@ public class Ressource implements Enseignement {
      * @return true si les pondérations sont valides, sinon false.
      */
     private boolean verifierPonderationComplette() {
-        return getPoidsTotal() == 100;
+        return getPoidsTotal() == 1;
     }
     
     
@@ -177,7 +177,6 @@ public class Ressource implements Enseignement {
             for (int i = 0; i < listeEvaluations.size(); i++) {
                 moyenne += listeEvaluations.get(i).getNote() * listeEvaluations.get(i).getPoids();
             }
-            moyenne = moyenne / 100;
         }
         return moyenne;
     }
@@ -193,7 +192,7 @@ public class Ressource implements Enseignement {
         if (verifierPonderationComplette()) {
             calculOk = true;
             for (int i = 0; i < this.listeEvaluations.size() && calculOk; i++) {
-                if (listeEvaluations.get(i).getNote() == 0.0) { //TODO A METTRE EN NULL
+                if (listeEvaluations.get(i).getNote() == null) { 
                     calculOk = false;
                 }
             }
@@ -205,8 +204,8 @@ public class Ressource implements Enseignement {
      * Obtient la liste des pondérations des évaluations.
      * @return La liste des pondérations.
      */
-    private ArrayList<Integer> getPonderations() {
-        ArrayList<Integer> ponderations;
+    private ArrayList<Double> getPonderations() {
+        ArrayList<Double> ponderations;
         ponderations = new ArrayList<>();
 
         for (int i = 0; i < listeEvaluations.size(); i++) {
@@ -220,8 +219,8 @@ public class Ressource implements Enseignement {
      * Permet d'obtenir le poids total de toutes les évaluations
      * @return le poids total des évaluations.
      */
-    private int getPoidsTotal() {
-        int poidsTotal = 0;
+    private double getPoidsTotal() {
+        double poidsTotal = 0;
         for (int i = 0; i < this.getPonderations().size(); i++) {
             poidsTotal += this.getPonderations().get(i);
         }

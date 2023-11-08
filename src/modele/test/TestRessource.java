@@ -51,9 +51,9 @@ class TestRessource {
         ressource6 = new Ressource("R1.06", "crypto");
         ressource7 = new Ressource("R1.06", "crypto");
         
-        eval1 = new Evaluation("QCM",0,"05/04/23");
-        eval2 = new Evaluation("controle",40,"08/07/23");
-        eval3 = new Evaluation("controle",25,"05/04/23");
+        eval1 = new Evaluation("QCM",0.01,"05/04/23");
+        eval2 = new Evaluation("controle",0.4,"08/07/23");
+        eval3 = new Evaluation("controle",0.25,"05/04/23");
         
         liste1 = new ArrayList<>();
         liste2 = new ArrayList<>();
@@ -68,17 +68,17 @@ class TestRessource {
         liste2.add(eval2);
         liste2.add(eval3);
         
-        ressource1.ajouterEvaluation(new Evaluation("controle",50,"05/04/23"));
+        ressource1.ajouterEvaluation(new Evaluation("controle",0.5,"05/04/23"));
         ressource2.ajouterEvaluation(eval1);
         ressource2.ajouterEvaluation(eval2);
-        ressource3.ajouterEvaluation(new Evaluation("controle",100,"02/04/23"));
-        ressource4.ajouterEvaluation(new Evaluation("controle",70,"15/06/23"));
+        ressource3.ajouterEvaluation(new Evaluation("controle",0.1,"02/04/23"));
+        ressource4.ajouterEvaluation(new Evaluation("controle",0.7,"15/06/23"));
                                         
-        ressource6.ajouterEvaluation(new Evaluation("controle",20,"15/06/23"));
-        ressource6.ajouterEvaluation(new Evaluation("controle",45,"15/06/23"));
-        ressource6.ajouterEvaluation(new Evaluation("controle",35,"15/06/23"));
+        ressource6.ajouterEvaluation(new Evaluation("controle",0.2,"15/06/23"));
+        ressource6.ajouterEvaluation(new Evaluation("controle",0.45,"15/06/23"));
+        ressource6.ajouterEvaluation(new Evaluation("controle",0.35,"15/06/23"));
         
-        ressource7.ajouterEvaluation(new Evaluation("controle",100,"02/04/23"));
+        ressource7.ajouterEvaluation(new Evaluation("controle",1.0,"02/04/23"));
         
     }
     
@@ -89,11 +89,10 @@ class TestRessource {
     
     @Test
     public void testAjouterEvaluation() {
-        Assertions.assertTrue(ressource1.ajouterEvaluation(new Evaluation("controle",50,"05/04/23")));
-        Assertions.assertTrue(ressource2.ajouterEvaluation(new Evaluation("controle",50,"05/05/23")));
-        Assertions.assertFalse(ressource3.ajouterEvaluation(new Evaluation("controle",30,"05/08/23")));
-        Assertions.assertFalse(ressource4.ajouterEvaluation(new Evaluation("controle",31,"01/08/23")));
-        Assertions.assertFalse(ressource5.ajouterEvaluation(new Evaluation("controle",-1,"01/08/23")));
+        Assertions.assertTrue(ressource1.ajouterEvaluation(new Evaluation("controle",0.5,"05/04/23")));
+        Assertions.assertTrue(ressource2.ajouterEvaluation(new Evaluation("controle",0.5,"05/05/23")));
+        Assertions.assertFalse(ressource7.ajouterEvaluation(new Evaluation("controle",0.3,"05/08/23")));
+        Assertions.assertFalse(ressource4.ajouterEvaluation(new Evaluation("controle",0.35,"01/08/23")));
     }
     
     @Test
@@ -103,7 +102,7 @@ class TestRessource {
         Assertions.assertFalse(ressource3.modifierEvaluation(3,3,"12.4"));
         Assertions.assertFalse(ressource3.modifierEvaluation(-1,2,"23/12/23"));
         Assertions.assertTrue(ressource4.modifierEvaluation(0,3,"14.5"));
-        Assertions.assertTrue(ressource3.modifierEvaluation(0,4,"35"));
+        Assertions.assertTrue(ressource3.modifierEvaluation(0,4,"0.35"));
     }
     
     @Test
