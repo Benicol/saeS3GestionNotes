@@ -18,6 +18,9 @@ public class Competence implements Enseignement{
      * @param libelle
      */
     public Competence(String identifiant, String libelle) {
+        if (libelle == null || libelle.equals("") || identifiant == null || identifiant.equals("")) {
+            throw new IllegalArgumentException();
+        }
         this.libelle = libelle;
         this.identifiant = identifiant;
         this.listeRessources = new HashMap<Ressource, Double>();
@@ -52,24 +55,28 @@ public class Competence implements Enseignement{
     public HashMap<Ressource, Double> getListeRessources() {
         return listeRessources;
     }
+    
     /** Getter de l'attribut listeSaes
      * @return listeSaes : la liste des saes de la compétence
      */
     public HashMap<Sae, Double> getListeSaes() {
         return listeSaes;
     }
+    
     /** Setter de l'attribut listeRessources
      * @param listeRessources
      */
     public void setListeRessources(HashMap<Ressource, Double> listeRessources) {
         this.listeRessources = listeRessources;
     }
+    
     /** Setter de l'attribut listeSaes
      * @param listeSaes
      */
     public void setListeSaes(HashMap<Sae, Double> listeSaes) {
         this.listeSaes = listeSaes;
     }
+    
     /** Méthode permettant de calculer la note obtenue à la compétence
      * @return moyenne : la note obtenue à la compétence
      */
@@ -86,7 +93,12 @@ public class Competence implements Enseignement{
         }
         return moyenne; //Somme des coefficients == 1 donc pas besoin de diviser
     }
-    private boolean isCalculable() {
+    
+    /** Méthode permettant de vérifier si la moyenne
+     * d'une compétence est calculable
+     * @return calculable : true si calculable, false sinon
+     */
+    public boolean isCalculable() {
         boolean calculable = true;
         for (Ressource i : listeRessources.keySet()) {
             if(!i.isCalculable()) {
