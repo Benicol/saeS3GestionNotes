@@ -1,6 +1,6 @@
-/**
- * OutilReseau.java                                                                                 21/10/2015
- * No copyright.
+/*
+ * OutilReseau.java                                                   31/10/2023
+ * IUT de Rodez, pas de droit d'auteur.
  */
 
 package modele;
@@ -10,11 +10,16 @@ import java.net.UnknownHostException;
 
 
 /**
+ * Classe outil permettant :
+ *     - récupérer l'adresse IP de la machine sur laquelle on se trouve
+ *     - importer des données depuis un autre ordinateur
+ *     - exporter des données vers un autre ordinateur
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class OutilReseau {
+    
     /**
-     * Methode qui permet de recuperer l'adresse IP de la machine.
+     * Méthode qui permet de récuperer l'adresse IP de la machine.
      * @return l'adresse IP de la machine.
      */
     public static String getIp() {
