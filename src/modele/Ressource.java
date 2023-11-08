@@ -46,7 +46,7 @@ public class Ressource implements Enseignement {
         boolean ajoutOk;
         ajoutOk = true;
         listeEvaluations.add(aAjouter);
-        if (!verifierPonderation(this.getPonderations())) {
+        if (!verifierPonderation()) {
             listeEvaluations.remove(aAjouter);
             ajoutOk = false;
         }
@@ -104,10 +104,8 @@ public class Ressource implements Enseignement {
     public boolean supprimerEvaluation(int idEvaluation) {
         boolean suprOk;
         suprOk = false;
-        Evaluation sauvegarde;
         if (idEvaluation <= listeEvaluations.size() && idEvaluation >= 0) {
             suprOk = true;
-            sauvegarde = listeEvaluations.get(idEvaluation);
             listeEvaluations.remove(idEvaluation);
         }
         return suprOk;
@@ -119,14 +117,21 @@ public class Ressource implements Enseignement {
      * @param ponderations La liste des pondérations des évaluations.
      * @return true si les pondérations sont valides, sinon false.
      */
-    private static boolean verifierPonderation(ArrayList<Integer> ponderations) {
-        int poidsTotal;
-        poidsTotal = 0;
-        for (int i = 0; i < ponderations.size(); i++) {
-            poidsTotal += ponderations.get(i);
-        }
+    private boolean verifierPonderation() {
+        int poidsTotal = getPoidsTotal();
         return poidsTotal >= 0 && poidsTotal <= 100;
     }
+    /**
+     * Vérifie si les pondérations des évaluations sont valides (somme entre 0 et 100).
+     *
+     * @param ponderations La liste des pondérations des évaluations.
+     * @return true si les pondérations sont valides, sinon false.
+     */
+    private boolean verifierPonderationComplette() {
+        return getPoidsTotal() == 100;
+    }
+    
+    
 
     /**
      * Obtient le libellé de la ressource.
@@ -149,15 +154,15 @@ public class Ressource implements Enseignement {
      * @return L'intitulé de la ressource.
      */
     public String creerIntitule() {
-        return this.getLibelle() + " " + this.getIdentifiant();
+        return this.getIdentifiant() + " : " + this.getLibelle();
     }
 
     /**
-     * Obtient la liste des évaluations sous forme de chaîne de caractères.
+     * Obtient la liste des évaluations.
      * @return La liste des évaluations.
      */
-    public String getListeEvaluations() {
-        return listeEvaluations.toString();
+    public ArrayList<Evaluation> getListeEvaluations() {
+        return listeEvaluations;
     }
 
     /**
@@ -168,7 +173,7 @@ public class Ressource implements Enseignement {
     public double calculerMoyenne() {
         double moyenne;
         moyenne = 0.0;
-        if (isCalculable() && this.getPoidsTotal() == 100) {
+        if (isCalculable()) {
             for (int i = 0; i < listeEvaluations.size(); i++) {
                 moyenne += listeEvaluations.get(i).getNote() * listeEvaluations.get(i).getPoids();
             }
@@ -185,10 +190,10 @@ public class Ressource implements Enseignement {
     public boolean isCalculable() {
         boolean calculOk;
         calculOk = false;
-        if (verifierPonderation(this.getPonderations())) {
+        if (verifierPonderationComplette()) {
             calculOk = true;
             for (int i = 0; i < this.listeEvaluations.size() && calculOk; i++) {
-                if (listeEvaluations.get(i).getNote() == 0.0) {
+                if (listeEvaluations.get(i).getNote() == 0.0) { //TODO A METTRE EN NULL
                     calculOk = false;
                 }
             }
@@ -216,8 +221,7 @@ public class Ressource implements Enseignement {
      * @return le poids total des évaluations.
      */
     private int getPoidsTotal() {
-        int poidsTotal;
-        poidsTotal = 0;
+        int poidsTotal = 0;
         for (int i = 0; i < this.getPonderations().size(); i++) {
             poidsTotal += this.getPonderations().get(i);
         }

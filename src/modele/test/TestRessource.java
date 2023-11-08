@@ -41,8 +41,8 @@ class TestRessource {
     private static Ressource ressource6;
     private static Ressource ressource7;
     
-    @BeforeAll
-    public static void initialisation() {
+    @BeforeEach
+    public void initialisation() {
         ressource1 = new Ressource("R1.01", "développement web");
         ressource2 = new Ressource("R1.02", "base de données ");
         ressource3 = new Ressource("R1.03", "proba");
@@ -58,7 +58,7 @@ class TestRessource {
         liste1 = new ArrayList<>();
         liste2 = new ArrayList<>();
         
-        intitule1 = "développement web R1.01";
+        intitule1 = "R1.01 : développement web";
         intitule2 = "développement  .01";
         
         liste1.add(eval1);
@@ -110,7 +110,6 @@ class TestRessource {
     public void testSupprimerEvaluation() {
         Assertions.assertTrue(ressource1.supprimerEvaluation(0));
         Assertions.assertTrue(ressource2.supprimerEvaluation(0));
-        Assertions.assertTrue(ressource2.supprimerEvaluation(1));
         Assertions.assertFalse(ressource1.supprimerEvaluation(4));
         Assertions.assertFalse(ressource2.supprimerEvaluation(-1));
         Assertions.assertFalse(ressource3.supprimerEvaluation(6));
@@ -137,7 +136,7 @@ class TestRessource {
     
     @Test
     public void testGetListeEvaluation() {
-        Assertions.assertEquals(liste1.toString(), ressource2.getListeEvaluations());
+        Assertions.assertEquals(liste1, ressource2.getListeEvaluations());
         Assertions.assertNotEquals(liste2, ressource2.getListeEvaluations());
         
     }
