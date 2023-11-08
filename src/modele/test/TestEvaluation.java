@@ -2,7 +2,7 @@
  * TestEvaluation.java                                      31 Oct 2023
  * IUT Rodez, info1 2022-2023, pas de copyright ni "copyleft" 
  */
-package modele.tests;
+package modele.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;

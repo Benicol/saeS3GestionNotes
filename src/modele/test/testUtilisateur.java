@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * Classe de test de la classe Utilisateur.
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class testUtilisateur {
+public class TestUtilisateur {
     
     /* Tableau d'utilisateur utilisée pour tester les méthodes */
     private Utilisateur[] utilisateurs = new Utilisateur[5];
