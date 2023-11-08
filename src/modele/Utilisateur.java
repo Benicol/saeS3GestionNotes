@@ -1,29 +1,27 @@
-/**
- * Modele.java                                                                                 21/10/2015
- * No copyright.
+/*
+ * Modele.java                                                        21/10/2023
+ * IUT de Rodez, pas de droit d'auteur.
  */
 package modele;
 
 /**
- * Classe Utilisateur.
+ * Classe permettant de stocker et de manipuler les données liées à un 
+ * utilisateur de l'application :
+ *     - son pseudo
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class Utilisateur {
     
-    /**
-     * Pseudo de l'utilisateur.
-     */
+    /* Pseudo de l'utilisateur */
     private String pseudo;
 
-    /**
-     * Pseudo par defaut.
-     */
+    /* Pseudo par defaut */
     private static final String PSEUDO_PAR_DEFAUT = "Utilisateur";
 
     /**
-     * Constructeur de la classe Utilisateur avec un pseudo.
-     * Si le pseudo est null ou vide, le pseudo par defaut est attribue.
-     * @param pseudo le pseudo de l'utilisateur.
+     * Constructeur de la classe Utilisateur.
+     * Si le pseudo est null ou vide, le pseudonyme par defaut est attribué.
+     * @param pseudo le pseudonyme utilisé pour désigner de l'utilisateur.
      */
     public Utilisateur(String pseudo) {
         if (pseudo == null || pseudo == "") {
@@ -33,8 +31,10 @@ public class Utilisateur {
         }
     }
 
-    /**
+    /** 
      * Constructeur de la classe Utilisateur sans pseudo.
+     * Le pseudo qui sera utilisé pour désigner l'utilisateur est donc celui par
+     * défaut.
      */
     public Utilisateur() {
         this.pseudo = PSEUDO_PAR_DEFAUT;
@@ -49,7 +49,8 @@ public class Utilisateur {
     }
 
     /**
-     * Setter du pseudo. Si le pseudo est null ou vide, le changement n'est pas effectue.
+     * Setter du pseudo. 
+     * Si le pseudo est null ou vide, le changement ne s'effectue pas.
      * @param pseudo le pseudo de l'utilisateur.
      */
     public void setPseudo(String pseudo) {
@@ -57,5 +58,4 @@ public class Utilisateur {
             this.pseudo = pseudo;
         }
     }
-
 }
