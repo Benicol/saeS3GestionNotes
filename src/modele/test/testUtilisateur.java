@@ -1,6 +1,6 @@
-/**
- * testUtilisateur.java                                                                                21/10/2015
- * No copyright.
+/*
+ * TestUtilisateur.java                                               21/10/2023
+ * IUT de Rodez, pas de droit d'auteur
  */
 package modele.test;
 import modele.Utilisateur;
@@ -15,9 +15,13 @@ import static org.junit.Assert.*;
  */
 public class testUtilisateur {
     
+    /* Tableau d'utilisateur utilisée pour tester les méthodes */
     private Utilisateur[] utilisateurs = new Utilisateur[5];
+    
     /** 
-     * Crée un tableau de 4 Utilisateur avec les pseudos : ["", "testing", "jean michel", "null", "Utilisateur")
+     * Crée un tableau avant chaque test comportant
+     * 5 Utilisateur avec les pseudos : 
+     * ["", "testing", "jean michel", null, "Utilisateur"]
      */
     @BeforeEach
     public void setUp() {
