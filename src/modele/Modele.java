@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * Modele.java                                                                                 21/10/2015
- * No copyright.
+ * No copyright. 
  */
 public class Modele {
 	
@@ -145,5 +145,11 @@ public class Modele {
      */
     public static String getIp() {
         return OutilReseau.getIp(); 
+    }
+     /**
+      * méthode temporaire
+      */
+    public static void setParametrage(Parametrage parametre) {
+    	parametrage = parametre;
     }
 }
