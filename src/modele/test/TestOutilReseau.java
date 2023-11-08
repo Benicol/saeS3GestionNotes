@@ -17,11 +17,9 @@ class TestOutilReseau {
      */
 	@Test
 	void testGetIp() {
-	    
-	    
 		assertDoesNotThrow(() -> OutilReseau.getIp());
-		assertEquals("192.168.1.18",OutilReseau.getIp());
-		assertNotEquals("122.100.1.25",OutilReseau.getIp());
+		assertTrue(OutilReseau.getIp()
+		        .matches("^((25[0-5]|(2[0-4]|1\\d|[1-9]|)\\d)\\.?\\b){4}$"));
 	}
 
 }
