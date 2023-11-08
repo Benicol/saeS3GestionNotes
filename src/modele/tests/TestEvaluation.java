@@ -24,7 +24,7 @@ public class TestEvaluation {
     @BeforeEach
     public void setUp() {
         // Initialisation avant chaque test
-        evaluation = new Evaluation("Examen de math", 40, "15/11/2023");
+        evaluation = new Evaluation("Examen de math", 0.4, "15/11/2023");
     }
 
     /**
@@ -33,9 +33,9 @@ public class TestEvaluation {
     @Test
     public void testConstructeur() {
         assertEquals("Examen de math", evaluation.getNom());
-        assertEquals(40, evaluation.getPoids());
+        assertEquals(0.4, evaluation.getPoids());
         assertEquals("15/11/2023", evaluation.getDate());
-        // FIXME : la note est pourtant bien à null ! --> assertNull(evaluation.getNote());
+        assertNull(evaluation.getNote());
     }
 
     /**
@@ -46,8 +46,8 @@ public class TestEvaluation {
         evaluation.setNom("Devoir d'histoire");
         assertEquals("Devoir d'histoire", evaluation.getNom());
 
-        evaluation.setPoids(30);
-        assertEquals(30, evaluation.getPoids());
+        evaluation.setPoids(0.3);
+        assertEquals(0.3, evaluation.getPoids());
 
         evaluation.setDate("20/11/2023");
         assertEquals("20/11/2023", evaluation.getDate());
@@ -63,8 +63,8 @@ public class TestEvaluation {
     public void testSettersOutOfRange() {
         assertThrows(IllegalArgumentException.class, () -> evaluation.setNote(25.0));
         assertThrows(IllegalArgumentException.class, () -> evaluation.setNote(-5.0));
-        assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(110));
-        assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(-10));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(1.5));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(-1.0));
     }
 
     /**
