@@ -32,6 +32,12 @@ class TestCompetence {
     private static Evaluation[] tableauEvaluationTest;
     private static Ressource[] tableauRessourceTest;
     private static Sae[] tableauSaeTest;
+    private static Double moyenneCompetenceTest;
+    private static HashMap<Ressource, Double> listeRessourcesErreurTest;
+    private static HashMap<Sae, Double> listeSaesErreurTest;
+    private static Evaluation[] tableauEvaluationErreurTest;
+    private static Ressource[] tableauRessourceErreurTest;
+    private static Sae[] tableauSaeErreurTest;
 
     @BeforeAll
     public static void initialisation() {
@@ -43,14 +49,15 @@ class TestCompetence {
         listeRessourcesTest = new HashMap<Ressource, Double>();
         listeSaesTest = new HashMap<Sae, Double>();
         
-        tableauEvaluationTest[0] = new Evaluation("E0", 25, "01/01/2023");
+        tableauEvaluationTest[0] = new Evaluation("E0", 0.25, "01/01/2023");
         tableauEvaluationTest[0].setNote(2.5);
-        tableauEvaluationTest[1] = new Evaluation("E1", 25, "01/02/2023");
+        tableauEvaluationTest[1] = new Evaluation("E1", 0.25, "01/02/2023");
         tableauEvaluationTest[1].setNote(5.0);
-        tableauEvaluationTest[2] = new Evaluation("E2", 25, "01/03/2023");
+        tableauEvaluationTest[2] = new Evaluation("E2", 0.25, "01/03/2023");
         tableauEvaluationTest[2].setNote(10.0);
-        tableauEvaluationTest[3] = new Evaluation("E3", 25, "01/04/2023");
+        tableauEvaluationTest[3] = new Evaluation("E3", 0.25, "01/04/2023");
         tableauEvaluationTest[3].setNote(20.0);
+        //Moyenne des évaluations : 9.375
         
         tableauRessourceTest[0] = new Ressource(identifiantTest, libelleTest);
         tableauRessourceTest[1] = new Ressource(identifiantTest, libelleTest);
@@ -70,9 +77,35 @@ class TestCompetence {
         for (Ressource ressourceTest : tableauRessourceTest) {
             listeRessourcesTest.put(ressourceTest, 0.2);
         }
+        //Moyenne des ressources : 5.625
         
         for (Sae saeTest : tableauSaeTest) {
             listeSaesTest.put(saeTest, 0.2);
+        }
+        //Moyenne des saes : 6.45
+        
+        moyenneCompetenceTest = 12.075;
+        
+        tableauEvaluationErreurTest[0] = new Evaluation("E0", 0.25, "01/01/2023");
+        tableauEvaluationErreurTest[1] = new Evaluation("E1", 0.25, "01/02/2023");
+        
+        tableauRessourceErreurTest[0] = new Ressource(identifiantTest, libelleTest);
+        tableauRessourceErreurTest[1] = new Ressource(identifiantTest, libelleTest);
+        
+        for (Ressource ressourceTest : tableauRessourceErreurTest) {
+            for (Evaluation evaluationTest : tableauEvaluationErreurTest) {
+                ressourceTest.ajouterEvaluation(evaluationTest);
+            }
+        }
+        
+        tableauSaeErreurTest[0] = new Sae(identifiantTest, libelleTest);
+        
+        for (Ressource ressourceTest : tableauRessourceTest) {
+            listeRessourcesErreurTest.put(ressourceTest, 0.2);
+        }
+        
+        for (Sae saeTest : tableauSaeTest) {
+            listeSaesErreurTest.put(saeTest, 0.2);
         }
     }
 
@@ -128,14 +161,30 @@ class TestCompetence {
     
     @Test
     public void testCalculerMoyenne() {
-        fail("Not yet implemented");
+        assertEquals(moyenneCompetenceTest, competenceTest.calculerMoyenne());
+        
+        Competence competenceErreurTest = new Competence(identifiantTest, libelleTest);
+        assertNull(competenceErreurTest.calculerMoyenne());
     }
     
     @Test
     public void testIsCalculable() {
         assertTrue(competenceTest.isCalculable());
         
-        //TODO changer un truc pour provoquer erreur
+        Competence competenceErreurTest = new Competence(identifiantTest, libelleTest);
+        assertFalse(competenceErreurTest.isCalculable());
+        
+        competenceErreurTest.setListeRessources(listeRessourcesErreurTest);
+        assertFalse(competenceErreurTest.isCalculable());
+        
+        competenceErreurTest.setListeSaes(listeSaesErreurTest);
+        assertFalse(competenceErreurTest.isCalculable());
+        
+        competenceErreurTest.setListeRessources(listeRessourcesTest);
+        assertFalse(competenceErreurTest.isCalculable());
+        
+        competenceErreurTest.setListeSaes(listeSaesTest);
+        assertTrue(competenceErreurTest.isCalculable());
     }
 
 }
