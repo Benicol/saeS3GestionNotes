@@ -20,6 +20,7 @@ public class Modele {
     private static Utilisateur utilisateur;
     
     static {
+        System.out.println("hi!");
         parametrage = null;
         utilisateur = new Utilisateur();
         charger();
@@ -138,7 +139,7 @@ public class Modele {
         } else {
             throw new IllegalArgumentException("Le fichier n'est pas valide");
         }
-
+        sauvegarder();
     }
     /** verifie si les donnees founis dans le csv sont correcte ou non
      * @param donnees sous formes de tableau de tableau (utiliser la methode formaterToDonnees de OutilCSV)
