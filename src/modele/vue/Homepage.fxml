@@ -414,7 +414,7 @@
                               </Text>
                            </children>
                         </HBox>
-                        <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
+                        <HBox alignment="TOP_RIGHT" prefHeight="40.0" HBox.hgrow="ALWAYS">
                            <children>
                               <Text fill="#22ffd7" strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
                                  <font>
@@ -437,29 +437,358 @@
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                            </padding>
                            <children>
-                              <VBox>
+                              <VBox spacing="4.0" HBox.hgrow="ALWAYS">
                                  <children>
-                                    <HBox>
+                                    <HBox spacing="8.0" VBox.vgrow="ALWAYS">
                                        <children>
-                                          <Pane prefWidth="50.0" styleClass="ponderation-label" stylesheets="@style.css">
+                                          <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
                                              <children>
-                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="20%" textOrigin="CENTER" translateY="16.0">
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="100 %" textOrigin="CENTER">
                                                    <font>
-                                                      <Font name="Verdana Bold" size="16.0" />
+                                                      <Font name="System Bold" size="14.0" />
                                                    </font>
                                                 </Text>
                                              </children>
                                              <padding>
                                                 <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                              </padding>
-                                          </Pane>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE" />
+                                          </HBox>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font></Text>
                                        </children>
                                     </HBox>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet">
+                                       <font>
+                                          <Font name="Verdana Bold" size="14.0" />
+                                       </font></Text>
                                  </children>
                               </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" prefHeight="40.0" styleClass="secondary-button" text="VOIR" textFill="#9555e8">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
+                        </HBox>
+                        <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@style.css">
+                           <children>
+                              <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
+                                             <children>
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="100 %" textOrigin="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </HBox>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet">
+                                       <font>
+                                          <Font name="Verdana Bold" size="14.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" prefHeight="40.0" styleClass="secondary-button" text="VOIR" textFill="#9555e8">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@style.css">
+                           <children>
+                              <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
+                                             <children>
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="100 %" textOrigin="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </HBox>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet">
+                                       <font>
+                                          <Font name="Verdana Bold" size="14.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" prefHeight="40.0" styleClass="secondary-button" text="VOIR" textFill="#9555e8">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@style.css">
+                           <children>
+                              <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
+                                             <children>
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="100 %" textOrigin="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </HBox>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet">
+                                       <font>
+                                          <Font name="Verdana Bold" size="14.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" prefHeight="40.0" styleClass="secondary-button" text="VOIR" textFill="#9555e8">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@style.css">
+                           <children>
+                              <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
+                                             <children>
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="100 %" textOrigin="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </HBox>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet">
+                                       <font>
+                                          <Font name="Verdana Bold" size="14.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" prefHeight="40.0" styleClass="secondary-button" text="VOIR" textFill="#9555e8">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                        <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@style.css">
+                           <children>
+                              <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+                                       <children>
+                                          <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
+                                             <children>
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="100 %" textOrigin="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="14.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </HBox>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet">
+                                       <font>
+                                          <Font name="Verdana Bold" size="14.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" spacing="16.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                             <font>
+                                                <Font name="Verdana Bold" size="24.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" prefHeight="40.0" styleClass="secondary-button" text="VOIR" textFill="#9555e8">
+                                       <font>
+                                          <Font name="Verdana Bold" size="12.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
                         </HBox>
                      </children>
                   </VBox>
