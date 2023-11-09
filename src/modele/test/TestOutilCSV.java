@@ -35,7 +35,7 @@ class TestOutilCSV {
         }
         donneesIncorrectes = null;
         
-        donneesCSVCorrectes = "test1;test2;test3;\n;test4;test5;test6;\n;test7;test8;test9;\n;";
+        donneesCSVCorrectes = "test1;test2;test3\ntest4;test5;test6\ntest7;test8;test9";
         donneesCSVIncorrectes1 = null;
         donneesCSVIncorrectes2 = "";
     }
@@ -44,7 +44,7 @@ class TestOutilCSV {
     public void testFormaterToCSV() {
         assertDoesNotThrow(() -> OutilCSV.formaterToCSV(donneesCorrectes));
         try {
-            assertEquals(OutilCSV.formaterToCSV(donneesCorrectes), donneesCSVCorrectes);
+            assertEquals(donneesCSVCorrectes, OutilCSV.formaterToCSV(donneesCorrectes));
         } catch (IllegalArgumentException e) {
             System.out.println("erreur de donnees");
         }
