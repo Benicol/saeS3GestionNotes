@@ -94,7 +94,7 @@ public class TestModele {
     @Test
     public void testVerifierFormatDonnees() {
         //Préparaion
-        String fichier = OutilFichier.lire(".\\src\\modele\\test\\testSae.csv");
+        String fichier = OutilFichier.lire(".\\src\\modele\\test\\testModeleParametrage.csv");
         System.out.println(fichier);
         String[][] donneesTests = OutilCSV.formaterToDonnees(fichier);
         String[][] donneesInvalides = donneesTests;
