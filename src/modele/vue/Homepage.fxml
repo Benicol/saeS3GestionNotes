@@ -23,6 +23,7 @@
                         <Font name="Verdana Bold" size="24.0" />
                      </font>
                   </Text>
+                  <Line endX="38.0" rotate="90.0" stroke="WHITE" translateY="16.0" HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="127.0" styleClass="primary-button" stylesheets="@style.css" text="IMPORTER" textFill="WHITE">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
@@ -33,7 +34,8 @@
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="127.0" styleClass="secondary-button" stylesheets="@style.css" text="REINITIALISER" textFill="WHITE">
+                  <Line endX="38.0" rotate="90.0" stroke="WHITE" translateY="16.0" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="127.0" style="-fx-border-style: ;" styleClass="secondary-button" stylesheets="@style.css" text="REINITIALISER" textFill="#9555e8">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
@@ -44,11 +46,11 @@
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding></HBox>
-      <HBox prefHeight="100.0" prefWidth="200.0">
+      <HBox spacing="16.0">
          <children>
             <VBox id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1010.0" prefWidth="360.0" spacing="16.0" stylesheets="@style.css">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="360.0" stylesheets="@style.css" text="AFFICHER MES MOYENNES" textFill="WHITE">
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="360.0" styleClass="primary-button" stylesheets="@style.css" text="AFFICHER MES MOYENNES" textFill="WHITE">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font></Button>
@@ -63,6 +65,102 @@
                                           <Font name="System Bold" size="24.0" />
                                        </font>
                                     </Text>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </padding>
+                        </HBox>
+                        <Line endX="359.0" stroke="#bfbfbf" />
+                        <HBox>
+                           <children>
+                              <VBox spacing="8.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Compétences">
+                                       <font>
+                                          <Font name="System Bold" size="24.0" />
+                                       </font>
+                                    </Text>
+                                    <VBox spacing="4.0">
+                                       <children>
+                                          <VBox spacing="4.0">
+                                             <children>
+                                                <Text fill="#9555e8" strokeType="OUTSIDE" strokeWidth="0.0" text="R1.01 - Qualité de développement">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="12.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox spacing="4.0">
+                                             <children>
+                                                <Text fill="#9555e8" strokeType="OUTSIDE" strokeWidth="0.0" text="R1.01 - Qualité de développement">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="12.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox spacing="4.0">
+                                             <children>
+                                                <Text fill="#9555e8" strokeType="OUTSIDE" strokeWidth="0.0" text="R1.01 - Qualité de développement">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="12.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox spacing="4.0">
+                                             <children>
+                                                <Text fill="#9555e8" strokeType="OUTSIDE" strokeWidth="0.0" text="R1.01 - Qualité de développement">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="12.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox spacing="4.0">
+                                             <children>
+                                                <Text fill="#9555e8" strokeType="OUTSIDE" strokeWidth="0.0" text="R1.01 - Qualité de développement">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="12.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox spacing="4.0">
+                                             <children>
+                                                <Text fill="#9555e8" strokeType="OUTSIDE" strokeWidth="0.0" text="R1.01 - Qualité de développement">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="12.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </VBox>
+                                       </children>
+                                    </VBox>
                                  </children>
                                  <padding>
                                     <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
@@ -303,6 +401,70 @@
                         </HBox>
                      </children></VBox>
                </children></VBox>
+            <VBox spacing="16.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox>
+                     <children>
+                        <HBox HBox.hgrow="ALWAYS">
+                           <children>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="U2.01 - Réaliser">
+                                 <font>
+                                    <Font name="Verdana Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
+                           <children>
+                              <Text fill="#22ffd7" strokeType="OUTSIDE" strokeWidth="0.0" text="17.23">
+                                 <font>
+                                    <Font name="Verdana Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                                 <font>
+                                    <Font name="Verdana Bold" size="24.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <VBox spacing="16.0">
+                     <children>
+                        <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@style.css" VBox.vgrow="ALWAYS">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <children>
+                              <VBox>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Pane prefWidth="50.0" styleClass="ponderation-label" stylesheets="@style.css">
+                                             <children>
+                                                <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="20%" textOrigin="CENTER" translateY="16.0">
+                                                   <font>
+                                                      <Font name="Verdana Bold" size="16.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </padding>
+                                          </Pane>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RESSOURCE" />
+                                       </children>
+                                    </HBox>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="R2.01 - Développement orienté objet" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
          </children>
          <padding>
             <Insets bottom="16.0" left="16.0" right="16.0" />

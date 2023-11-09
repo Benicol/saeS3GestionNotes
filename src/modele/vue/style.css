@@ -4,6 +4,8 @@
 
 .secondary-button {
 	-fx-background-color : transparent;
+	-fx-border-style : solid outside;
+	-fx-border-color: #9555E8;
 	-fx-border-radius : 4px;
 }
 
@@ -15,4 +17,14 @@
 #navigation {
 	-fx-background-color : #E8E3E8;
 	-fx-background-radius : 16px;
+}
+
+.grade-info-band {
+	-fx-background-color : #E8E3E8;
+	-fx-background-radius : 16px;
+}
+
+.ponderation-label {
+	-fx-background-color : black;
+	-fx-background-radius : 4px;
 }
