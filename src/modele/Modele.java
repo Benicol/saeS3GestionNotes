@@ -17,7 +17,7 @@ public class Modele {
      */
     public static void reset() {
         parametrage = null;
-    }
+    } 
     public void importer() {
         //TODO
     }
