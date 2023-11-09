@@ -9,15 +9,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modele.Evaluation;
-import modele.OutilCSV;
 import modele.Ressource;
 
-/** TODO comment class responsibility (SRP)
+/** Classe permettant de tester la classe modele.Ressource()
  * @author ugosc
  *
  */
@@ -38,8 +36,6 @@ class TestRessource {
     private static Ressource ressource3;
     private static Ressource ressource4;
     private static Ressource ressource5;
-    private static Ressource ressource6;
-    private static Ressource ressource7;
     
     @BeforeEach
     public void initialisation() {
@@ -47,9 +43,8 @@ class TestRessource {
         ressource2 = new Ressource("R1.02", "base de données ");
         ressource3 = new Ressource("R1.03", "proba");
         ressource4 = new Ressource("R1.04", "PPP");
-        ressource5 = new Ressource("R1.04", "com");
-        ressource6 = new Ressource("R1.06", "crypto");
-        ressource7 = new Ressource("R1.06", "crypto");
+        new Ressource("R1.04", "com");
+        ressource5 = new Ressource("R1.06", "crypto");
         
         eval1 = new Evaluation("QCM",0.01,"05/04/23");
         eval2 = new Evaluation("controle",0.4,"08/07/23");
@@ -73,12 +68,8 @@ class TestRessource {
         ressource2.ajouterEvaluation(eval2);
         ressource3.ajouterEvaluation(new Evaluation("controle",0.1,"02/04/23"));
         ressource4.ajouterEvaluation(new Evaluation("controle",0.7,"15/06/23"));
-                                        
-        ressource6.ajouterEvaluation(new Evaluation("controle",0.2,"15/06/23"));
-        ressource6.ajouterEvaluation(new Evaluation("controle",0.45,"15/06/23"));
-        ressource6.ajouterEvaluation(new Evaluation("controle",0.35,"15/06/23"));
         
-        ressource7.ajouterEvaluation(new Evaluation("controle",1.0,"02/04/23"));
+        ressource5.ajouterEvaluation(new Evaluation("controle",1.0,"02/04/23"));
         
     }
     
@@ -91,7 +82,7 @@ class TestRessource {
     public void testAjouterEvaluation() {
         Assertions.assertTrue(ressource1.ajouterEvaluation(new Evaluation("controle",0.5,"05/04/23")));
         Assertions.assertTrue(ressource2.ajouterEvaluation(new Evaluation("controle",0.5,"05/05/23")));
-        Assertions.assertFalse(ressource7.ajouterEvaluation(new Evaluation("controle",0.3,"05/08/23")));
+        Assertions.assertFalse(ressource5.ajouterEvaluation(new Evaluation("controle",0.3,"05/08/23")));
         Assertions.assertFalse(ressource4.ajouterEvaluation(new Evaluation("controle",0.35,"01/08/23")));
     }
     
@@ -149,8 +140,8 @@ class TestRessource {
     
     @Test
     public void testCalculerMoyenne() {
-        ressource7.modifierEvaluation(0, 3, "12.5");
-        Assertions.assertEquals(12.5, ressource7.calculerMoyenne());
+        ressource5.modifierEvaluation(0, 3, "12.5");
+        Assertions.assertEquals(12.5, ressource5.calculerMoyenne());
         Assertions.assertEquals(0.0, ressource1.calculerMoyenne());
         Assertions.assertNotEquals(5.0, ressource2.calculerMoyenne());
         Assertions.assertNotEquals(0.5, ressource4.calculerMoyenne());

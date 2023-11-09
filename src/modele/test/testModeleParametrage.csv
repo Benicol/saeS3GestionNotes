@@ -36,7 +36,7 @@ Ressource;R2.08;Outils numériques pour les statistiques descriptives;12
 Ressource;R2.10;Introduction à la gestion des systèmes d'information;12
 Ressource;R2.12;Anglais;6
 Portfolio;P2.01;Portfolio;2
-SAE;S2.03;Exploitation d'une base de données;38
+SAE;S2.04;Exploitation d'une base de données;38
 ;;;
 Compétence;U2.5; Conduire un projet;
 Type évaluation;Identifiant;Libellé;Poids
@@ -47,7 +47,7 @@ Ressource;R2.10;Introduction à la gestion des systèmes d'information;30
 Ressource;R2.12;Anglais;6
 Ressource;R2.13;Communication technique;9
 Portfolio;P2.01;Portfolio;2
-SAE;S2.03;Gestion d'un projet;38
+SAE;S2.05;Gestion d'un projet;38
 ;;;
 Compétence;U2.6;Collaborer au sein d’une équipe informatique;
 Type évaluation;Identifiant;Libellé;Poids
@@ -57,7 +57,7 @@ Ressource;R2.12;Anglais;17
 Ressource;R2.13;Communication technique;11
 Ressource;R2.14;PPP;11
 Portfolio;P2.01;Portfolio;2
-SAE;S2.03;Organisation d'un travail d'équipe;38
+SAE;S2.06;Organisation d'un travail d'équipe;38
 ;;;
 Ressource;R2.01;Développement orienté objets;
 Type évaluation;Date;Poids;

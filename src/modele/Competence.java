@@ -1,5 +1,6 @@
 package modele;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /** Classe objet permettant de représenter une compétence à partir
@@ -7,7 +8,8 @@ import java.util.HashMap;
  * et de la liste de ses saes.
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Competence implements Enseignement{
+public class Competence implements Enseignement, Serializable{
+    private static final long serialVersionUID = 1L;
     private HashMap<Ressource, Double> listeRessources;
     private HashMap<Sae, Double> listeSaes;
     private String libelle;

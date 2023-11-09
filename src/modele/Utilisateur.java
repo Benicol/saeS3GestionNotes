@@ -4,14 +4,18 @@
  */
 package modele;
 
+import java.io.Serializable;
+
 /**
  * Classe permettant de stocker et de manipuler les données liées à un 
  * utilisateur de l'application :
  *     - son pseudo
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Utilisateur {
+public class Utilisateur implements Serializable{
     
+    private static final long serialVersionUID = 1L;
+
     /* Pseudo de l'utilisateur */
     private String pseudo;
 

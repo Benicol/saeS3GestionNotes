@@ -7,6 +7,7 @@ package modele;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -63,5 +64,20 @@ public class OutilFichier {
                                + "fichier : " + e.getMessage());
             return false; // Une erreur s'est produite lors de l'écriture du fichier
         }
+    }
+
+    /**
+     * Vérifie que le fichier fournis existe et qu'il est de l'extension fournis.
+     * @param chemin le chemin d'accès au fichier.
+     * @param extension l'extension du fichier.
+     * @return true si le fichier existe et à la bonne extension, false sinon
+     */
+    public static boolean verifierFichier(String chemin, String extension) {
+        boolean res = true;
+        File fichier = new File(chemin);
+        if (!fichier.exists() || !chemin.endsWith(extension)) {
+            return false;
+        }
+        return res;
     }
 }

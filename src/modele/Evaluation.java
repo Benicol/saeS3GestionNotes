@@ -4,6 +4,8 @@
  */
 package modele;
 
+import java.io.Serializable;
+
 /**
  * Classe Evaluation, permet de stocker les informations propres à une évaluation :
  *     - le nom d'une évaluation
@@ -13,7 +15,8 @@ package modele;
  *     
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Evaluation {
+public class Evaluation implements Serializable{
+    private static final long serialVersionUID = 1L;
     
     /* Déclaration des variables */
     private String nom;
@@ -100,12 +103,7 @@ public class Evaluation {
      * @param date la nouvelle date choisie pour l'évaluation
      */
     public void setDate(String date) {
-        if (isDateValide(date)) {
-            this.date = date; 
-        } else {
-            throw new IllegalArgumentException("La date choisie pour l'évaluation "
-                    + "est incorrecte");
-        }
+        this.date = date; 
     }
     
     /**
@@ -137,15 +135,6 @@ public class Evaluation {
      */
     private static boolean isPoidsValide(Double poids) {
         return poids > 0 && poids <= 1;
-    }
-    
-    /**
-     * Méthode permettant de vérifier la date d'une évaluation.
-     * @param date la date à vérifier.
-     * @return false si la date n'est pas correct (""), true sinon.
-     */
-    private static boolean isDateValide(String date) {
-        return !date.equals("");
     }
     
     /**

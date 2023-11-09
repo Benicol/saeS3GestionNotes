@@ -4,12 +4,15 @@
  */
 package modele;
 
+import java.io.Serializable;
+
 /** Classe objet permettant de représenter une Sae
  * à partir d'un identifiant et d'un libelle,
  * et permettant d'y associer une note.
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Sae implements Enseignement{
+public class Sae implements Enseignement, Serializable{
+    private static final long serialVersionUID = 1L;
     private String libelle;
     private String identifiant;
     private Double note;

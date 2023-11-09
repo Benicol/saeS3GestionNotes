@@ -1,6 +1,13 @@
 package modele;
 
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 /**
  * Modele.java                                                                                 21/10/2015
@@ -12,14 +19,126 @@ public class Modele {
     private static Parametrage parametrage;
     private static Utilisateur utilisateur;
     
+    static {
+        parametrage = null;
+        utilisateur = new Utilisateur();
+        charger();
+    }
     /**
-     * Méthode qui mets paramétrage à null 
+     * Reset paramétrage (le met à null)
      */
     public static void reset() {
         parametrage = null;
     } 
-    public void importer() {
-        //TODO
+    
+    /**
+     * Sauvegarde à l'aide de la classe Serializable
+     * L'utilisateur puis le parametrage
+     */
+    public static void sauvegarder() {
+        try {
+            ObjectOutputStream fluxEcriture = new ObjectOutputStream(new FileOutputStream("donnees.bin"));
+            fluxEcriture.writeObject(utilisateur);
+            fluxEcriture.writeObject(parametrage);
+            fluxEcriture.close();
+        } catch (IOException e) {
+            System.err.println("Erreur lors de la sauvegarde des donnees (IOExeption)");
+        }
+    }
+    /**
+     * Charge les données sauvegardées
+     * 
+     */
+    public static void charger() {
+        try {
+            if (OutilFichier.verifierFichier("donnees.bin", ".bin")) {
+                ObjectInputStream fluxLecture = new ObjectInputStream(new FileInputStream("donnees.bin"));
+                utilisateur = (Utilisateur) fluxLecture.readObject();
+                parametrage = (Parametrage) fluxLecture.readObject();
+                fluxLecture.close();
+            }
+        } catch (IOException e) {
+            System.err.println("Erreur lors du chargement des donnees (IOExeption)");
+        } catch (ClassNotFoundException e) {
+            System.err.println("Erreur lors du chargement des donnees (ClassNotFoundException)");
+        }
+    }
+    /**
+     * Importe les informations du csv mis en parametre
+     * @param chemin fichier CSV fournis
+     */
+    public static void importer(String chemin) {
+        String donneesCSV = null;
+        String[][] donnees = null;
+        if (isParametrageInitialise()) {
+            throw new IllegalArgumentException("L'application contient déjà des données!");
+        }
+        if (OutilFichier.verifierFichier(chemin, ".csv")) {
+            donneesCSV = OutilFichier.lire(chemin);
+            donnees = OutilCSV.formaterToDonnees(donneesCSV);
+        } else {
+            throw new IllegalArgumentException("Le fichier n'existe pas");
+        }
+        if (donnees != null && verifierFormatDonnees(donnees)) {
+            String semestre;
+            String parcours;
+            HashMap<String, String> listeSae = new HashMap<>();
+            HashMap<String, String> listeRessource = new HashMap<>();
+            ArrayList<String[][]> listeCompetence = new ArrayList<>();
+            HashMap<String,ArrayList<Evaluation>> ressource = new HashMap<>();
+            semestre = donnees[1][1];
+            parcours = donnees[2][1];
+            for (int i = 3; i < donnees.length; i++) {
+                if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
+                    ArrayList<String[]> competence = new ArrayList<>();;
+                    String[] infoLigne = new String[2];
+                    infoLigne[0] = donnees[i][1];
+                    infoLigne[1] = donnees[i][2];
+                    System.out.println(infoLigne[0] + "|" + infoLigne[1]);
+                    competence.add(infoLigne.clone());
+                    int poids = 0;
+                    i++;
+                    while (poids != 100) {
+                        i++;
+                        infoLigne[0] = donnees[i][1];
+                        infoLigne[1] = donnees[i][3];
+                        if (donnees[i][0].equals("Ressource") && !listeRessource.containsKey(infoLigne[0])) {
+                            listeRessource.put(infoLigne[0], donnees[i][2]);
+                        } else if (!donnees[i][0].equals("Ressource") && !listeSae.containsKey(infoLigne[0])) {
+                            listeSae.put(infoLigne[0], donnees[i][2]);
+                        }
+                        competence.add(infoLigne.clone());
+                        poids += Integer.parseInt(donnees[i][3]);
+                    }
+                    listeCompetence.add(competence.toArray(new String[0][0]));
+                } else if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource")) {
+                    ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
+                    String[] infoEvaluation = new String[3];
+                    String key = donnees[i][1];
+                    int poids = 0;
+                    i++;
+                    while (poids != 100) {
+                        i++;
+                        infoEvaluation[0] = donnees[i][0];
+                        infoEvaluation[1] = donnees[i][1];
+                        infoEvaluation[2] = donnees[i][2];
+                        
+                        poids += Integer.parseInt(donnees[i][2]);
+                        listeEvaluation.add(new Evaluation(infoEvaluation[0],Double.parseDouble(infoEvaluation[2]) / 100, infoEvaluation[1]));
+                    }
+                    ressource.put(key, listeEvaluation);
+                }
+            }
+            parametrage = new Parametrage(semestre, parcours, listeCompetence.toArray(new String[0][0][0]) , listeSae, listeRessource);
+            for (String key : ressource.keySet()) {
+                for (Evaluation evaluation : ressource.get(key)) {
+                    parametrage.getListeRessources().get(key).ajouterEvaluation(evaluation);
+                }
+            }
+        } else {
+            throw new IllegalArgumentException("Le fichier n'est pas valide");
+        }
+
     }
     /** verifie si les donnees founis dans le csv sont correcte ou non
      * @param donnees sous formes de tableau de tableau (utiliser la methode formaterToDonnees de OutilCSV)
@@ -90,10 +209,6 @@ public class Modele {
         return valide;
     }
 
-
-    
-
-
     private static boolean isIdentifiant(String str) {
         boolean valide;
         if (str == null || str.length() == 0) {
@@ -112,6 +227,14 @@ public class Modele {
      */
     public static HashMap<String, Ressource> getRessources() {
         return parametrage.getListeRessources();
+    }
+    
+    /**
+     * Getter de paramétrage
+     * @return paramétrage
+     */
+    public static Parametrage getParametrage() {
+        return parametrage;
     }
     
     /**
@@ -137,9 +260,6 @@ public class Modele {
      * @return utilisateur 
      */
     public static Utilisateur getUtilisateur() {
-    	if(utilisateur == null) {
-    		utilisateur = new Utilisateur();
-    	}
         return utilisateur;
     }
     
@@ -151,9 +271,18 @@ public class Modele {
         return OutilReseau.getIp(); 
     }
      /**
-      * méthode temporaire
+      * setter du parametrage (A UTILISE UNIQUEMENT POUR LES TESTS)
+     * @param parametre le parametrage a mettre
       */
     public static void setParametrage(Parametrage parametre) {
     	parametrage = parametre;
+    }
+
+    /**
+     * Test si le paramétrage est initialisé
+     * @return true si le parametrage n'est aps null, false sinon
+     */
+    public static boolean isParametrageInitialise() {
+        return parametrage != null;
     }
 }
