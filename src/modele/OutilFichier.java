@@ -67,17 +67,18 @@ public class OutilFichier {
     }
 
     /**
-     * Vérifie que le fichier fournis existe et qu'il est de l'extension fournis.
+     * Vérifie que le fichier fourni existe et qu'il correspond à 
+     * l'extension fournie.
      * @param chemin le chemin d'accès au fichier.
      * @param extension l'extension du fichier.
-     * @return true si le fichier existe et à la bonne extension, false sinon
+     * @return true si le fichier existe et a la bonne extension, false sinon
      */
     public static boolean verifierFichier(String chemin, String extension) {
-        boolean res = true;
+        boolean resultat = true;
         File fichier = new File(chemin);
         if (!fichier.exists() || !chemin.endsWith(extension)) {
             return false;
         }
-        return res;
+        return resultat;
     }
 }

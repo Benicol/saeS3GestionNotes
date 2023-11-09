@@ -133,46 +133,56 @@ public class TestModele {
      */
     @Test
     public void testVerifierFormatDonnees() {
-        //Préparaion
+        //Préparation
         String fichier = OutilFichier.lire(".\\src\\modele\\test\\testModeleParametrage.csv");
         String[][] donneesTests = OutilCSV.formaterToDonnees(fichier);
         String[][] donneesInvalides = donneesTests;
-        //tests
+        
+        // test conditions normales
         assertTrue(Modele.verifierFormatDonnees(donneesTests)); 
-        //test où il n'y a pas de Semestre
+        
+        // tests sans semestre
         donneesInvalides[1][1] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où il n'y a pas de parcours
+        
+        // tests sans parcours
         donneesInvalides[2][0] = "un truc là";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où il n'y a pas une ligne vide entre 2 tableaux
+        
+        // tests sans ligne vide entre 2 tableaux
         donneesInvalides[3] = new String[1];
         donneesInvalides[3][0] = "COUCOU C'EST MOI";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où il y a un tableau qui commence pas par ressource ou compétence
+        
+        // tests avec un tableau qui ne commence pas par ressource ou compétence
         donneesInvalides[13][0] = "SAE";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où la pondération s'aditionne pas à 100
+        
+        // tests où la pondération s'aditionne pas à 100
         donneesInvalides[17][0] = "196";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test avec un identifiant invalide
+        
+        // tests avec un identifiant invalide
         donneesInvalides[24][1] = "R2.4";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test avec le titre d'une ressource vide
+        
+        // tests avec le titre d'une ressource vide
         donneesInvalides[31][2] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test avec un element d'une competence qui n'as pas de nom
+        
+        // tests avec un élément d'une competence qui n'a pas de nom
         donneesInvalides[27][0] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où un identifiant est null
+        
+        // tests avec un identifiant null
         donneesInvalides[36][1] = null;
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
