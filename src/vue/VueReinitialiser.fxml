@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="193.0" prefWidth="482.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="193.0" prefWidth="482.0" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.VueReinitialiserControleur">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="content" text="Vous vous apprêtez à supprimer l'intégralité de vos données (notes, modalités, paramètres)." wrappingWidth="430.0">
          <VBox.margin>
@@ -23,11 +23,11 @@
       </Text>
       <HBox alignment="CENTER" prefHeight="64.0" prefWidth="482.0">
          <children>
-            <Button mnemonicParsing="false" text="Annuler">
+            <Button mnemonicParsing="false" onAction="#annulerPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" text="Annuler">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@ressources/icone_annuler.png" />
+                        <Image url="@../vue/ressources/icone_annuler.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -39,10 +39,10 @@
                   <String fx:value="button" />
                </styleClass>
             </Button>
-            <Button mnemonicParsing="false" text="Supprimer toutes les données">
+            <Button mnemonicParsing="false" onAction="#supprimerToutesLesDonneesPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" text="Supprimer toutes les données">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                  	<Image url="@ressources/icone_supprimer.png" />
+                  	<Image url="@../vue/ressources/icone_supprimer.png" />
                   </ImageView>
                </graphic>
                <HBox.margin>
