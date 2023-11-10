@@ -29,8 +29,8 @@ public class Competence implements Enseignement, Serializable{
         if (libelle == null || libelle.equals("") || identifiant == null || identifiant.equals("")) {
             throw new IllegalArgumentException();
         }
-        this.libelle = libelle;
-        this.identifiant = identifiant;
+        this.libelle = libelle.trim();
+        this.identifiant = identifiant.trim();
         this.listeRessources = new HashMap<Ressource, Double>();
         this.listeSaes = new HashMap<Sae, Double>();
     }
@@ -55,7 +55,7 @@ public class Competence implements Enseignement, Serializable{
      * @return intitule : correspond à l'identifiant + le libellé
      */
     public String creerIntitule() {
-        String intitule = this.identifiant + " " + this.libelle;
+        String intitule = this.identifiant + " : " + this.libelle;
         return intitule;
     }
     

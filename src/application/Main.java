@@ -21,8 +21,9 @@ public class Main extends Application {
         /*
          * création d'un chargeur de code FXML et chargement de la vue de l'application
          */
+        EchangeurDeVue.setPrimaryStage(primaryStage);
         FXMLLoader chargeurFXML = new FXMLLoader();
-        chargeurFXML.setLocation(getClass().getResource("vueTemporaire.fxml"));
+        chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("h")));
         Parent racine;
         try {
             racine = chargeurFXML.load();
@@ -30,12 +31,10 @@ public class Main extends Application {
             scene.getRoot().requestFocus();
 
             // on définit les caractéristiques de la fenêtre et lui associe la scène
-            primaryStage.setTitle("temporaire");
-            primaryStage.setHeight(700);
-            primaryStage.setWidth(600);
+            primaryStage.setTitle("Gestionnaire de note");
             EchangeurDeVue.setSceneCourante(scene);
             primaryStage.setScene(scene);
-            EchangeurDeVue.setPrimaryStage(primaryStage);
+            
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

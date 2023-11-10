@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="TOP_RIGHT" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="TOP_RIGHT" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" styleClass="primary-button" stylesheets="@../modele/vue/style.css" text="AJOUTER" textFill="WHITE">
          <font>
