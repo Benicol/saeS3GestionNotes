@@ -22,7 +22,7 @@ import modele.OutilFichier;
 public class TestOutilFichier {
 
     /* Déclaration des variables */
-    private String cheminValide = "D:\\fichier.txt";
+    private String cheminValide = "..\\fichier.txt";
     private String cheminInvalide = "chemin/invalide/vers/le/fichier.txt";
     private File fichier;
     

@@ -5,6 +5,7 @@
 
 package modele;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -15,8 +16,10 @@ import java.util.ArrayList;
  *      - en modifier
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Ressource implements Enseignement {
+public class Ressource implements Enseignement, Serializable {
     
+    private static final long serialVersionUID = 1L;
+
     /* Liste des évaluations associées à la ressource */
     private ArrayList<Evaluation> listeEvaluations;
     

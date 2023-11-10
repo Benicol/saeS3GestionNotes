@@ -4,13 +4,12 @@
  */
 package modele.test;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
-
-import java.util.HashMap;
-
 import org.junit.Before;
+import org.junit.Test;
 
+import static org.junit.Assert.*;
+import java.util.HashMap;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import modele.OutilFichier;
 import modele.Parametrage;
 import modele.Utilisateur;
@@ -39,29 +38,29 @@ public class TestModele {
         String parcours = "A";
         String[][][] donneesCompetences = {{
                                             {"C2.1","Compétence de test 1"},
-                                            {"R2.01", "60"}, 
-                                            {"S2.01", "38"}, 
-                                            {"P2.01", "2"}
+                                            {"R2.01", "0.6"}, 
+                                            {"S2.01", "0.38"}, 
+                                            {"P2.01", "0.2"}
                                             },
                                            {
                                             {"C2.2","Compétence de test 2"},
-                                            {"R2.01", "30"},
-                                            {"R2.02", "30"},
-                                            {"S2.02", "38"}, 
-                                            {"P2.01", "2"}
+                                            {"R2.01", "0.30"},
+                                            {"R2.02", "0.30"},
+                                            {"S2.02", "0.38"}, 
+                                            {"P2.01", "0.2"}
                                            }};
         
         String[][][] donneesCompetences2 = {{
 								            {"C2.1","Compétence de test 1"},
-								            {"R2.01", "60"}, 
-								            {"S2.01", "38"}, 
+								            {"R2.01", "0.60"}, 
+								            {"S2.01", "0.38"}, 
 								            
 								            },
 								           {
 								            {"C2.2","Compétence de test 2"},
-								            {"R2.01", "30"},
-								            {"R2.02", "30"},
-								            {"S2.02", "38"}, 
+								            {"R2.01", "0.30"},
+								            {"R2.02", "0.30"},
+								            {"S2.02", "0.38"}, 
 							
 								           }};
         
@@ -84,62 +83,111 @@ public class TestModele {
         
         parametrage = new Parametrage(semestre, parcours, donneesCompetences, donneesSaes, donneesRessources);
         parametrage2 = new Parametrage(semestre, parcours, donneesCompetences2, donneesSaes2, donneesRessources2);
-        
         Modele.setParametrage(parametrage);
     }
+	
+	/**
+	 * Test de la méthode 
+	 */
+	@Test
+	public void testImporter() {
+	    Modele.reset();
+	    //Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv");
+        assertDoesNotThrow(() -> Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv"));
+        assertEquals("2", Modele.getParametrage().getSemestre());
+        assertEquals("Tous", Modele.getParametrage().getParcours());
+        assertEquals(6, Modele.getCompetences().size());
+        assertEquals(14, Modele.getRessources().size());
+        assertEquals(7, Modele.getSae().size());
+        assertEquals("U2.1",Modele.getCompetences().get("U2.1").getIdentifiant());
+        assertEquals("Réaliser un développement d’application",Modele.getCompetences().get("U2.1").getLibelle());
+        assertEquals(4,Modele.getCompetences().get("U2.1").getListeRessources().size());
+        assertEquals(2,Modele.getCompetences().get("U2.1").getListeSaes().size());
+        assertEquals(4,Modele.getRessources().get("R2.01").getListeEvaluations().size());
+        assertEquals(0,Modele.getRessources().get("R2.03").getListeEvaluations().size());
+        assertThrows(IllegalArgumentException.class,
+                () -> Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv"));
+        Modele.reset();
+        assertThrows(IllegalArgumentException.class,
+                () -> Modele.importer(".\\src\\modele\\test\\fichierEvidemmentInvalide.csv"));
+        
+        
+        
+	}
+	
+	/**
+	 * Test de la méthode isParametrageInitialise()
+	 */
+	@Test
+	public void testIsParamaetrageInitialises() {
+	    assertTrue(Modele.isParametrageInitialise());
+	    Modele.reset();
+	    assertFalse(Modele.isParametrageInitialise());
+	}
 	
     /** 
      * Test de la méthode verifierFormatDonnees() de la classe Modèle
      */
     @Test
     public void testVerifierFormatDonnees() {
-        //Préparaion
+        //Préparation
         String fichier = OutilFichier.lire(".\\src\\modele\\test\\testModeleParametrage.csv");
-        System.out.println(fichier);
         String[][] donneesTests = OutilCSV.formaterToDonnees(fichier);
         String[][] donneesInvalides = donneesTests;
-        //tests
+        
+        // test conditions normales
         assertTrue(Modele.verifierFormatDonnees(donneesTests)); 
-        //test où il n'y a pas de Semestre
+        
+        // tests sans semestre
         donneesInvalides[1][1] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où il n'y a pas de parcours
+        
+        // tests sans parcours
         donneesInvalides[2][0] = "un truc là";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où il n'y a pas une ligne vide entre 2 tableaux
+        
+        // tests sans ligne vide entre 2 tableaux
         donneesInvalides[3] = new String[1];
         donneesInvalides[3][0] = "COUCOU C'EST MOI";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où il y a un tableau qui commence pas par ressource ou compétence
+        
+        // tests avec un tableau qui ne commence pas par ressource ou compétence
         donneesInvalides[13][0] = "SAE";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où la pondération s'aditionne pas à 100
+        
+        // tests où la pondération s'aditionne pas à 100
         donneesInvalides[17][0] = "196";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test avec un identifiant invalide
+        
+        // tests avec un identifiant invalide
         donneesInvalides[24][1] = "R2.4";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test avec le titre d'une ressource vide
+        
+        // tests avec le titre d'une ressource vide
         donneesInvalides[31][2] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test avec un element d'une competence qui n'as pas de nom
+        
+        // tests avec un élément d'une competence qui n'a pas de nom
         donneesInvalides[27][0] = "";
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
-        //test où un identifiant est null
+        
+        // tests avec un identifiant null
         donneesInvalides[36][1] = null;
         assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
         donneesInvalides = donneesTests;
     }
     
-
+    /**
+     * test de la methode getListRessources()
+     */
     @Test
     public void testGetListeRessources() {
         HashMap<String, Ressource> ressources = parametrage.getListeRessources();
@@ -148,6 +196,9 @@ public class TestModele {
         assertNotEquals(ressources2, Modele.getRessources());
     }
     
+    /**
+     * test de la methode getListeCompetences
+     */
     @Test
     public void testGetListeCompetences() {
         HashMap<String, Competence> competence = parametrage.getListeCompetences();
@@ -156,6 +207,9 @@ public class TestModele {
         assertNotEquals(competence2, Modele.getCompetences());
     }
     
+    /**
+     * test de la methode getListeSae
+     */
     @Test
     public void testGetListeSae() {
         HashMap<String, Sae > sae = parametrage.getListeSaes();
@@ -164,13 +218,13 @@ public class TestModele {
         assertNotEquals(sae2, Modele.getSae());
     }
     
+    /**
+     * test de la methode getUtilisateur
+     */
     @Test
     public void testGetUtilisateur() {
         Utilisateur user = new Utilisateur();
         assertEquals(user.getPseudo(), Modele.getUtilisateur().getPseudo());
         assertNotEquals(null, Modele.getUtilisateur());
     }
-    
-    
-    
 }

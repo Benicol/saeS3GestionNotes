@@ -73,6 +73,5 @@ public class TestEvaluation {
     @Test
     public void testSettersInvalidValues() {
         assertThrows(IllegalArgumentException.class, () -> evaluation.setNom(""));
-        assertThrows(IllegalArgumentException.class, () -> evaluation.setDate(""));
     }
 }

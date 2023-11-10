@@ -4,6 +4,7 @@
  */
 package modele;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
@@ -18,8 +19,9 @@ import java.util.HashMap;
  * 
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Parametrage {
+public class Parametrage implements Serializable{
     
+    private static final long serialVersionUID = 1L;
     /* Déclaration des variables qui composent le paramétrage */
     private String semestre;
     private String parcours;
@@ -31,7 +33,7 @@ public class Parametrage {
      * Constructeur de la classe Paramétrage, qui utilise les données passées en 
      * paramètres pour définir de quoi est composée le semestre.
      * @param semestre Le numéro du semestre en cours (un chiffre de 1 à 6).
-     * @param parcours Le nom du parcours choisi (A, D ou "XXX" pour la 1e année).
+     * @param parcours Le nom du parcours choisi (A, D ou "Tous" pour la 1e année).
      * @param donneesCompetences La liste des compétences associées à ce semestre.
      * @param donneesSaes La liste des SAE associées à ce semestre.
      * @param donneesRessources La liste des ressources associées à ce semestre.

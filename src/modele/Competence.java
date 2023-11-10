@@ -1,19 +1,27 @@
+/*
+ * Competence.java                                                        5 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package modele;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-/** Classe objet permettant de représenter une compétence à partir
+/** 
+ * Classe objet permettant de représenter une compétence à partir
  * de son identifiant, de son libellé, de la liste de ses ressources
  * et de la liste de ses saes.
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class Competence implements Enseignement{
+public class Competence implements Enseignement, Serializable{
+    private static final long serialVersionUID = 1L;
     private HashMap<Ressource, Double> listeRessources;
     private HashMap<Sae, Double> listeSaes;
     private String libelle;
     private String identifiant;
 
-    /** Constructeur de la classe Competence
+    /** 
+     * Constructeur de la classe Competence
      * @param identifiant
      * @param libelle
      */
@@ -27,14 +35,16 @@ public class Competence implements Enseignement{
         this.listeSaes = new HashMap<Sae, Double>();
     }
     
-    /** Getter de l'attribut libelle
+    /** 
+     * Getter de l'attribut libelle
      * @return libelle : le libellé de la compétence
      */
     public String getLibelle() {
         return libelle;
     }
     
-    /** Getter de l'attribut identifiant
+    /** 
+     * Getter de l'attribut identifiant
      * @return identifiant : l'identifiant de la compétence
      */
     public String getIdentifiant() {
@@ -49,35 +59,40 @@ public class Competence implements Enseignement{
         return intitule;
     }
     
-    /** Getter de l'attribut listeRessources
+    /** 
+     * Getter de l'attribut listeRessources
      * @return listeRessources : la liste des ressources de la compétence
      */
     public HashMap<Ressource, Double> getListeRessources() {
         return listeRessources;
     }
     
-    /** Getter de l'attribut listeSaes
+    /** 
+     * Getter de l'attribut listeSaes
      * @return listeSaes : la liste des saes de la compétence
      */
     public HashMap<Sae, Double> getListeSaes() {
         return listeSaes;
     }
     
-    /** Setter de l'attribut listeRessources
+    /** 
+     * Setter de l'attribut listeRessources
      * @param listeRessources
      */
     public void setListeRessources(HashMap<Ressource, Double> listeRessources) {
         this.listeRessources = listeRessources;
     }
     
-    /** Setter de l'attribut listeSaes
+    /** 
+     * Setter de l'attribut listeSaes
      * @param listeSaes
      */
     public void setListeSaes(HashMap<Sae, Double> listeSaes) {
         this.listeSaes = listeSaes;
     }
     
-    /** Méthode permettant de calculer la note obtenue à la compétence
+    /** 
+     * Méthode permettant de calculer la note obtenue à la compétence
      * @return moyenne : la note obtenue à la compétence
      */
     public Double calculerMoyenne() {
@@ -94,7 +109,8 @@ public class Competence implements Enseignement{
         return moyenne; //Somme des coefficients == 1 donc pas besoin de diviser
     }
     
-    /** Méthode permettant de vérifier si la moyenne
+    /** 
+     * Méthode permettant de vérifier si la moyenne
      * d'une compétence est calculable
      * @return calculable : true si calculable, false sinon
      */
