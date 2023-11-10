@@ -1,0 +1,82 @@
+#container {
+	-fx-background-color : #29222A;
+}
+
+#grades-view {
+	-fx-background-color : #29222A;
+}
+
+#navigation {
+	-fx-background-color : #E8E3E8;
+	-fx-background-radius : 16px;
+}
+
+.black {
+	-fx-fill : black;
+}
+
+.white {
+	-fx-fill : white;
+}
+
+.purple {
+	-fx-fill : #9555E8;
+}
+
+.title {
+	-fx-font-size : 24px;
+	-fx-font-family : verdana;
+	-fx-font-weight : bold;
+}
+
+.type {
+	-fx-font-size : 14px;
+	-fx-font-family : verdana;
+	-fx-font-weight : bold;
+	
+}
+
+.type-content {
+	-fx-font-size : 16px;
+	-fx-font-family : verdana;
+}
+
+.content {
+	-fx-font-size : 16px;
+	-fx-font-family : verdana;
+	-fx-font-weight : bold;
+}
+
+.button {
+	-fx-border-radius : 4px;
+	-fx-font-family : verdana;
+	-fx-font-weight : bold;
+}
+
+.primary-button {
+	-fx-background-color : #9555E8;
+	-fx-text-fill : white;
+}
+
+.secondary-button {
+	-fx-background-color : transparent;
+	-fx-border-style : solid outside;
+	-fx-border-color: #9555E8;
+	-fx-text-fill : #9555E8;
+}
+
+.grade-info-band {
+	-fx-background-color : #E8E3E8;
+	-fx-background-radius : 16px;
+}
+
+.ponderation-label {
+	-fx-background-color : black;
+	-fx-background-radius : 4px;
+}
+
+.side-nav-element-active {
+	-fx-text-fill : white;
+	-fx-background-color :  #9555E8;
+}
+ 
