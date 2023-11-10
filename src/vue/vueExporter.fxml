@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="845.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="283.0" prefWidth="845.0" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.VueExporterControleur">
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="EXPORTER DES DONNEES" wrappingWidth="253.8828125">
          <font>
@@ -39,7 +39,7 @@
                   <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
                </padding>
                <children>
-                  <TextField prefHeight="31.0" prefWidth="239.0">
+                  <TextField fx:id="adresseIpInput" prefHeight="31.0" prefWidth="239.0">
                      <font>
                         <Font name="Verdana Bold" size="16.0" />
                      </font>
@@ -54,7 +54,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </HBox>
-      <HBox prefHeight="62.0" prefWidth="843.0" styleClass="grade-info-band" stylesheets="@style.css">
+      <HBox prefHeight="62.0" prefWidth="843.0" styleClass="grade-info-band">
          <children>
             <VBox alignment="CENTER" prefHeight="52.0" prefWidth="267.0">
                <children>
@@ -70,11 +70,11 @@
             </VBox>
             <HBox alignment="CENTER" prefHeight="52.0" prefWidth="500.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="225.0" styleClass="secondary-button" text="Programme nationnal">
+                  <Button mnemonicParsing="false" onAction="#programmeNationnalPresser" onMouseEntered="#boutonVideOuPleinEntree" onMouseExited="#boutonVideOuPleinSortie" prefHeight="32.0" prefWidth="225.0" styleClass="secondary-button" text="Programme nationnal">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ressources/icone_plus_violet.png" />
+                              <Image url="@../vue/ressources/icone_plus_violet.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -85,11 +85,11 @@
                         <Insets right="16.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="225.0" styleClass="secondary-button" text="Modalités d'évaluation">
+                  <Button mnemonicParsing="false" onAction="#modalitesEvaluationPresser" onMouseEntered="#boutonVideOuPleinEntree" onMouseExited="#boutonVideOuPleinSortie" prefHeight="32.0" prefWidth="225.0" styleClass="secondary-button" text="Modalités d'évaluation">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@ressources/icone_plus_violet.png" />
+                              <Image url="@../vue/ressources/icone_plus_violet.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -112,14 +112,14 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" styleClass="secondary-button" text="ANNULER">
+            <Button mnemonicParsing="false" onAction="#annulerPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" styleClass="secondary-button" text="ANNULER">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@ressources/icone_annuler.png" />
+                        <Image url="@../vue/ressources/icone_annuler.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -127,11 +127,11 @@
                   <Insets right="16.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="245.0" styleClass="primary-button" text="ETABLIR UNE CONNEXION">
+            <Button mnemonicParsing="false" onAction="#etablirUneConnexionPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="32.0" prefWidth="245.0" styleClass="primary-button" text="ETABLIR UNE CONNEXION">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@ressources/icone_connexion.png" />
+                        <Image url="@../vue/ressources/icone_connexion.png" />
                      </image>
                   </ImageView>
                </graphic>
