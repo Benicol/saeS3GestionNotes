@@ -1,0 +1,63 @@
+#container {
+	-fx-background-color : #29222A;
+}
+
+.scroll-pane {
+	-fx-background-color: transparent;
+}
+
+.scroll-pane .viewport {
+       -fx-background-color: transparent;
+}
+
+.secondary-button {
+	-fx-background-color : transparent;
+	-fx-border-style : solid outside;
+	-fx-border-color: #9555E8;
+	-fx-text-fill : #9555E8;
+}
+
+.primary-button {
+	-fx-background-color : #9555E8;
+	-fx-text-fill : white;
+}
+
+.button {
+	-fx-border-radius : 4px;
+	-fx-font-family : verdana;
+	-fx-font-weight : bold;
+	-fx-font-size : 12px;
+}
+
+#navigation {
+	-fx-background-color : #E8E3E8;
+	-fx-background-radius : 16px;
+}
+
+.grade-info-band {
+	-fx-background-color : #E8E3E8;
+	-fx-background-radius : 16px;
+}
+
+.ponderation-label {
+	-fx-background-color : black;
+	-fx-background-radius : 4px;
+}
+
+.side-nav-element-active {
+	-fx-text-fill : white;
+	-fx-background-color :  #9555E8;
+}
+
+.side-nav-element-inactive {
+	-fx-text-fill : #9555E8;
+	-fx-background-color : transparent;
+}
+
+.side-nav-element {
+	-fx-pref-width : 344px;
+	-fx-alignment : center-left;
+	-fx-font-family : verdana;
+	-fx-font-weight : bold;
+}
+ 
