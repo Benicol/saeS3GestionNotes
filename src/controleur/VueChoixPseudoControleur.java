@@ -1,8 +1,10 @@
 package controleur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import modele.Modele;
 
 /**
  * Controleur de la vue vue.vueChoixPseudo.fxml
@@ -14,32 +16,42 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     private TextField pseudoInput;
+    
+    
     /**
      * Methode appeler lors du clic sur le bouton "annuler"
      */
     @FXML
     void annulerPresser(ActionEvent event) {
-        System.out.println("annuler presser");
+        EchangeurDeVue.getPopUpStage().close();
     }
     /**
      * Methode appeler lors de l'entrée de la souris sur un bouton plein (bouton violet)
      * afin de le rendre plus foncer
      * Boutons utilisant cette méthode : 
-     * - Bouton "Changer de pseudo"
+     * - Bouton "Etablir une connexion"
      */
     @FXML
     void boutonPleinEntree(MouseEvent event) {
-        System.out.println("bouton plein entrer");
+    	Button bouton = (Button) event.getSource();
+        
+        
+        bouton.getStyleClass().remove("primary-button-not-hover");
+        bouton.getStyleClass().add("primary-button-hover");
     }
     /**
      * Methode appeler lors de la sortie de la souris d'un bouton plein (bouton violet)
      * afin de le rééclaircir
      * Boutons utilisant cette méthode : 
-     * - Bouton "Changer de pseudo"
+     * - Bouton "Etablir une connexion"
      */
     @FXML
     void boutonPleinSortie(MouseEvent event) {
-        System.out.println("bouton plein sortie");
+    	Button bouton = (Button) event.getSource();
+        
+        
+        bouton.getStyleClass().remove("primary-button-hover");
+        bouton.getStyleClass().add("primary-button-not-hover");
     }
     /**
      * Methode appeler lors de l'entrée de la souris sur un bouton vide (bouton blanc)
@@ -49,8 +61,13 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void boutonVideEntree(MouseEvent event) {
-        System.out.println("bouton vide entrer");
+    	
+        Button bouton = (Button) event.getSource();
+        
+        bouton.getStyleClass().remove("secondary-button-not-hover");
+        bouton.getStyleClass().add("secondary-button-hover");
     }
+    
     /**
      * Methode appeler lors de la sortie de la souris d'un bouton vide (bouton blanc)
      * afin de le rééclaircir
@@ -59,14 +76,19 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void boutonVideSortie(MouseEvent event) {
-        System.out.println("bouton vide sortie");
+        Button bouton = (Button) event.getSource();
+        
+        bouton.getStyleClass().remove("secondary-button-hover");
+        bouton.getStyleClass().add("secondary-button-not-hover");
     }
     /**
      * Methode appeler lors du clic sur le bouton "Changer de Pseudo"
      */
     @FXML
     void changerDePseudoPresser(ActionEvent event) {
-        System.out.println("changer de pseudo presser");
+    	if ( pseudoInput.getPromptText().trim().length() !=0) {
+    		Modele.getUtilisateur().setPseudo(pseudoInput.getPromptText());
+    	}
     }
 
 }

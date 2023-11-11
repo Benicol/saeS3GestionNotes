@@ -2,7 +2,10 @@ package controleur;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /** 
@@ -13,13 +16,18 @@ public class VueExporterControleur {
     /** TexteField contenant l'adresse ip */
     @FXML
     private TextField adresseIpInput;
+    @FXML
+    private ImageView plusMod;
+
+    @FXML
+    private ImageView plusProg;
     
     /**
      * Methode appeler lors du clic sur le bouton "annuler"
      */
     @FXML
     void annulerPresser(ActionEvent event) {
-        System.out.println("annuler presser");
+        EchangeurDeVue.getPopUpStage().close();
     }
     /**
      * Methode appeler lors de l'entrée de la souris sur un bouton plein (bouton violet)
@@ -29,7 +37,11 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonPleinEntree(MouseEvent event) {
-        System.out.println("bouton plein entrer");
+    	Button bouton = (Button) event.getSource();
+        
+        
+        bouton.getStyleClass().remove("primary-button-not-hover");
+        bouton.getStyleClass().add("primary-button-hover");
     }
     /**
      * Methode appeler lors de la sortie de la souris d'un bouton plein (bouton violet)
@@ -39,7 +51,11 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonPleinSortie(MouseEvent event) {
-        System.out.println("bouton plein sortie");
+    	Button bouton = (Button) event.getSource();
+        
+        
+        bouton.getStyleClass().remove("primary-button-hover");
+        bouton.getStyleClass().add("primary-button-not-hover");
     }
     /**
      * Methode appeler lors de l'entrée de la souris sur un bouton vide (bouton blanc)
@@ -49,30 +65,13 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonVideEntree(MouseEvent event) {
-        System.out.println("bouton vide entree");
+    	
+        Button bouton = (Button) event.getSource();
+        
+        bouton.getStyleClass().remove("secondary-button-not-hover");
+        bouton.getStyleClass().add("secondary-button-hover");
     }
-    /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton vide ou plein (on sait pas)
-     * afin de le rendre plus foncer
-     * Boutons utilisant cette méthode : 
-     * - Bouton "Programme nationnal"
-     * - Bouton "Modalités d'évaluation"
-     */
-    @FXML
-    void boutonVideOuPleinEntree(MouseEvent event) {
-        System.out.println("bouton vide ou plein entree");
-    }
-    /**
-     * Methode appeler lors de la sortie de la souris sur un bouton vide ou plein (on sait pas)
-     * afin de le rééclaircir
-     * Boutons utilisant cette méthode : 
-     * - Bouton "Programme nationnal"
-     * - Bouton "Modalités d'évaluation"
-     */
-    @FXML
-    void boutonVideOuPleinSortie(MouseEvent event) {
-        System.out.println("bouton vide ou plein sortie");
-    }
+    
     /**
      * Methode appeler lors de la sortie de la souris d'un bouton vide (bouton blanc)
      * afin de le rééclaircir
@@ -81,28 +80,67 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonVideSortie(MouseEvent event) {
-        System.out.println("bouton vide sortie");
+        Button bouton = (Button) event.getSource();
+        
+        bouton.getStyleClass().remove("secondary-button-hover");
+        bouton.getStyleClass().add("secondary-button-not-hover");
     }
+
+    
     /**
      * Methode appeler lors du clic sur le bouton "Etablir une connexion"
      */
     @FXML
     void etablirUneConnexionPresser(ActionEvent event) {
-        System.out.println("bouton etablir une connexion presser");
+    	  Button bouton = (Button) event.getSource();
+          
+          bouton.setText("Connexion en cours");
     }
     /**
      * Methode appeler lors du clic sur le bouton "Modalités d'évaluation"
      */
     @FXML
     void modalitesEvaluationPresser(ActionEvent event) {
-        System.out.println("bouton modalite evaluation presser");
+    	Button bouton = (Button) event.getSource();
+        if(bouton.getStyleClass().equals("secondary-button-hover")) {
+        	Image image = new Image(getClass().getResource("../vue/ressources/remove_icone.png").toExternalForm());
+        	bouton.getStyleClass().remove("secondary-button-hover");
+        	bouton.getStyleClass().add("primary-button-hover");
+        	plusMod.setImage(image);
+        	//bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
+        	//bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
+        	
+        }else {
+        	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());
+        	bouton.getStyleClass().remove("primary-button-hover");
+        	bouton.getStyleClass().add("secondary-button-hover");
+        	plusMod.setImage(image);
+        	//bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
+        	//bouton.setOnMouseExited((event) -> boutonVideEntree(event));
+        }
     }
     /**
      * Methode appeler lors du clic sur le bouton "Programme nationnal"
      */
     @FXML
     void programmeNationnalPresser(ActionEvent event) {
-        System.out.println("bouton programme national presser");
+    	Button bouton = (Button) event.getSource();
+        if(bouton.getStyleClass().equals("secondary-button-hover")) {
+        	Image image = new Image(getClass().getResource("../vue/ressources/remove_icone.png").toExternalForm());
+        	bouton.getStyleClass().remove("secondary-button-hover");
+        	bouton.getStyleClass().add("primary-button-hover");
+        	//bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
+        	//bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
+        	plusProg.setImage(image);
+        	
+        }else {
+        	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());
+        	bouton.getStyleClass().remove("primary-button-hover");
+        	bouton.getStyleClass().add("secondary-button-hover");
+        	//bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
+        	//bouton.setOnMouseExited((event) -> boutonVideEntree(event));
+        	plusProg.setImage(image);
+        }
     }
 
 }
