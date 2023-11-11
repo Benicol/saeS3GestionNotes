@@ -429,7 +429,7 @@ public class VueHomepageController {
                     //remplis les champs
                     type.setText("Ressource");
                     titre.setText(ressource.creerIntitule());
-                    note.setText(ressource.calculerMoyenne().toString()); 
+                    note.setText(String.format("%.2f", ressource.calculerMoyenne())); 
                     int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
                     Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
                     
@@ -486,7 +486,7 @@ public class VueHomepageController {
                     //remplis les champs
                     type.setText("Sae");
                     titre.setText(sae.creerIntitule());
-                    note.setText(sae.getNote().toString()); 
+                    note.setText(String.format("%.2f", sae.getNote())); 
                     Button bouton = null;
                     for (Node node : listeSaes.getChildren()) {
                         bouton = (Button) node;
@@ -589,7 +589,7 @@ public class VueHomepageController {
             type.setText("Ressource");
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
-                note.setText(ressource.calculerMoyenne().toString()); 
+                note.setText(String.format("%.2f", ressource.calculerMoyenne())); 
             } else {
                 note.setText("Moyenne indisponible");
                 diviseur.setText("");
@@ -634,9 +634,9 @@ public class VueHomepageController {
             type.setText("Sae");
             titre.setText(sae.creerIntitule());
             if (sae.getNote() != null) {
-                note.setText(sae.getNote().toString()); 
+                note.setText(String.format("%.2f", sae.getNote())); 
             } else {
-                note.setText("Moyenne indisponible");
+                note.setText("Note non définie");
                 diviseur.setText("");
             }
             Button bouton = null;
@@ -712,7 +712,7 @@ public class VueHomepageController {
             });
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
-                note.setText(ressource.calculerMoyenne().toString()); 
+                note.setText(String.format("%.2f", ressource.calculerMoyenne()));  
             } else {
                 note.setText("Moyenne indisponible");
                 diviseur.setText("");

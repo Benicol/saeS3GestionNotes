@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import modele.Modele;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 
 /** TODO comment class responsibility (SRP)
@@ -39,6 +40,7 @@ public class Main extends Application {
             // on définit les caractéristiques de la fenêtre et lui associe la scène
             primaryStage.setTitle("Gestionnaire de note");
             EchangeurDeVue.setSceneCourante(scene);
+            primaryStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
