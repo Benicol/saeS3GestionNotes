@@ -289,7 +289,10 @@ public class VueHomepageController {
      */
     @FXML
     void reinitialiserPresser(ActionEvent event) {
-        System.out.println("reset presser");
+        EchangeurDeVue.launchPopUp("vr", "Réinitialisation");
+        if (!Modele.isParametrageInitialise()) {
+            System.err.println("LANCE LA VUE PAS FAITE LA");
+        }
     }
     
     /**

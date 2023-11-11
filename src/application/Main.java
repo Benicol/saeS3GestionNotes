@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 
 
 /** TODO comment class responsibility (SRP)
@@ -34,6 +35,7 @@ public class Main extends Application {
             primaryStage.setTitle("Gestionnaire de note");
             EchangeurDeVue.setSceneCourante(scene);
             primaryStage.setScene(scene);
+            primaryStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

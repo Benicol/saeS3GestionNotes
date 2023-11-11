@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -115,6 +116,7 @@ public class EchangeurDeVue {
     /** @param popUpStage nouvelle valeur de popUpStage */
     public static void setPopUpStage(Stage popUpStage) {
         EchangeurDeVue.popUpStage = popUpStage;
+        EchangeurDeVue.popUpStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
     }
     
     /**
@@ -161,8 +163,9 @@ public class EchangeurDeVue {
      * le code est donné en argument La scène pop up seras initialisé si pas sséjà initialisé
      * 
      * @param codeVue code de la vue à placer sur la scène courante
+     * @param nomFenetre nom de la fenetre
      */
-    public static void launchPopUp(String codeVue) {
+    public static void launchPopUp(String codeVue, String nomFenetre) {
         try {
             Parent racine = FXMLLoader.load(EchangeurDeVue.class.getResource(getNomVue(codeVue)));
             if (scenePopUp == null) {
@@ -175,6 +178,7 @@ public class EchangeurDeVue {
                 popUpStage.setScene(scenePopUp);
                 popUpStage.initModality(Modality.APPLICATION_MODAL);
             }
+            popUpStage.setTitle(nomFenetre);
             popUpStage.showAndWait();
         } catch (IOException erreur) {
             System.out.println("Echec du chargement de la vue de code " + codeVue + " => " + erreur.getMessage());
