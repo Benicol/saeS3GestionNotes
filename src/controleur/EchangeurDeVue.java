@@ -75,6 +75,8 @@ public class EchangeurDeVue {
         modules.put("MS", "..\\vue\\modules\\ModuleSae.fxml");
         modules.put("MTS", "..\\vue\\modules\\ModuleTitreSae.fxml");
         modules.put("MEvalV", "..\\vue\\modules\\ModuleEvaluationVide.fxml");
+        modules.put("MM", "..\\vue\\modules\\ModuleMoyenne.fxml");
+        modules.put("MB", "..\\vue\\modules\\ModuleBienvenue.fxml");
     }
 
     /**

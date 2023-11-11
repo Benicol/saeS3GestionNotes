@@ -34,7 +34,6 @@ public class Main extends Application {
             primaryStage.setTitle("Gestionnaire de note");
             EchangeurDeVue.setSceneCourante(scene);
             primaryStage.setScene(scene);
-            
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

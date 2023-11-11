@@ -86,15 +86,6 @@ class TestRessource {
         Assertions.assertFalse(ressource4.ajouterEvaluation(new Evaluation("controle",0.35,"01/08/23")));
     }
     
-    @Test
-    public void testModifierEvaluation() {
-        Assertions.assertTrue(ressource1.modifierEvaluation(0,1,"qcm"));
-        Assertions.assertTrue(ressource2.modifierEvaluation(0,2,"03/11/23"));
-        Assertions.assertFalse(ressource3.modifierEvaluation(3,3,"12.4"));
-        Assertions.assertFalse(ressource3.modifierEvaluation(-1,2,"23/12/23"));
-        Assertions.assertTrue(ressource4.modifierEvaluation(0,3,"14.5"));
-        Assertions.assertTrue(ressource3.modifierEvaluation(0,4,"0.35"));
-    }
     
     @Test
     public void testSupprimerEvaluation() {
@@ -140,8 +131,6 @@ class TestRessource {
     
     @Test
     public void testCalculerMoyenne() {
-        ressource5.modifierEvaluation(0, 3, "12.5");
-        Assertions.assertEquals(12.5, ressource5.calculerMoyenne());
         Assertions.assertEquals(0.0, ressource1.calculerMoyenne());
         Assertions.assertNotEquals(5.0, ressource2.calculerMoyenne());
         Assertions.assertNotEquals(0.5, ressource4.calculerMoyenne());

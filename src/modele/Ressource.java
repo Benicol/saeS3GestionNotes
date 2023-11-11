@@ -57,49 +57,6 @@ public class Ressource implements Enseignement, Serializable {
     }
 
     /**
-     * Modifie les informations d'une évaluation existante.
-     *
-     * @param idEvaluation L'identifiant de l'évaluation à modifier.
-     * @param idChamps L'identifiant du champ à modifier (1: nom, 2: date, 3: note, 4: poids).
-     * @param donnee La nouvelle valeur du champ.
-     * @return true si la modification a réussi, sinon false.
-     */
-    public boolean modifierEvaluation(int idEvaluation, int idChamps, String donnee) {
-        boolean modifOk;
-        modifOk = false;
-        if(idEvaluation <= listeEvaluations.size() && idEvaluation >= 0) {
-            try {
-                switch(idChamps) {
-                    case 1:
-                        // Modification du nom de l'évaluation
-                        listeEvaluations.get(idEvaluation).setNom(donnee);
-                        modifOk = true;
-                        break;
-                    case 2:
-                        // Modification de la date de l'évaluation
-                        listeEvaluations.get(idEvaluation).setDate(donnee);
-                        modifOk = true;
-                        break;
-       
-                    case 3:
-                        // Modification de la note de l'évaluation
-                        listeEvaluations.get(idEvaluation).setNote(Double.parseDouble(donnee));
-                        modifOk = true;
-                        break;         
-                    case 4:
-                     // Modification du poids de l'évaluation
-                        listeEvaluations.get(idEvaluation).setPoids(Double.parseDouble(donnee));
-                        modifOk = true;
-                        break;
-                }
-            }catch(IllegalArgumentException erreur) {
-                System.out.print(erreur.getMessage());
-            }
-        }
-        return modifOk; 
-    }
-
-    /**
      * Supprime une évaluation de la liste des évaluations de la ressource.
      * @param idEvaluation L'identifiant de l'évaluation à supprimer.
      * @return true si la suppression a réussi, sinon false.
