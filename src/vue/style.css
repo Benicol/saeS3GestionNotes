@@ -6,17 +6,36 @@
 	-fx-background-color : #29222A;
 }
 .secondary-button {
-	-fx-background-color : transparent;
 	-fx-border-style : solid outside;
 	-fx-border-color: #9555E8;
 	-fx-text-fill : #9555E8;
+}
+
+.button {
 	-fx-border-radius : 4px;
+	-fx-font-family : verdana;
+	-fx-font-size: 12px;
+	-fx-font-weight : bold;
 }
 
 .primary-button {
-	-fx-background-color : #9555E8;
 	-fx-text-fill : white;
-	-fx-border-radius : 4px;
+}
+
+.primary-button-not-hover {
+	-fx-background-color : #9555E8;
+}
+
+.primary-button-hover {
+	-fx-background-color : #5A18AF;
+}
+
+.secondary-button-hover {
+	-fx-background-color : #D8C0F6;
+}
+
+.secondary-button-not-hover {
+	-fx-background-color : transparent;
 }
 
 #navigation {
