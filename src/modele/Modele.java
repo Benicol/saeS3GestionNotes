@@ -143,7 +143,6 @@ public class Modele {
                     String[] infoLigne = new String[2];
                     infoLigne[0] = donnees[i][1];
                     infoLigne[1] = donnees[i][2];
-                    System.out.println(infoLigne[0] + "|" + infoLigne[1]);
                     competence.add(infoLigne.clone());
                     int poids = 0;
                     i++;

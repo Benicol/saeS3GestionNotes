@@ -85,7 +85,6 @@ public class VueHomepageController {
         Label texte = (Label) ((VBox) hbox.getChildren().get(0)).getChildren().get(0);
         texte.setText("Bienvenue " + Modele.getUtilisateur().getPseudo());
         listePrincipal.getChildren().add(hbox);
-        System.out.println("tentative");
 
     }
     

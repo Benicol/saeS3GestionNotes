@@ -63,7 +63,6 @@ public class VueImportationController {
     
     @FXML
     void onDragDropped(DragEvent event) {
-        System.out.println("hi");
         if (event.getDragboard().hasFiles()) {
             event.acceptTransferModes(TransferMode.COPY);
         }
@@ -77,7 +76,6 @@ public class VueImportationController {
         if (dragboard.hasFiles()) {
             // Récupérer le fichier déposé
             String file = dragboard.getFiles().get(0).getPath();
-            System.out.println("Fichier déposé : " + file);
             Modele.importer(file);
             success = true;
             
