@@ -36,7 +36,7 @@
                </HBox.margin>
                <styleClass>
                   <String fx:value="secondary-button" />
-                  <String fx:value="button" />
+                  <String fx:value="secondary-button-not-hover" />
                </styleClass>
             </Button>
             <Button mnemonicParsing="false" onAction="#supprimerToutesLesDonneesPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" text="Supprimer toutes les données">
@@ -50,7 +50,7 @@
                </HBox.margin>
                <styleClass>
                   <String fx:value="primary-button" />
-                  <String fx:value="button" />
+                  <String fx:value="primary-button-not-hover" />
                </styleClass>
             </Button>
          </children>

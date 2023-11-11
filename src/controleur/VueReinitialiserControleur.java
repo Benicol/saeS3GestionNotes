@@ -86,6 +86,7 @@ public class VueReinitialiserControleur {
     void supprimerToutesLesDonneesPresser(ActionEvent event) {
         // Réinitialisation du modèle
         Modele.reset();
+        EchangeurDeVue.getPopUpStage().close();
     }
 
 }
