@@ -11,15 +11,29 @@
 }
 
 .secondary-button {
-	-fx-background-color : transparent;
 	-fx-border-style : solid outside;
 	-fx-border-color: #9555E8;
 	-fx-text-fill : #9555E8;
 }
 
+.secondary-button-hover {
+    -fx-background-color : #D8C0F6;
+}
+
+.secondary-button-not-hover {
+    -fx-background-color : transparent;
+}
+
 .primary-button {
-	-fx-background-color : #9555E8;
 	-fx-text-fill : white;
+}
+
+.primary-button-not-hover {
+    -fx-background-color : #9555E8;
+}
+
+.primary-button-hover {
+    -fx-background-color : #5A18AF;
 }
 
 .button {
@@ -63,10 +77,25 @@
 
 .utilisateur {
 	-fx-background-color : transparent;
-	-fx-text-fill : white;
 	-fx-font-family : verdana;
 	-fx-font-weight : bold;
 	-fx-font-size : 24px;
 	-fx-padding : 0;
+}
+
+.utilisateur-not-hover {
+	-fx-text-fill : white;
+}
+
+.utilisateur-hover {
+	-fx-text-fill : gray;
+}
+
+.positif {
+	-fx-text-fill : green;
+}
+
+.negatif {
+	-fx-text-fill : red;
 }
  

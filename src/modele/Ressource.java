@@ -173,7 +173,7 @@ public class Ressource implements Enseignement, Serializable {
      * somme des pondérations est égale à 100.
      * @return La moyenne des évaluations, sinon 0.0.
      */
-    public double calculerMoyenne() {
+    public Double calculerMoyenne() {
         double moyenne;
         moyenne = 0.0;
         if (isCalculable()) {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -13,18 +14,30 @@
             <Font name="Verdana Bold" size="24.0" />
          </font>
       </Text>
-      <HBox alignment="CENTER" spacing="4.0">
+      <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
          <children>
-            <TextField alignment="CENTER_RIGHT" prefWidth="164.0" promptText="Saisir une note" style="-fx-padding: 0 0 0 8px;" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-            </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
-               <font>
-                  <Font name="Verdana Bold" size="24.0" />
-               </font>
-            </Text>
+            <HBox alignment="CENTER" spacing="4.0">
+               <children>
+                  <Label>
+                     <font>
+                        <Font name="Verdana Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="90.0" promptText="Note" style="-fx-padding: 0 0 0 8px;" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                     <font>
+                        <Font name="Verdana Bold" size="24.0" />
+                     </font>
+                  </TextField>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
+                     <font>
+                        <Font name="Verdana Bold" size="24.0" />
+                     </font>
+                  </Text>
+               </children>
+            </HBox>
          </children>
       </HBox>
    </children>

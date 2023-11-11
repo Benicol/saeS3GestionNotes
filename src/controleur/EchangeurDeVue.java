@@ -64,8 +64,8 @@ public class EchangeurDeVue {
         vues.put("h", "..\\vue\\Homepage.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
-        modules.put("MEval", "..\\vue\\modules\\Evaluation.fxml");
-        modules.put("MEvalE", "..\\vue\\modules\\EvaluationEdition.fxml");
+        modules.put("MEval", "..\\vue\\modules\\ModuleEvaluation.fxml");
+        modules.put("MEvalE", "..\\vue\\modules\\ModuleEvaluationEdition.fxml");
         modules.put("MR", "..\\vue\\modules\\ModuleRessource.fxml");
         modules.put("MREA", "..\\vue\\modules\\ModuleRessourceEditionAjouter.fxml");
         modules.put("MSMB", "..\\vue\\modules\\ModuleSideMenuButton.fxml");
@@ -73,6 +73,8 @@ public class EchangeurDeVue {
         modules.put("MTR", "..\\vue\\modules\\ModuleTitreRessource.fxml");
         modules.put("MTRE", "..\\vue\\modules\\ModuleTitreRessourceEdition.fxml");
         modules.put("MS", "..\\vue\\modules\\ModuleSae.fxml");
+        modules.put("MTS", "..\\vue\\modules\\ModuleTitreSae.fxml");
+        modules.put("MEvalV", "..\\vue\\modules\\ModuleEvaluationVide.fxml");
     }
 
     /**

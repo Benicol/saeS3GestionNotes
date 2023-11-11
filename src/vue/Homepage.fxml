@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
@@ -22,11 +23,15 @@
             </Text>
             <HBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="boutonUtilisateur" mnemonicParsing="false" onAction="#utilisateurPresser" onMouseEntered="#utilisateurEntree" onMouseExited="#utilisateurSortie" styleClass="utilisateur" text="Utilisateur" />
+                  <Button fx:id="boutonUtilisateur" mnemonicParsing="false" onAction="#utilisateurPresser" onMouseEntered="#utilisateurEntree" onMouseExited="#utilisateurSortie" text="Utilisateur">
+                     <styleClass>
+                        <String fx:value="utilisateur" />
+                        <String fx:value="utilisateur-not-hover" />
+                     </styleClass></Button>
                   <Line endX="38.0" rotate="90.0" stroke="WHITE" translateY="16.0" />
                   <HBox spacing="16.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#importerPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="40.0" prefWidth="150.0" styleClass="primary-button" text="IMPORTER" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#importerPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="40.0" prefWidth="150.0" text="IMPORTER" textFill="WHITE">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
@@ -37,8 +42,12 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <styleClass>
+                              <String fx:value="primary-button" />
+                              <String fx:value="primary-button-not-hover" />
+                           </styleClass>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#exporterPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="40.0" prefWidth="150.0" styleClass="primary-button" text="EXPORTER" textFill="WHITE">
+                        <Button mnemonicParsing="false" onAction="#exporterPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="40.0" prefWidth="150.0" text="EXPORTER" textFill="WHITE">
                            <font>
                               <Font name="Verdana Bold" size="12.0" />
                            </font>
@@ -49,11 +58,15 @@
                                  </image>
                               </ImageView>
                            </graphic>
+                           <styleClass>
+                              <String fx:value="primary-button" />
+                              <String fx:value="primary-button-not-hover" />
+                           </styleClass>
                         </Button>
                      </children>
                   </HBox>
                   <Line endX="38.0" rotate="90.0" stroke="WHITE" translateY="16.0" />
-                  <Button mnemonicParsing="false" onAction="#reinitialiserPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" prefHeight="40.0" prefWidth="150.0" styleClass="secondary-button" text="REINITIALISER" textFill="#9555e8">
+                  <Button mnemonicParsing="false" onAction="#reinitialiserPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" prefHeight="40.0" prefWidth="150.0" text="REINITIALISER" textFill="#9555e8">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
@@ -64,6 +77,10 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <styleClass>
+                        <String fx:value="secondary-button" />
+                        <String fx:value="secondary-button-not-hover" />
+                     </styleClass>
                   </Button>
                </children>
             </HBox>
@@ -75,7 +92,7 @@
          <children>
             <VBox id="container" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="370.0" spacing="16.0">
                <children>
-                  <Button graphicTextGap="8.0" mnemonicParsing="false" onAction="#afficherMesMoyennesPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="40.0" prefWidth="360.0" styleClass="primary-button" text="AFFICHER MES MOYENNES" textFill="WHITE">
+                  <Button graphicTextGap="8.0" mnemonicParsing="false" onAction="#afficherMesMoyennesPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" prefHeight="40.0" prefWidth="360.0" text="AFFICHER MES MOYENNES" textFill="WHITE">
                      <font>
                         <Font name="Verdana Bold" size="12.0" />
                      </font>
@@ -85,7 +102,11 @@
                               <Image url="@../vue/ressources/icone_moyenne.png" />
                            </image>
                         </ImageView>
-                     </graphic></Button>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="primary-button" />
+                        <String fx:value="primary-button-not-hover" />
+                     </styleClass></Button>
                   <ScrollPane id="sideMenu" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                      <content>
                         <VBox id="navigation" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="360.0" VBox.vgrow="ALWAYS">
