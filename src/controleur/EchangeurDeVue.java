@@ -4,7 +4,6 @@
  */
 package controleur;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +21,7 @@ import javafx.fxml.FXMLLoader;
 public class EchangeurDeVue {
     
     private static HashMap<String, String> vues = new HashMap<>();    
-    /** TODO comment method role
+    /** getter du nom de la vue à partir de la clé
      * @param codeVue 
      * @return le chemin vers le module
      */
@@ -34,7 +33,7 @@ public class EchangeurDeVue {
     }
     
     private static HashMap <String, String> modules = new HashMap<>();
-    /** TODO comment method role
+    /** Getteur du module a partir de la clé
      * @param codeModule code du module chercher
      * @return le chemin vers le module
      */
@@ -62,6 +61,7 @@ public class EchangeurDeVue {
         cache = new HashMap<>();
         /* VUES */
         vues.put("h", "..\\vue\\Homepage.fxml");
+        vues.put("vr", "..\\vue\\VueReinitialiser.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
         modules.put("MEval", "..\\vue\\modules\\ModuleEvaluation.fxml");
@@ -122,7 +122,7 @@ public class EchangeurDeVue {
      * le code est donné en argument La scène courante doit avoir été initialisée
      * 
      * @param codeVue code de la vue à placer sur la scène courante
-     * @param garderEnMemoire TODO
+     * @param garderEnMemoire true si on garde en mémoire la vue, false sinon
      */
     public static void echangerAvec(String codeVue, boolean garderEnMemoire) {
         if (sceneCourante == null) {
@@ -161,7 +161,6 @@ public class EchangeurDeVue {
      * le code est donné en argument La scène pop up seras initialisé si pas sséjà initialisé
      * 
      * @param codeVue code de la vue à placer sur la scène courante
-     * @param garderEnMemoire TODO
      */
     public static void launchPopUp(String codeVue) {
         try {
