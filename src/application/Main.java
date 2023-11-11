@@ -3,12 +3,13 @@ package application;
 import java.io.IOException;
 
 import controleur.EchangeurDeVue;
+import controleur.VueHomepageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import modele.Modele;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 
 
 /** TODO comment class responsibility (SRP)
@@ -24,7 +25,11 @@ public class Main extends Application {
          */
         EchangeurDeVue.setPrimaryStage(primaryStage);
         FXMLLoader chargeurFXML = new FXMLLoader();
-        chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("h")));
+        if (Modele.isParametrageInitialise()) {
+            chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("h")));
+        } else {
+            chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("i")));
+        }
         Parent racine;
         try {
             racine = chargeurFXML.load();
@@ -35,7 +40,6 @@ public class Main extends Application {
             primaryStage.setTitle("Gestionnaire de note");
             EchangeurDeVue.setSceneCourante(scene);
             primaryStage.setScene(scene);
-            primaryStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();

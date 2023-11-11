@@ -68,10 +68,6 @@ public class VueHomepageController {
     void initialize() throws Exception {
         // Initialise selected à null
         selected = null;
-        // Si le parametrage = null, alors lance la vue importer
-        if (Modele.getParametrage() == null) {
-            System.err.println("LANCE LA VUE PAS FAITE LA");
-        }
         // Met en grand la fenetre
         EchangeurDeVue.getPrimaryStage().setMaximized(true);
         // Met à jour l'utilisateur
@@ -89,6 +85,8 @@ public class VueHomepageController {
         Label texte = (Label) ((VBox) hbox.getChildren().get(0)).getChildren().get(0);
         texte.setText("Bienvenue " + Modele.getUtilisateur().getPseudo());
         listePrincipal.getChildren().add(hbox);
+        System.out.println("tentative");
+
     }
     
     /* remplie la liste des compétences dans le menu à gauche */
@@ -273,6 +271,7 @@ public class VueHomepageController {
      */
     @FXML
     void exporterPresser(ActionEvent event) {
+        EchangeurDeVue.echangerAvec("i", false);
         System.out.println("exporter presser");
     }
     
@@ -291,7 +290,7 @@ public class VueHomepageController {
     void reinitialiserPresser(ActionEvent event) {
         EchangeurDeVue.launchPopUp("vr", "Réinitialisation");
         if (!Modele.isParametrageInitialise()) {
-            System.err.println("LANCE LA VUE PAS FAITE LA");
+            EchangeurDeVue.echangerAvec("i", false);
         }
     }
     

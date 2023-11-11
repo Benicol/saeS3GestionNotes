@@ -63,6 +63,7 @@ public class EchangeurDeVue {
         /* VUES */
         vues.put("h", "..\\vue\\Homepage.fxml");
         vues.put("vr", "..\\vue\\VueReinitialiser.fxml");
+        vues.put("i", "..\\vue\\Importation.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
         modules.put("MEval", "..\\vue\\modules\\ModuleEvaluation.fxml");
