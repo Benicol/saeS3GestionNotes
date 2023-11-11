@@ -98,3 +98,14 @@
 .negatif {
 	-fx-text-fill : red;
 }
+
+.import-button {
+	-fx-border-width : 6px;
+	-fx-background-radius : 8px;
+	-fx-background-color : white;
+	-fx-border-style : dashed inside;
+	-fx-border-color: #9555E8;
+	-fx-text-fill : #9555E8;
+}
+ 
+
