@@ -33,9 +33,10 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void boutonPleinEntree(MouseEvent event) {
-    	Button bouton = (Button) event.getSource();
+     // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
         
-        
+        // On change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("primary-button-not-hover");
         bouton.getStyleClass().add("primary-button-hover");
     }
@@ -47,7 +48,10 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void boutonPleinSortie(MouseEvent event) {
-    	Button bouton = (Button) event.getSource();
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
+        
+        // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
@@ -59,9 +63,10 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void boutonVideEntree(MouseEvent event) {
-    	
+        // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
+        // On change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
@@ -74,8 +79,10 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void boutonVideSortie(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
+        // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }

@@ -72,7 +72,7 @@
                <children>
                   <Button mnemonicParsing="false" onAction="#programmeNationnalPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" prefHeight="32.0" prefWidth="225.0" styleClass="secondary-button" text="Programme nationnal">
                      <graphic>
-                        <ImageView fx:id="plusProg" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logoProgramme" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../vue/ressources/icone_plus_violet.png" />
                            </image>
@@ -87,7 +87,7 @@
                   </Button>
                   <Button mnemonicParsing="false" onAction="#modalitesEvaluationPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" prefHeight="32.0" prefWidth="225.0" styleClass="secondary-button" text="Modalités d'évaluation">
                      <graphic>
-                        <ImageView fx:id="plusMod" fitHeight="24.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="logoModalites" fitHeight="24.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../vue/ressources/icone_plus_violet.png" />
                            </image>

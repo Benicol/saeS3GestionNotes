@@ -17,10 +17,10 @@ public class VueExporterControleur {
     @FXML
     private TextField adresseIpInput;
     @FXML
-    private ImageView plusMod;
+    private ImageView logoModalites;
 
     @FXML
-    private ImageView plusProg;
+    private ImageView logoProgramme;
     
     /**
      * Methode appeler lors du clic sur le bouton "annuler"
@@ -37,9 +37,10 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonPleinEntree(MouseEvent event) {
-    	Button bouton = (Button) event.getSource();
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
         
-        
+        // On change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("primary-button-not-hover");
         bouton.getStyleClass().add("primary-button-hover");
     }
@@ -51,9 +52,10 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonPleinSortie(MouseEvent event) {
-    	Button bouton = (Button) event.getSource();
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
         
-        
+        // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
@@ -65,9 +67,10 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonVideEntree(MouseEvent event) {
-    	
+        // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
+        // On change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
@@ -80,8 +83,10 @@ public class VueExporterControleur {
      */
     @FXML
     void boutonVideSortie(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
+        // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
@@ -104,17 +109,20 @@ public class VueExporterControleur {
     	Button bouton = (Button) event.getSource();
         if(bouton.getStyleClass().equals("secondary-button-hover")) {
         	Image image = new Image(getClass().getResource("../vue/ressources/remove_icone.png").toExternalForm());
+        	bouton.getStyleClass().remove("secondary-button");
         	bouton.getStyleClass().remove("secondary-button-hover");
+        	bouton.getStyleClass().add("primary-button");
         	bouton.getStyleClass().add("primary-button-hover");
-        	plusMod.setImage(image);
+        	
+        	logoModalites.setImage(image);
         	//bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
         	//bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
         	
-        }else {
+        } else {
         	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());
         	bouton.getStyleClass().remove("primary-button-hover");
         	bouton.getStyleClass().add("secondary-button-hover");
-        	plusMod.setImage(image);
+        	logoModalites.setImage(image);
         	//bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
         	//bouton.setOnMouseExited((event) -> boutonVideEntree(event));
         }
@@ -131,7 +139,7 @@ public class VueExporterControleur {
         	bouton.getStyleClass().add("primary-button-hover");
         	//bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
         	//bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
-        	plusProg.setImage(image);
+        	logoProgramme.setImage(image);
         	
         }else {
         	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());
@@ -139,7 +147,7 @@ public class VueExporterControleur {
         	bouton.getStyleClass().add("secondary-button-hover");
         	//bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
         	//bouton.setOnMouseExited((event) -> boutonVideEntree(event));
-        	plusProg.setImage(image);
+        	logoProgramme.setImage(image);
         }
     }
 
