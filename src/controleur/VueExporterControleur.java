@@ -107,7 +107,7 @@ public class VueExporterControleur {
     @FXML
     void modalitesEvaluationPresser(ActionEvent event) {
     	Button bouton = (Button) event.getSource();
-        if(bouton.getStyleClass().equals("secondary-button-hover")) {
+        if(bouton.getStyleClass().equals("secondary-button")) {
         	Image image = new Image(getClass().getResource("../vue/ressources/remove_icone.png").toExternalForm());
         	bouton.getStyleClass().remove("secondary-button");
         	bouton.getStyleClass().remove("secondary-button-hover");
@@ -115,8 +115,8 @@ public class VueExporterControleur {
         	bouton.getStyleClass().add("primary-button-hover");
         	
         	logoModalites.setImage(image);
-        	//bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
-        	//bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
+        	bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
+        	bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
         	
         } else {
         	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());

@@ -13,10 +13,26 @@
 	-fx-border-radius : 4px;
 }
 
+.secondary-button-hover {
+    -fx-background-color : #D8C0F6;
+}
+
+.secondary-button-not-hover {
+    -fx-background-color : transparent;
+}
+
 .primary-button {
 	-fx-background-color : #9555E8;
 	-fx-text-fill : white;
 	-fx-border-radius : 4px;
+}
+
+.primary-button-not-hover {
+    -fx-background-color : #9555E8;
+}
+
+.primary-button-hover {
+    -fx-background-color : #5A18AF;
 }
 
 #navigation {
