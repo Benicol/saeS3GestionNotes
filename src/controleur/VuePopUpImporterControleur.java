@@ -1,3 +1,7 @@
+/*
+ * VuePopUpImporterController.java                                        9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 
 import java.io.File;
@@ -16,14 +20,14 @@ import modele.Modele;
 import modele.OutilReseau;
 
 /** 
- * Controleur de la vue vue.VueExporter.fxml
+ * Contrôleur de la vue vue.VueExporter.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class VuePopUpImporterControleur {
     
     /**
-     * Methode appeler lors du clic sur le bouton "afficher l'adresse IP"
-     * Cette méthode permet simplement dans changer le texte du bouton appelant
+     * Méthode appelée lors du clic sur le bouton "afficher l'adresse IP"
+     * Cette méthode permet simplement de changer le texte du bouton
      * en l'adresse IP de l'utilisateur
      */
     @FXML
@@ -39,7 +43,7 @@ public class VuePopUpImporterControleur {
     }
     
     /**
-     * Methode appeler lors du clic sur le bouton "annuler"
+     * Méthode appelée lors du clic sur le bouton "annuler"
      */
     @FXML
     void annulerPresser(ActionEvent event) {
@@ -47,8 +51,8 @@ public class VuePopUpImporterControleur {
     }
     
     /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton plein (bouton violet)
-     * afin de le rendre plus foncer
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'primary-button' (bouton plein violet) afin d'en changer le style
      * Boutons utilisant cette méthode : 
      * - Bouton "Importer"
      * - Bouton "Afficher l'asresse IP"
@@ -65,8 +69,9 @@ public class VuePopUpImporterControleur {
     }
     
     /**
-     * Methode appeler lors de la sortie de la souris d'un bouton plein (bouton violet)
-     * afin de le rééclaircir
+     * Méthode appelée lors de la sortie de la souris d'un bouton de 
+     * style 'primary-button' (bouton plein violet) afin de remettre son style par 
+     * défaut.
      * Boutons utilisant cette méthode : 
      * - Bouton "Importer"
      * - Bouton "Afficher l'adresse IP"
@@ -83,8 +88,9 @@ public class VuePopUpImporterControleur {
     }
     
     /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton vide (bouton blanc)
-     * afin de le rendre plus foncer
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets) afin
+     * d'en changer le style
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
@@ -99,8 +105,9 @@ public class VuePopUpImporterControleur {
     }
     
     /**
-     * Methode appeler lors de la sortie de la souris d'un bouton vide (bouton blanc)
-     * afin de le rééclaircir
+     * Méthode appelée lors de la sortie de la souris d'un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets) afin de 
+     * remettre son style par défaut.
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
@@ -115,8 +122,9 @@ public class VuePopUpImporterControleur {
     }
     
     /**
-     * Methode appeler lors du clic sur le bouton "Etablir une connexion"
-     * Methode ne faisant rien pour l'instant (change le texte du bouton en "NON IMPLEMENTER"
+     * Méthode appelée lors du clic sur le bouton "Etablir une connexion"
+     * Méthode NON IMPLEMENTEE 
+     * (change le texte du bouton en "Implémentation en cours"
      */
     @FXML
     void etablirUneConnexionPresser(ActionEvent event) {
@@ -124,16 +132,19 @@ public class VuePopUpImporterControleur {
         Button bouton = (Button) event.getSource();
         
         bouton.setText("Implémentation en cours");
+        
+        // TODO : coder la méthode
     }
     
     
     /**
-     * Methode appeler lors du clic sur le bouton "Importer"
+     * Méthode appelée lors du clic sur le bouton "Importer"
      * Lance un explorateur de fichier afin que l'utilisateur puisse 
-     * séléctionner un .csv et lance donc la méthode du Modele d'importer,
-     * si invalide alors affiche un label rouge à gauche d'importer disant 
-     * que les données sont invalides, si l'importation c'est bien passer 
-     * alors ce label est en vert et dit que tout c'est bien passer
+     * sélectionner un .csv et lance donc la méthode du Modele d'importer.
+     * Si le fichier choisi est invalide,  alors affiche une Pop-Up expliquant les 
+     * raison de l'échec de l'importation, si l'importation s'est bien déroulée,
+     * la Pop-Up confirme le bon déroulement de l'importation et l'utilisateur 
+     * retourne sur la homepage.
      */
     @FXML
     void importerPresser(ActionEvent event) {

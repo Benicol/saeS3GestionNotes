@@ -1,5 +1,5 @@
 /*
- * EchangeurDeVue.java                                     26/05/2023
+ * EchangeurDeVue.java                                                    26/05/2023
  * IUT Rodez, info1 2022-2023, pas de copyright ni "copyleft"
  */
 package controleur;
@@ -17,13 +17,15 @@ import javafx.fxml.FXMLLoader;
 /**
  * Classe outil permettant de gérer le changement de la vue affichée par la
  * scene de l'application. 
- * @author Corinne Servieres, Benjamin Nicol, Jodie Monterde, 
+ * @author corinne.servieres, noah.miquel, 
+ * jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class EchangeurDeVue {
     
     private static HashMap<String, String> vues = new HashMap<>();    
-    /** getter du nom de la vue à partir de la clé
-     * @param codeVue 
+    /** 
+     * Getter du nom de la vue à partir de la clé
+     * @param codeVue le code correspondant à la vue
      * @return le chemin vers le module
      */
     public static String getNomVue(String codeVue) {
@@ -34,8 +36,10 @@ public class EchangeurDeVue {
     }
     
     private static HashMap <String, String> modules = new HashMap<>();
-    /** Getteur du module a partir de la clé
-     * @param codeModule code du module chercher
+    
+    /** 
+     * Getteur du module a partir de la clé
+     * @param codeModule code du module à chercher
      * @return le chemin vers le module
      */
     public static String getModule(String codeModule) {
@@ -118,7 +122,8 @@ public class EchangeurDeVue {
     /** @param popUpStage nouvelle valeur de popUpStage */
     public static void setPopUpStage(Stage popUpStage) {
         EchangeurDeVue.popUpStage = popUpStage;
-        EchangeurDeVue.popUpStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
+        EchangeurDeVue.popUpStage.getIcons().add(
+                                 new Image("vue/ressources/icone_application.png"));
     }
     
     /**
@@ -132,7 +137,8 @@ public class EchangeurDeVue {
         if (sceneCourante == null) {
 
             // pas de scène courante : impossible de modifier sa vue
-            throw new IllegalStateException("Echange de vue impossible. Pas de scène courante.");
+            throw new IllegalStateException("Echange de vue impossible. "
+                                            + "Pas de scène courante.");
         }
 
         try {
@@ -140,14 +146,16 @@ public class EchangeurDeVue {
             if (cache.containsKey(codeVue)) {
                 racine = cache.get(codeVue);
             } else {
-                racine = FXMLLoader.load(EchangeurDeVue.class.getResource(getNomVue(codeVue)));
+                racine = FXMLLoader.load(EchangeurDeVue.class.getResource(
+                                                               getNomVue(codeVue)));
                 if (garderEnMemoire) {
                     cache.put(codeVue, racine);
                 }
             }
             sceneCourante.setRoot(racine);
         } catch (IOException erreur) {
-            System.out.println("Echec du chargement de la vue de code " + codeVue + " => " + erreur.getMessage());
+            System.out.println("Echec du chargement de la vue de code " 
+                               + codeVue + " => " + erreur.getMessage());
         }
     }
     
@@ -161,8 +169,9 @@ public class EchangeurDeVue {
     }
     
     /**
-     * Modifie la vue associée à la scène de pop up, pour qu'elle devienne celle dont
-     * le code est donné en argument La scène pop up seras initialisé si pas sséjà initialisé
+     * Modifie la vue associée à la scène de pop up, pour qu'elle devienne celle 
+     * dont le code est donné en argument. La scène pop up sera initialisée ssi 
+     * elle n'est pas déjà initialisée
      * 
      * @param codeVue code de la vue à placer sur la scène courante
      * @param nomFenetre nom de la fenetre

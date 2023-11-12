@@ -1,3 +1,7 @@
+/*
+ * Main.java                                                             11 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package application;
 	
 import java.io.IOException;
@@ -13,23 +17,26 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
 
-/** TODO comment class responsibility (SRP)
- * @author benji
- *
+/** 
+ * Classe de main, point d'entrée de l'application
+ * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
         /*
-         * création d'un chargeur de code FXML et chargement de la vue de l'application
+         * Création d'un chargeur de code FXML et chargement de la vue de 
+         * l'application
          */
         EchangeurDeVue.setPrimaryStage(primaryStage);
         FXMLLoader chargeurFXML = new FXMLLoader();
         if (Modele.isParametrageInitialise()) {
-            chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("h")));
+            chargeurFXML.setLocation(getClass().getResource(
+                                                    EchangeurDeVue.getNomVue("h")));
         } else {
-            chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("i")));
+            chargeurFXML.setLocation(getClass().getResource(
+                                                    EchangeurDeVue.getNomVue("i")));
         }
         Parent racine;
         try {
@@ -37,10 +44,11 @@ public class Main extends Application {
             Scene scene = new Scene(racine);
             scene.getRoot().requestFocus();
 
-            // on définit les caractéristiques de la fenêtre et lui associe la scène
+            // On définit les caractéristiques de la fenêtre et lui associe la scène
             primaryStage.setTitle("Gestionnaire de note");
             EchangeurDeVue.setSceneCourante(scene);
-            primaryStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
+            primaryStage.getIcons().add(
+                                 new Image("vue/ressources/icone_application.png"));
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {
@@ -50,7 +58,6 @@ public class Main extends Application {
 
     /**
      * Programme principal
-     * 
      * @param args non utilisé
      */
     public static void main(String[] args) {

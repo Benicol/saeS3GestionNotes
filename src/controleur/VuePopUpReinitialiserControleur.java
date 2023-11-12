@@ -1,3 +1,7 @@
+/*
+ * VuePopUpReinitialiserController.java                                   9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 
 import javafx.event.ActionEvent;
@@ -7,21 +11,21 @@ import javafx.scene.input.MouseEvent;
 import modele.Modele;
 
 /** 
- * Controleur de la vue vue.VueReinitialiser.fxml
+ * Contrôleur de la vue vue.VuePopUpReinitialiser.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class VuePopUpReinitialiserControleur {
     /**
-     * Methode appelée lors du clic sur le bouton "annuler"
+     * Méthode appelée lors du clic sur le bouton "annuler"
      */
     @FXML
     void annulerPresser(ActionEvent event) {
-        // Ferme le popup
+        // Ferme la pop-up
         EchangeurDeVue.getPopUpStage().close();
     }
     /**
-     * Methode appelée lors de l'entrée de la souris sur un bouton plein (bouton violet)
-     * afin de le rendre plus foncé
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'primary-button' (bouton plein violet) afin d'en changer le style
      * Boutons utilisant cette méthode : 
      * - Bouton "Supprimer toutes les données"
      */
@@ -35,8 +39,9 @@ public class VuePopUpReinitialiserControleur {
         bouton.getStyleClass().add("primary-button-hover");
     }
     /**
-     * Methode appelée lors de la sortie de la souris d'un bouton plein (bouton violet)
-     * afin de le rééclaircir
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'primary-button' (bouton plein violet) afin de remettre son style par 
+     * défaut.
      * Boutons utilisant cette méthode : 
      * - Bouton "Supprimer toutes les données"
      */
@@ -50,8 +55,9 @@ public class VuePopUpReinitialiserControleur {
         bouton.getStyleClass().add("primary-button-not-hover");
     }
     /**
-     * Methode appelée lors de l'entrée de la souris sur un bouton vide (bouton blanc)
-     * afin de le rendre plus foncé
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets) afin
+     * d'en changer le style
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
@@ -65,8 +71,9 @@ public class VuePopUpReinitialiserControleur {
         bouton.getStyleClass().add("secondary-button-hover");
     }
     /**
-     * Methode appelée lors de la sortie de la souris d'un bouton vide (bouton blanc)
-     * afin de le rééclaircir
+     * Méthode appelée lors de la sortie de la souris d'un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets) afin de 
+     * remettre son style par défaut.
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
@@ -80,7 +87,7 @@ public class VuePopUpReinitialiserControleur {
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
     /**
-     * Methode appeler lors du clic sur le bouton "Supprimer toutes les données"
+     * Méthode appelée lors du clic sur le bouton "Supprimer toutes les données"
      */
     @FXML
     void supprimerToutesLesDonneesPresser(ActionEvent event) {

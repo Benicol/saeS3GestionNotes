@@ -1,3 +1,7 @@
+/*
+ * VueImportationController.java                                             9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 
 import java.io.File;
@@ -12,7 +16,7 @@ import javafx.scene.input.TransferMode;
 import modele.Modele;
 
 /** 
- * Controleur de la vue vue.Importation.fxml
+ * Contrôleur de la vue vue.VueImportation.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, jodie.monterde
  */
 public class VueImportationController {
@@ -34,7 +38,7 @@ public class VueImportationController {
     }
 
     /**
-     * Methode appelée lors que la souris rentre sur bouton Utilisateur
+     * Méthode appelée lorsque la souris entre sur le bouton Utilisateur
      */
     @FXML
     void utilisateurEntree(MouseEvent event) {
@@ -46,7 +50,7 @@ public class VueImportationController {
     }
 
     /**
-     * Methode appelée lors que la souris sort du bouton Utilisateur
+     * Méthode appelée lorsque la souris sort du bouton Utilisateur
      */
     @FXML
     void utilisateurSortie(MouseEvent event) {

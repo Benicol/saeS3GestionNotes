@@ -1,3 +1,7 @@
+/*
+ * VueHomepageController.java                                             9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 
 import modele.Competence;
@@ -27,10 +31,10 @@ import javafx.scene.text.Text;
 import javafx.scene.layout.HBox;
 
 /** 
- * Controleur de la vue vue.Homepage.fxml
+ * Contrôleur de la vue vue.Homepage.fxml
  */
 public class VueHomepageController {
-    /** Text donnant le numero du semestre et parcours */
+    /** Texte donnant le numéro du semestre et parcours */
     @FXML
     private Text nbSemestreParcours;
     /** Bouton invisible contenant le nom de l'utilisateur*/
@@ -38,7 +42,7 @@ public class VueHomepageController {
     private Button boutonUtilisateur;
     /** listePrincipal, VBox central de l'application */
     @FXML
-    private VBox listePrincipal;
+    private VBox listePrincipale;
     /** liste des ressources à gauche */
     @FXML
     private VBox listeRessources;
@@ -48,68 +52,70 @@ public class VueHomepageController {
     /** liste des competences à gauche */
     @FXML
     private VBox listesCompetences;
-    /** bouton Séléectionner dans le menu à gauche */
+    /** bouton Sélectionner dans le menu à gauche */
     private Button selected;
     /** Utiliser pour la modification des modalitées d'une évluation */
     private ArrayList<Integer> evalTmpId;
     /** Utiliser pour la modification des modalitées d'une évluation */
     private ArrayList<Integer> evalTmpIdRemoved;
     
-    //Zone d'initialisation de l'applciation
+    //Zone d'initialisation de l'application
     
     /**
      * Effectue les traitement suivant dans cette ordre : 
      * - initialise le semestre et parcours
      * - Initialise selected à null
-     * - Si le parametrage = null, alors lance la vue importer
-     * - Met en grand la fenetre
+     * - Si le paramétrage est null, alors lance la vue importer
+     * - Met en grand la fenêtre
      * - Met à jour l'utilisateur
-     * - Affiche les competences
+     * - Affiche les compétences
      * - Affiche les ressources
      * - Affiche les saes
      * - Affiche le message de bienvenue par défaut
      * @throws Exception 
-     * 
      */
     @FXML
     void initialize() throws Exception {
         // initialise le semestre et parcours
-        nbSemestreParcours.setText("Semestre " + Modele.getParametrage().getSemestre()
-                                   + " - Parcours " + Modele.getParametrage().getParcours());
+        nbSemestreParcours.setText("Semestre " + Modele.getParametrage()
+                                   .getSemestre() + " - Parcours " + 
+                                   Modele.getParametrage().getParcours());
         // Initialise selected à null
         selected = null;
-        // Met en grand la fenetre
+        // Met en grand la fenêtre
         EchangeurDeVue.getPrimaryStage().setMaximized(true);
         // Met à jour l'utilisateur
         boutonUtilisateur.setText(Modele.getUtilisateur().getPseudo());
-        // Affiche les competences
+        // Affiche les compétences
         setVBoxListeCompetence();
         // Affiche les ressources
         setVBoxListeRessouces();
-        // Affiche les saes
+        // Affiche les SAE
         setVBoxListeSaes();
         // Affiche le message de bienvenue par défaut
-        FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MB")));
+        FXMLLoader fxmlloader = new FXMLLoader(getClass()
+                                      .getResource(EchangeurDeVue.getModule("MB")));
         Parent root = fxmlloader.load();
         HBox hbox = (HBox) root;
         Label texte = (Label) ((VBox) hbox.getChildren().get(0)).getChildren().get(0);
         texte.setText("Bienvenue " + Modele.getUtilisateur().getPseudo());
-        listePrincipal.getChildren().add(hbox);
+        listePrincipale.getChildren().add(hbox);
 
     }
     
-    /* remplie la liste des compétences dans le menu à gauche */
+    /* Rempli la liste des compétences dans le menu à gauche */
     private void setVBoxListeCompetence() throws Exception {
-        // Récupère les compétences et les tris
+        // Récupère les compétences et les trie
         String[] keys = Modele.getCompetences().keySet().toArray(new String[0]);
         Arrays.sort(keys);
         for (String key : keys) {
             try {
-                //Charge le module
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MSMB")));
+                // Charge le module
+                FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                                                 EchangeurDeVue.getModule("MSMB")));
                 Parent root = fxmlloader.load();
                 Button button = (Button) root;
-                //Configure le module
+                // Configure le module
                 button.setText(Modele.getCompetences().get(key).creerIntitule());
                 button.setOnAction((event) -> {
                     try {
@@ -119,7 +125,7 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                 });
-                //Ajoute le module
+                // Ajoute le module
                 listesCompetences.getChildren().add(button);
             } catch (Exception e) {
                 throw new Exception("application corrompu (1) : " + e.getMessage());
@@ -127,18 +133,19 @@ public class VueHomepageController {
         }
     }
     
-    /* remplie la liste des ressources dans le menu à gauche */
+    /* Rempli la liste des ressources dans le menu à gauche */
     private void setVBoxListeRessouces() throws Exception {
-        // Récupère les ressources et les tris
+        // Récupère les ressources et les trie
         String[] keys = Modele.getRessources().keySet().toArray(new String[0]);
         Arrays.sort(keys);
         for (String key : keys) {
             try {
-                //Charge le module
-                FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MSMB")));
+                // Charge le module
+                FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                                                 EchangeurDeVue.getModule("MSMB")));
                 Parent root = fxmlloader.load();
                 Button button = (Button) root;
-                //Configure le module
+                // Configure le module
                 button.setText(Modele.getRessources().get(key).creerIntitule());
                 button.setOnAction((event) -> {
                     try {
@@ -148,7 +155,7 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                 });
-              //Ajoute le module
+              // Ajoute le module
                 listeRessources.getChildren().add(button);
             } catch (Exception e) {
                 throw new Exception("application corrompu (2) : " + e.getMessage());
@@ -156,18 +163,18 @@ public class VueHomepageController {
         }
     }
     
-    /* remplie la liste des saes dans le menu à gauche */
+    /* Rempli la liste des SAE dans le menu à gauche */
     private void setVBoxListeSaes() throws Exception {
-     // Récupère les saes et les tris
+        // Récupère les saes et les tris
         String[] keys = Modele.getSae().keySet().toArray(new String[0]);
         Arrays.sort(keys);
         for (String key : keys) {
             try {
-                //Charge le module
+                // Charge le module
                 FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MSMB")));
                 Parent root = fxmlloader.load();
                 Button button = (Button) root;
-                //Configure le module
+                // Configure le module
                 button.setText(Modele.getSae().get(key).creerIntitule());
                 button.setOnAction((event) -> {
                     try {
@@ -177,7 +184,7 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                 });
-                //Ajoute le module
+                // Ajoute le module
                 listeSaes.getChildren().add(button);
             } catch (Exception e) {
                 throw new Exception("application corrompu (3) : " + e.getMessage());
@@ -185,14 +192,14 @@ public class VueHomepageController {
         }
     }
     
-    /* Vide la liste principal de tous ces éléments */
-    private void viderListePrincipal() {
-        while (!listePrincipal.getChildren().isEmpty()) {
-            listePrincipal.getChildren().remove(0);
+    /* Vide la liste principale de tous ces éléments */
+    private void viderListePrincipale() {
+        while (!listePrincipale.getChildren().isEmpty()) {
+            listePrincipale.getChildren().remove(0);
         }
     }
     
-    /* Change quel bouton est visuelment séléctionner dans le menu */
+    /* Change quel bouton est visuellement sélectionné dans le menu */
     private void eltMenuSelectionner(Button button) {
         if (selected != null) {
             selected.getStyleClass().remove("side-nav-element-active");
@@ -203,17 +210,18 @@ public class VueHomepageController {
         selected.getStyleClass().add("side-nav-element-active");
     }
     
-    //Zone Reactiviter
+    // Zone Reactivitée
     
     /**
-     * Méthode appelé lors de l'entree de la souris dans un bouton plein (violet)
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'primary-button' (bouton plein violet)
      * Boutons utilisant cette méthode : 
      * - Afficher mes moyennes
      * - Importer
      * - Exporter
      * - Editer les modalitées (ressource séléctionnée)
      * - Ajouter (modification des modalitées)
-     * - valider (modification des modalitées)
+     * - Valider (modification des modalitées)
      */
     @FXML
     void primaryButtonEntered(MouseEvent event) {
@@ -225,14 +233,15 @@ public class VueHomepageController {
     }
     
     /**
-     * Méthode appelé lors de la sortie de la souris dans un bouton plein (violet)
+     * Méthode appelée lors de la sortie de la souris dans un bouton de 
+     * style 'primary-button' (bouton plein violet)
      * Boutons utilisant cette méthode : 
      * - Afficher mes moyennes
      * - Importer
      * - Exporter
      * - Editer les modalitées (ressource séléctionnée)
      * - Ajouter (modification des modalitées)
-     * - valider (modification des modalitées)
+     * - Valider (modification des modalitées)
      */
     @FXML
     void primaryButtonExited(MouseEvent event) {
@@ -244,7 +253,8 @@ public class VueHomepageController {
     }
     
     /**
-     * Méthode appelé lors de l'entrée de la souris dans un bouton vide (blanc)
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
      * - Reinitialiser
      * - oeuil (Competences et afficher les moyennes)
@@ -260,7 +270,8 @@ public class VueHomepageController {
     }
     
     /**
-     * Méthode appelé lors de la sortie de la souris dans un bouton vide (blanc)
+     * Méthode appelé lors de la sortie de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
      * - Reinitialiser
      * - oeuil (Competences et afficher les moyennes)
@@ -276,7 +287,7 @@ public class VueHomepageController {
     }
     
     /**
-     * Methode appelée quand le bouton "Exporter" est appuyée
+     * Méthode appelée quand le bouton "Exporter" est pressé
      */
     @FXML
     void exporterPresser(ActionEvent event) {
@@ -284,16 +295,15 @@ public class VueHomepageController {
     }
     
     /**
-     * Methode appelée quand le bouton "Importer" est appuyée
+     * Méthode appelée quand le bouton "Importer" est pressé
      */
     @FXML
     void importerPresser(ActionEvent event) {
         EchangeurDeVue.launchPopUp("vpui", "Importer");
-        System.out.println("importer presser");
     }
     
     /**
-     * Methode appelée quand le bouton "Reinitialiser" est appuyée
+     * Méthode appelée quand le bouton "Reinitialiser" est pressé
      */
     @FXML
     void reinitialiserPresser(ActionEvent event) {
@@ -304,7 +314,7 @@ public class VueHomepageController {
     }
     
     /**
-     * Methode appelée lors que la souris rentre sur bouton Utilisateur
+     * Méthode appelée lorsque la souris entre sur bouton Utilisateur
      */
     @FXML
     void utilisateurEntree(MouseEvent event) {
@@ -328,66 +338,69 @@ public class VueHomepageController {
     }
 
     /**
-     * Methode appelée quand le bouton "Utilisateur" est appuyée
+     * Méthode appelée quand le bouton "Utilisateur" est pressé
      */
     @FXML
     void utilisateurPresser(ActionEvent event) {
         System.out.println("utilisateur presser");
     }
     
-    //ZONE CALCUL MOYENNES
+    //ZONE CALCUL DES MOYENNES
     
     /**
-     * Methode appelée lors de l'appuit du bouton "afficher mes moyennes"
+     * Méthode appelée lors de l'appui du bouton "afficher mes moyennes"
      */
     @FXML
     void afficherMesMoyennesPresser(ActionEvent event) throws Exception {
-        viderListePrincipal();
+        viderListePrincipale();
         competenceMoyennes();
         ressourceMoyennes();
         saeMoyennes();
     }
     
     /**
-     * méthodes mettant les moyennes des comeptenceset son titre dans la vbox principal
+     * Méthode mettant les moyennes des compétences et son titre dans la vbox 
+     * principale
      */
     private void competenceMoyennes() throws Exception {
         try {
-            // charge la vue ModuleTitreSae
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
+            // Charge la vue ModuleTitreSae
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                                                  EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            //Lui associe le bon titre puis l'affiche
+            // Lui associe le bon titre puis l'affiche
             Text titre = (Text) hbox.getChildren().get(0);
             titre.setText("COMPETENCES");
-            listePrincipal.getChildren().add(hbox);
-            //verifie pour chaque compétences si ils sont calculables
+            listePrincipale.getChildren().add(hbox);
+            // Vérifie pour chaque compétences si elles sont calculables
             String[] cles = Modele.getCompetences().keySet().toArray(new String[0]);
             Arrays.sort(cles);
             for (String cle : cles) {
                 Competence competence = Modele.getCompetences().get(cle);
                 if (competence.isCalculable()) {
-                    //charge la vue ModuleMoyenne
-                    fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MM")));
+                    // Charge la vue ModuleMoyenne
+                    fxmlloader = new FXMLLoader(getClass().getResource(
+                                                   EchangeurDeVue.getModule("MM")));
                     root = fxmlloader.load();
                     hbox = (HBox) root;
-                    //va chercher les champs
+                    // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
                     titre = (Text) zoneEcriture.getChildren().get(0);
                     HBox zoneDroite = (HBox) hbox.getChildren().get(1);
-                    Button oeuil = (Button) zoneDroite.getChildren().get(1);
+                    Button oeil = (Button) zoneDroite.getChildren().get(1);
                     HBox zoneNote = (HBox) zoneDroite.getChildren().get(0);
                     Text note = (Text) zoneNote.getChildren().get(0);
-                    //remplis les champs
+                    // Rempli les champs
                     type.setText("Competence");
                     titre.setText(competence.creerIntitule());
                     note.setText(String.format("%.2f", competence.calculerMoyenne())); 
                     int boutonId = Integer.parseInt(competence.getIdentifiant().substring(3, 4)) - 1;
                     Button bouttonCompetence = (Button) listesCompetences.getChildren().get(boutonId);
-                    oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
-                    oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
-                    oeuil.setOnAction((event) -> {
+                    oeil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+                    oeil.setOnMouseExited((event) -> secondaryButtonExited(event));
+                    oeil.setOnAction((event) -> {
                     eltMenuSelectionner(bouttonCompetence);
                     try {
                         competenceCliquer(competence);
@@ -395,8 +408,8 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                     });
-                    //met la HBox dans la liste principal
-                    listePrincipal.getChildren().add(hbox);
+                    // Met la HBox dans la liste principale
+                    listePrincipale.getChildren().add(hbox);
                 }
             } 
         } catch (Exception e) {
@@ -406,29 +419,30 @@ public class VueHomepageController {
     }
     
     /**
-     * méthodes mettant les moyennes des ressources et son titre dans la vbox principal
+     * Méthodes mettant les moyennes des ressources et son titre dans la 
+     * vbox principale
      */
     private void ressourceMoyennes() throws Exception {
         try {
-            // charge la vue ModuleTitreSae
+            // Charge la vue ModuleTitreSae
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
             Text titre = (Text) hbox.getChildren().get(0);
-            //Lui associe le bon titre puis l'affiche
+            // Lui associe le bon titre puis l'affiche
             titre.setText("RESSOURCES");
-            listePrincipal.getChildren().add(hbox);
-            //verifie pour chaque ressources si ils sont calculables
+            listePrincipale.getChildren().add(hbox);
+            // Verifie pour chaque ressources si ils sont calculables
             String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
             Arrays.sort(cles);
             for (String cle : cles) {
                 Ressource ressource = Modele.getRessources().get(cle);
                 if (ressource.isCalculable()) {
-                    //charge la vue ModuleMoyenne
+                    // Charge la vue ModuleMoyenne
                     fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MM")));
                     root = fxmlloader.load();
                     hbox = (HBox) root;
-                    //va chercher les champs
+                    // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
                     titre = (Text) zoneEcriture.getChildren().get(0);
@@ -436,7 +450,7 @@ public class VueHomepageController {
                     Button oeuil = (Button) zoneDroite.getChildren().get(1);
                     HBox zoneNote = (HBox) zoneDroite.getChildren().get(0);
                     Text note = (Text) zoneNote.getChildren().get(0);
-                    //remplis les champs
+                    // Rempli les champs
                     type.setText("Ressource");
                     titre.setText(ressource.creerIntitule());
                     note.setText(String.format("%.2f", ressource.calculerMoyenne())); 
@@ -453,8 +467,8 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                     });
-                    //met la HBox dans la liste principal
-                    listePrincipal.getChildren().add(hbox);
+                    // Met la HBox dans la liste principal
+                    listePrincipale.getChildren().add(hbox);
                 }
             }
         } catch (Exception e) {
@@ -467,25 +481,25 @@ public class VueHomepageController {
      */
     private void saeMoyennes() throws Exception {
         try {
-            // charge la vue ModuleTitreSae
+            // Charge la vue ModuleTitreSae
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            //Lui associe le bon titre puis l'affiche
+            // Lui associe le bon titre puis l'affiche
             Text titre = (Text) hbox.getChildren().get(0);
-            titre.setText("SAES");
-            listePrincipal.getChildren().add(hbox);
-            //verifie pour chaque saes si ils ont une note
+            titre.setText("SAE");
+            listePrincipale.getChildren().add(hbox);
+            // Vérifie pour chaque SAE si elles ont une note
             String[] cles = Modele.getSae().keySet().toArray(new String[0]);
             Arrays.sort(cles);
             for (String cle : cles) {
                 Sae sae = Modele.getSae().get(cle);
                 if (sae.getNote() != null) {
-                    //charge la vue ModuleMoyenne
+                    // Charge la vue ModuleMoyenne
                     fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MM")));
                     root = fxmlloader.load();
                     hbox = (HBox) root;
-                    //va chercher les champs
+                    // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
                     titre = (Text) zoneEcriture.getChildren().get(0);
@@ -493,8 +507,8 @@ public class VueHomepageController {
                     Button oeuil = (Button) zoneDroite.getChildren().get(1);
                     HBox zoneNote = (HBox) zoneDroite.getChildren().get(0);
                     Text note = (Text) zoneNote.getChildren().get(0);
-                    //remplis les champs
-                    type.setText("Sae");
+                    // Rempli les champs
+                    type.setText("SAE");
                     titre.setText(sae.creerIntitule());
                     note.setText(String.format("%.2f", sae.getNote())); 
                     Button bouton = null;
@@ -515,8 +529,8 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                     });
-                    //met la HBox dans la liste principal
-                    listePrincipal.getChildren().add(hbox);
+                    // Met la HBox dans la liste principale
+                    listePrincipale.getChildren().add(hbox);
                 }
             }
         } catch (Exception e) {
@@ -524,17 +538,17 @@ public class VueHomepageController {
         }
     }
     
-    //COMPETENCE
+    // COMPETENCES
     
     /*
-     * S'active quand un bouton competence est cliquer dans le menu
+     * S'active quand un bouton compétence est pressé dans le menu
      */
     private void competenceCliquer(Competence competence) throws Exception {
-        // Vide la vue principal
-        viderListePrincipal();
-        //Ajoute le titre de la compétence
+        // Vide la vue principale
+        viderListePrincipale();
+        // Ajoute le titre de la compétence
         ajouterTitreComeptence(competence);
-        //Pour chaque ressource associé, les affiche
+        // Pour chaque ressource associé, les affiche
         String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
         Arrays.sort(cles);
         for(String cle : cles) {
@@ -543,7 +557,7 @@ public class VueHomepageController {
                 ajouterRessourceComeptence(ressource, competence.getListeRessources().get(ressource));
             }
         }
-        //Pour chaque ressource associé, les affiche
+        // Pour chaque ressource associée, les affiche
         cles = Modele.getSae().keySet().toArray(new String[0]);
         Arrays.sort(cles);
         for(String cle : cles) {
@@ -576,10 +590,10 @@ public class VueHomepageController {
                     note.setFill(Color.ORANGERED);
                 }
             } else {
-                note.setText("Moyenne indisponible");
+                note.setText("Moyenne incalculable");
                 diviseur.setText("");
             }
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (4) : " + e.getMessage());
         }
@@ -608,12 +622,12 @@ public class VueHomepageController {
             if (ressource.isCalculable()) {
                 note.setText(String.format("%.2f", ressource.calculerMoyenne())); 
             } else {
-                note.setText("Moyenne indisponible");
+                note.setText("Moyenne incalculable");
                 diviseur.setText("");
             }
             int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
             Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
             oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
             oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
             oeuil.setOnAction((event) -> {
@@ -629,7 +643,7 @@ public class VueHomepageController {
         }
     }
     /*
-     * Ajoute les saes dans la competence
+     * Ajoute les SAE dans la compétence
      */
     private void ajouterSaeComeptence(Sae sae, Double poids) throws Exception {
         try {
@@ -647,12 +661,12 @@ public class VueHomepageController {
             Text note = (Text) zoneNote.getChildren().get(0);
             Text diviseur = (Text) zoneNote.getChildren().get(1);
             ponderation.setText(String.format("%.0f ", poids * 100) + "%");
-            type.setText("Sae");
+            type.setText("SAE");
             titre.setText(sae.creerIntitule());
             if (sae.getNote() != null) {
                 note.setText(String.format("%.2f", sae.getNote())); 
             } else {
-                note.setText("Note non définie");
+                note.setText("Note indéfinie");
                 diviseur.setText("");
             }
             Button bouton = null;
@@ -664,7 +678,7 @@ public class VueHomepageController {
             }
             Button boutonCherche = bouton;
             
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
             oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
             oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
             oeuil.setOnAction((event) -> {
@@ -679,17 +693,20 @@ public class VueHomepageController {
         }
     }
     
-    //RESSOURCE NORMAL
+    // RESSOURCE NORMALE
     
     /*
-     * Est appelé quand une ressource est séléctionner
+     * Est appelée quand une ressource est sélectionnée
      */
     private void ressourceCliquer(Ressource ressource) throws Exception {
-        // vide la vbox principal
-        viderListePrincipal();
-        //ajoute le titre de la ressource
+        // Vide la vbox principale
+        viderListePrincipale();
+        // Ajoute le titre de la ressource
         ajouterTitreRessource(ressource);
-        //pour chaque evaluation associé rajoute son cadre, si il n'y a pas d"évaluations mais un cadre informatif
+        /*
+         * Pour chaque évaluation associée, ajoute son cadre,
+         * et s'il n'y a pas d"évaluation, ajoute un cadre informatif 
+         */
         ArrayList<Evaluation> listeEvaluation = ressource.getListeEvaluations();
         if (listeEvaluation.isEmpty()){
             afficherEvaluationVide();
@@ -734,24 +751,24 @@ public class VueHomepageController {
                     note.setFill(Color.ORANGERED);
                 }
             } else {
-                note.setText("Moyenne indisponible");
+                note.setText("Moyenne incalculable");
                 diviseur.setText("");
             }
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (7) : " + e.getMessage());
         }
     }
     
     /*
-     * Ajoute une evaluation
+     * Ajoute une évaluation
      */
     private void ajouterEvaluation(Evaluation eval, Ressource ressource) throws Exception {
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MEval")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            //Récupération de tous les éléments
+            // Récupération de tous les éléments
             VBox colonneGauche = (VBox) hbox.getChildren().get(0);
             HBox ligneHaute = (HBox) colonneGauche.getChildren().get(0);
             Text ponderation = (Text) ((HBox) ligneHaute.getChildren().get(0)).getChildren().get(0);
@@ -761,7 +778,7 @@ public class VueHomepageController {
             HBox colonneDroite = (HBox) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
             Label feedback = (Label) colonneDroite.getChildren().get(0);
             TextField noteText = (TextField) colonneDroite.getChildren().get(1);
-            //setter des éléments
+            // Setter des éléments
             ponderation.setText(String.format("%.0f ", eval.getPoids() * 100) + "%");
             nomEval.setText(eval.getNom());
             date.setText(eval.getDate());
@@ -775,20 +792,20 @@ public class VueHomepageController {
             if (note != null) {
                 noteText.setText(note.toString());
             }
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (8) : " + e.getMessage() + ",");
         }
     }
     /*
-     * Affichage dans le cas où il n'y a aucune évalauation
+     * Affichage dans le cas où il n'y a aucune évaluation
      */
     private void afficherEvaluationVide() throws Exception {
         try {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MEvalV")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (9) : " + e.getMessage() + ",");
         }
@@ -804,13 +821,13 @@ public class VueHomepageController {
                 feedback.getStyleClass().remove("negatif");
             }
             feedback.getStyleClass().add("positif");
-            feedback.setText("Note valide, note enregistré  ");
+            feedback.setText("Note valide, sauvegarde effectuée");
         } catch (IllegalArgumentException e) {
             if (feedback.getStyleClass().contains("positif")) {
                 feedback.getStyleClass().remove("positif");
             }
             feedback.getStyleClass().add("negatif");
-            feedback.setText("Note invalide, note pas enregistré  ");
+            feedback.setText("Note invalide, format non accepté");
         }
         updateMoyenneEvaluation(ressource);
     }
@@ -818,7 +835,7 @@ public class VueHomepageController {
      * Met à jour la moyenne suite au changement d'une note
      */
     private void updateMoyenneEvaluation(Ressource ressource) {
-        HBox hbox = (HBox) listePrincipal.getChildren().get(0);
+        HBox hbox = (HBox) listePrincipale.getChildren().get(0);
         Text note = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
         Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
         if (ressource.isCalculable()) {
@@ -832,36 +849,39 @@ public class VueHomepageController {
                 note.setFill(Color.ORANGERED);
             }
         } else {
-            note.setText("Moyenne indisponible");
+            note.setText("Moyenne incalculable");
             diviseur.setText("");
             note.setFill(Color.valueOf("#E8E3E8"));
         }
     }
     
-    //RESSOURCE EDITER MODALITER
+    // RESSOURCE EDITER MODALITES
     
     /*
-     * Appelé lors su clic du bouton modifier une ressource
+     * Appelée lors du clic du bouton modifier une ressource
      */
     private void modaliteCliquer(Ressource ressource) throws Exception {
-        //set ces tableau qui permeterons de suivre qu"elles évluations on été supprimé ect
+        /*
+         *  Set ces tableaux qui permettrons de suivre quelles évluations 
+         *  ont été supprimées etc.
+         */
         evalTmpId = new ArrayList<>();
         evalTmpIdRemoved = new ArrayList<>();
-        //vide la vue principal
-        viderListePrincipal();
-        //Insere le titre
+        // Vide la vue principale
+        viderListePrincipale();
+        // Insere le titre
         modaliteTitre(ressource);
-        //ajoute les évluations déjà existantes
+        // Ajoute les évluations déjà existantes
         int i = 0;
         for (Evaluation eval : ressource.getListeEvaluations()) {
             modaliteElement(eval, i);
             i++;
         }
-        //ajoute le bouton ajouter
+        // Ajoute le bouton ajouter
         modaliteBouton();
     }
     /*
-     * ajoute le titre
+     * Ajoute le titre
      */
     private void modaliteTitre(Ressource ressource) throws Exception {
         try {
@@ -891,14 +911,14 @@ public class VueHomepageController {
                     e.printStackTrace();
                 }
             });
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (10) : " + e.getMessage());
         }
     }
     
     /*
-     * Ajoute un encadrer évluation
+     * Ajoute un encadré évaluation
      */
     private void modaliteElement(Evaluation evaluation, int index) throws Exception {
         
@@ -932,14 +952,14 @@ public class VueHomepageController {
             boutonSupprimer.setOnMouseExited((event) -> primaryButtonExited(event));
             boutonSupprimer.setOnAction((event) -> retirer(hbox, index));
             evalTmpId.add(index);
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (11) : " + e.getMessage());
         }
     }
     
     /*
-     * ajoute le bouton ajouter
+     * Ajoute le bouton ajouter
      */
     private void modaliteBouton() throws Exception {
         try {
@@ -956,35 +976,36 @@ public class VueHomepageController {
                     e.printStackTrace();
                 }
             });
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (11) : " + e.getMessage());
         }
     }
     
     /*
-     * Retire uen évaluation
+     * Retire une évaluation
      */
     private void retirer(HBox hbox, int index) {
         evalTmpIdRemoved.add(evalTmpId.remove(evalTmpId.indexOf(index)));
-        listePrincipal.getChildren().remove(hbox);
+        listePrincipale.getChildren().remove(hbox);
     }
     
     /*
-     * Ajoute une évluation
+     * Ajoute une évaluation
      */
     private void ajouter() throws Exception {
         try {
-            HBox boutonAjouter = (HBox) listePrincipal.getChildren().remove(listePrincipal.getChildren().size() - 1);
+            HBox boutonAjouter = (HBox) listePrincipale.getChildren()
+                                  .remove(listePrincipale.getChildren().size() - 1);
             modaliteElement(null, -1);
-            listePrincipal.getChildren().add(boutonAjouter);
+            listePrincipale.getChildren().add(boutonAjouter);
         } catch (Exception e) {
             throw new Exception("application corrompu (12) : " + e.getMessage());
         }
     }
     
     /*
-     * Lancer quand le bouton annuler est appuyé
+     * Lancée quand le bouton annuler est pressé
      */
     private void annulerModalite(Ressource ressource) throws Exception {
         evalTmpId = null;
@@ -993,19 +1014,23 @@ public class VueHomepageController {
     }
     
     /*
-     * lancé quand le bouton sauvegarder est appuyé
+     * Lancée quand le bouton sauvegarder est pressé
      */
     private void sauvegarderPresser(Ressource ressource) throws Exception {
         if (verifierModalite()) {
             int i = 1;
             for (int index : evalTmpId) {
-                HBox racine = (HBox) listePrincipal.getChildren().get(i);
+                HBox racine = (HBox) listePrincipale.getChildren().get(i);
                 VBox colonne = (VBox) racine.getChildren().get(0);
-                TextField tDesc = (TextField) ((HBox) colonne.getChildren().get(0)).getChildren().get(1);
-                TextField tPoids = (TextField) ((HBox) colonne.getChildren().get(1)).getChildren().get(1);
-                TextField tDate = (TextField) ((HBox) colonne.getChildren().get(2)).getChildren().get(1);
+                TextField tDesc = (TextField) ((HBox) colonne.getChildren()
+                        .get(0)).getChildren().get(1);
+                TextField tPoids = (TextField) ((HBox) colonne.getChildren().get(1))
+                        .getChildren().get(1);
+                TextField tDate = (TextField) ((HBox) colonne.getChildren().get(2))
+                        .getChildren().get(1);
                 String description = tDesc.getText();
-                Double ponderation = (Double.parseDouble(tPoids.getText().replaceAll("[^0-9.,]", "")) / 100);
+                Double ponderation = (Double.parseDouble(tPoids.getText()
+                        .replaceAll("[^0-9.,]", "")) / 100);
                 String date = tDate.getText();
                 if (index > -1) {
                     Evaluation eval = ressource.getListeEvaluations().get(index);
@@ -1026,25 +1051,28 @@ public class VueHomepageController {
             annulerModalite(ressource);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("DONNEES INVALIDES");
-            alert.setHeaderText("Assurez-vous que toutes les déscription soit bien remplie "
-                    + "et que la somme des poids est égal à 100!");
+            alert.setTitle("INFORMATIONS INVALIDES");
+            alert.setHeaderText("Assurez-vous que toutes les descriptions soient "
+                    + "correctement renseignées et que la somme des poids soit "
+                    + "égale à 100!");
             alert.showAndWait();
         }
     }
     
     /*
-     * Verifie si les modalités sont correctes 
-     * (appelé par la méthode saucegarder)
+     * Vérifie si les modalités sont correctes 
+     * (appelée par la méthode sauvegarder)
      */
     private boolean verifierModalite() throws Exception {
         int poids = 0;
         boolean ok = true;
-        for (int i = 1; i < listePrincipal.getChildren().size() - 1 && ok; i++) {
-            HBox racine = (HBox) listePrincipal.getChildren().get(i);
+        for (int i = 1; i < listePrincipale.getChildren().size() - 1 && ok; i++) {
+            HBox racine = (HBox) listePrincipale.getChildren().get(i);
             VBox colonne = (VBox) racine.getChildren().get(0);
-            TextField tDesc = (TextField) ((HBox) colonne.getChildren().get(0)).getChildren().get(1);
-            TextField tPoids = (TextField) ((HBox) colonne.getChildren().get(1)).getChildren().get(1);
+            TextField tDesc = (TextField) ((HBox) colonne.getChildren().get(0))
+                    .getChildren().get(1);
+            TextField tPoids = (TextField) ((HBox) colonne.getChildren().get(1))
+                    .getChildren().get(1);
             if (tDesc.getText().equals("")) {
                 ok = false;
             }
@@ -1074,38 +1102,40 @@ public class VueHomepageController {
     //SAE
     
     /*
-     * Appelé lors du clic sur un boutopn sae dans le menu
+     * Appelée lors du clic sur un boutopn sae dans le menu
      */
     private void saeCliquer(Sae sae) throws Exception {
-        // vide la vue principal
-        viderListePrincipal();
-        // ajoute le titre
+        // Vide la vue principale
+        viderListePrincipale();
+        // Ajoute le titre
         ajouterTitreSae(sae);
-        //ajoute la note de la sae
+        // Ajoute la note de la sae
         ajouterElementSae(sae);
     }
     /*
-     * ajotue le titre de la sae
+     * Ajoute le titre de la sae
      */
     private void ajouterTitreSae(Sae sae) throws Exception {
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                    EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
             Text titre = (Text) hbox.getChildren().get(0);
             titre.setText(sae.creerIntitule());
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (5) : " + e.getMessage());
         }
     }
     
     /*
-     * ajoute la note de la sae
+     * Ajoute la note de la sae
      */
     private void ajouterElementSae(Sae sae) throws Exception {
         try {
-            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MS")));
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                    EchangeurDeVue.getModule("MS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
             TextField titre = (TextField) ((HBox) ((HBox) hbox.getChildren().get(1))
@@ -1121,23 +1151,25 @@ public class VueHomepageController {
             if (note != null) {
                 titre.setText(note.toString());
             }
-            listePrincipal.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (6) : " + e.getMessage());
         }
     }
     /*
-     * Methode appelé dans le cas su changement d'une note
+     * Méthode appelée dans le cas du changement d'une note
      */
     private void noteChangerSae(Sae sae) {
-        Label feedback = (Label) ((HBox) ((HBox) ((HBox) listePrincipal.getChildren().get(1))
-                                                                     .getChildren().get(1))
-                                                                     .getChildren().get(0))
-                                                                     .getChildren().get(0);
-        TextField reponse = (TextField) ((HBox) ((HBox) ((HBox) listePrincipal.getChildren().get(1))
-                                                                              .getChildren().get(1))
-                                                                              .getChildren().get(0))
-                                                                              .getChildren().get(1);
+        Label feedback = (Label) ((HBox) ((HBox) ((HBox) listePrincipale
+                                                              .getChildren().get(1))
+                                                              .getChildren().get(1))
+                                                              .getChildren().get(0))
+                                                              .getChildren().get(0);
+        TextField reponse = (TextField) ((HBox) ((HBox) ((HBox) listePrincipale
+                                                              .getChildren().get(1))
+                                                              .getChildren().get(1))
+                                                              .getChildren().get(0))
+                                                              .getChildren().get(1);
         try {
             sae.setNote(Double.parseDouble(reponse.getText()));
             Modele.sauvegarder();
@@ -1145,13 +1177,13 @@ public class VueHomepageController {
                 feedback.getStyleClass().remove("negatif");
             }
             feedback.getStyleClass().add("positif");
-            feedback.setText("Note valide, note enregistré  ");
+            feedback.setText("Note valide, sauvegarde effectuée");
         } catch (IllegalArgumentException e) {
             if (feedback.getStyleClass().contains("positif")) {
                 feedback.getStyleClass().remove("positif");
             }
             feedback.getStyleClass().add("negatif");
-            feedback.setText("Note invalide, note pas enregistré  ");
+            feedback.setText("Note invalide, format non accepté");
         }
     }
 }
