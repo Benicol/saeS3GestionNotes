@@ -110,7 +110,6 @@ public class VuePopUpExporterControleur {
     @FXML
     void boutonSelectionPresser(ActionEvent event) {
     	Button bouton = (Button) event.getSource();
-    	System.out.println(bouton.getId());
     	Image image;
         if(bouton.getStyleClass().contains("secondary-button")) {
         	image = new Image(getClass().getResource("../vue/ressources/icone_moins.png").toExternalForm());
@@ -135,8 +134,6 @@ public class VuePopUpExporterControleur {
             modalites = !modalites;
             logoModalites.setImage(image);
         }
-        System.out.println("programme : " + programme);
-        System.out.println("modalites : " + modalites);
     }
     private void onMouseSwitch(Button bouton, String type) {
         if (type.equals("primary")) {

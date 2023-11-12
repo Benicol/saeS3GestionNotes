@@ -255,7 +255,6 @@ public class VueHomepageController {
                     selected.getStyleClass().add("side-nav-element-inactive-not-hover");
                     selected.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
                     selected.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
-                    System.out.println("1 : " + selected.getStyleClass());
                 }
                 selected = button;
                 selected.getStyleClass().remove("side-nav-element-inactive");
@@ -264,7 +263,6 @@ public class VueHomepageController {
                 selected.getStyleClass().add("side-nav-element-active-not-hover");
                 selected.setOnMouseEntered(null);
                 selected.setOnMouseExited(null);
-                System.out.println(selected.getStyleClass());
             }
         }
     }
@@ -348,19 +346,15 @@ public class VueHomepageController {
     void sideNavButtonInactiveEntered(MouseEvent event) {
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
-        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
         bouton.getStyleClass().remove("side-nav-element-inactive-not-hover");
         bouton.getStyleClass().add("side-nav-element-inactive-hover");
-        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
     }
     
     void sideNavButtonInactiveExited(MouseEvent event) {
         Button bouton = (Button) event.getSource();
-        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
         // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("side-nav-element-inactive-hover");
         bouton.getStyleClass().add("side-nav-element-inactive-not-hover");
-        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
     }
     
     /**

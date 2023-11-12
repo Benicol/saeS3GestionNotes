@@ -25,11 +25,8 @@ public class OutilCSV {
         StringBuilder donneesCSV = new StringBuilder();
         for (String[] ligne : donnees) {
             for (String elt : ligne ) {
-                System.out.print("|" + elt + "|");
             }
-            System.out.println();
             for (int i = 0; i < ligne.length; i++) {
-                System.out.println("i :" + i + " " + "length : " + ligne.length);
                 donneesCSV.append(ligne[i] + ";");
                 if (i == ligne.length - 1) {
                     donneesCSV.deleteCharAt(donneesCSV.length() - 1);
@@ -37,7 +34,6 @@ public class OutilCSV {
                 }
             }
         }
-        System.out.println(donneesCSV.toString().substring(0, donneesCSV.length() - 1).replace("\\", "\\"));
         return donneesCSV.toString().substring(0, donneesCSV.length() - 1);
     }
 

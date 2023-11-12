@@ -50,7 +50,6 @@ public class Ressource implements Enseignement, Serializable {
         ajoutOk = true;
         listeEvaluations.add(aAjouter);
         if (!verifierPonderation()) {
-            System.out.println("REMOVED AHHHH");
             listeEvaluations.remove(aAjouter);
             ajoutOk = false;
         }
