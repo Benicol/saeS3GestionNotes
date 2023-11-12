@@ -2,7 +2,9 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -14,7 +16,7 @@
    <children>
       <VBox spacing="4.0" HBox.hgrow="ALWAYS">
          <children>
-            <HBox spacing="8.0" VBox.vgrow="ALWAYS">
+            <HBox maxWidth="1000.0" spacing="8.0" VBox.vgrow="ALWAYS">
                <children>
                   <HBox alignment="CENTER" prefWidth="50.0" styleClass="ponderation-label">
                      <children>
@@ -28,11 +30,11 @@
                         <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                      </padding>
                   </HBox>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="R2.01 - Qualité de développement">
+                  <Label maxWidth="1000.0" styleClass="label-noir" text="Label">
                      <font>
                         <Font name="Verdana Bold" size="24.0" />
                      </font>
-                  </Text>
+                  </Label>
                </children>
             </HBox>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ressource">
@@ -70,6 +72,9 @@
                   <String fx:value="secondary-button" />
                   <String fx:value="secondary-button-not-hover" />
                </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>

@@ -1,6 +1,7 @@
 package controleur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -10,7 +11,7 @@ import modele.Modele;
  * Controleur de la vue vue.vueChoixPseudo.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class VueChoixPseudoControleur {
+public class VuePopUpChoixPseudoControleur {
     /**
      * TexteField contenant le pseudo
      */
@@ -32,7 +33,7 @@ public class VueChoixPseudoControleur {
      * - Bouton "Etablir une connexion"
      */
     @FXML
-    void boutonPleinEntree(MouseEvent event) {
+    void primaryButtonEntered(MouseEvent event) {
      // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -47,7 +48,7 @@ public class VueChoixPseudoControleur {
      * - Bouton "Etablir une connexion"
      */
     @FXML
-    void boutonPleinSortie(MouseEvent event) {
+    void primaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -62,7 +63,7 @@ public class VueChoixPseudoControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideEntree(MouseEvent event) {
+    void secondaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -78,7 +79,7 @@ public class VueChoixPseudoControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideSortie(MouseEvent event) {
+    void secondaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -91,8 +92,23 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void changerDePseudoPresser(ActionEvent event) {
+        String messageErreur = null;
     	if (!pseudoInput.getText().trim().equals("")) {
-    		Modele.getUtilisateur().setPseudo(pseudoInput.getText());
+    	    if (pseudoInput.getText().trim().length() < 40) {
+    	        Modele.getUtilisateur().setPseudo(pseudoInput.getText());
+    	        Modele.sauvegarder();
+    	        EchangeurDeVue.getPopUpStage().close();
+    	    } else {
+    	        messageErreur = "il fait plus de 40 lettres !";
+    	    }
+    	} else {
+    	    messageErreur = "vous n'avez pas saisi de pseudo !";
+    	}
+    	if (messageErreur != null) {
+    	    Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("PSEUDO INVALIDES");
+            alert.setHeaderText("Votre pseudo est invalide : " + messageErreur);
+            alert.showAndWait();
     	}
     }
 

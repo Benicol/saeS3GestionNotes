@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <HBox stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox HBox.hgrow="ALWAYS">
+      <HBox maxWidth="1000.0" HBox.hgrow="ALWAYS">
          <children>
-            <Text fx:id="titre" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="U2.01 - Réaliser">
+            <Label maxWidth="1000.0" text="Label" styleClass="label-blanc">
                <font>
                   <Font name="Verdana Bold" size="24.0" />
                </font>
-            </Text>
+            </Label>
          </children>
       </HBox>
       <HBox alignment="TOP_RIGHT" prefHeight="40.0" HBox.hgrow="ALWAYS">

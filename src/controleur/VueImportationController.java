@@ -4,8 +4,6 @@
  */
 package controleur;
 
-import java.io.File;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,6 +12,7 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import modele.Modele;
+import modele.Ressource;
 
 /** 
  * Contrôleur de la vue vue.VueImportation.fxml
@@ -34,14 +33,15 @@ public class VueImportationController {
 
     @FXML
     void utilisateurPresser(ActionEvent event) {
-
+        EchangeurDeVue.launchPopUp("vcp", "Changement de nom d'utilisateur");
+        boutonUtilisateur.setText(Modele.getUtilisateur().getPseudo());
     }
 
     /**
      * Méthode appelée lorsque la souris entre sur le bouton Utilisateur
      */
     @FXML
-    void utilisateurEntree(MouseEvent event) {
+    void userEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
@@ -53,7 +53,7 @@ public class VueImportationController {
      * Méthode appelée lorsque la souris sort du bouton Utilisateur
      */
     @FXML
-    void utilisateurSortie(MouseEvent event) {
+    void userExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.

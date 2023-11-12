@@ -69,7 +69,8 @@ public class EchangeurDeVue {
         vues.put("vpur", "..\\vue\\VuePopUpReinitialiser.fxml");
         vues.put("i", "..\\vue\\VueImportation.fxml");
         vues.put("vpui", "..\\vue\\VuePopUpImporter.fxml");
-        vues.put("ve", "..\\vue\\VueExporter.fxml");
+        vues.put("ve", "..\\vue\\VuePopUpExporter.fxml");
+        vues.put("vcp", "..\\vue\\VuePopUpChoixPseudo.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
         modules.put("MEval", "..\\vue\\modules\\ModuleEvaluation.fxml");

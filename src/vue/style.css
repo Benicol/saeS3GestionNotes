@@ -22,7 +22,7 @@
 }
 
 .secondary-button-hover {
-    -fx-background-color : #D8C0F6;
+    -fx-background-color : #49424A;
 }
 
 .secondary-button-not-hover {
@@ -38,7 +38,7 @@
 }
 
 .primary-button-hover {
-    -fx-background-color : #5A18AF;
+    -fx-background-color : #7535C8;
 }
 
 .button {
@@ -60,12 +60,27 @@
 
 .side-nav-element-active {
 	-fx-text-fill : white;
+}
+
+.side-nav-element-active-not-hover {
 	-fx-background-color :  #9555E8;
+}
+
+.side-nav-element-active-hover {
+	-fx-background-color :  #7535C8;
 }
 
 .side-nav-element-inactive {
 	-fx-text-fill : #9555E8;
+}
+
+.side-nav-element-inactive-not-hover {
 	-fx-background-color : transparent;
+}
+
+.side-nav-element-inactive-hover {
+	-fx-text-fill : #9555E8;
+	-fx-background-color : #C8C3C8;
 }
 
 .side-nav-element {
@@ -88,7 +103,7 @@
 }
 
 .utilisateur-hover {
-	-fx-text-fill : gray;
+	-fx-text-fill : #AFAFAF;
 }
 
 .positif {
@@ -97,6 +112,14 @@
 
 .negatif {
 	-fx-text-fill : red;
+}
+
+.label-noir {
+	-fx-text-fill : black;
+}
+
+.label-blanc {
+	-fx-text-fill : white;
 }
 
 .import-button {

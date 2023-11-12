@@ -64,7 +64,7 @@ public class VueHomepageController {
     private ArrayList<Integer> evalTmpId;
     /** Utiliser pour la modification des modalitées d'une évluation */
     private ArrayList<Integer> evalTmpIdRemoved;
-    
+    private Label bienvenueX = null;
     private Ressource ressourceModifier = null;
     
     private boolean dansModifierModalite() {
@@ -112,8 +112,8 @@ public class VueHomepageController {
                                       .getResource(EchangeurDeVue.getModule("MB")));
         Parent root = fxmlloader.load();
         HBox hbox = (HBox) root;
-        Label texte = (Label) ((VBox) hbox.getChildren().get(0)).getChildren().get(0);
-        texte.setText("Bienvenue " + Modele.getUtilisateur().getPseudo());
+        bienvenueX = (Label) ((VBox) hbox.getChildren().get(0)).getChildren().get(0);
+        bienvenueX.setText("Bienvenue " + Modele.getUtilisateur().getPseudo());
         listePrincipale.getChildren().add(hbox);
 
     }
@@ -132,6 +132,8 @@ public class VueHomepageController {
                 Button button = (Button) root;
                 // Configure le module
                 button.setText(Modele.getCompetences().get(key).creerIntitule());
+                button.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+                button.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
                 button.setOnAction((event) -> {
                     try {
                         eltMenuSelectionner(button);
@@ -162,6 +164,8 @@ public class VueHomepageController {
                 Button button = (Button) root;
                 // Configure le module
                 button.setText(Modele.getRessources().get(key).creerIntitule());
+                button.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+                button.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
                 button.setOnAction((event) -> {
                     try {
                         eltMenuSelectionner(button);
@@ -191,6 +195,8 @@ public class VueHomepageController {
                 Button button = (Button) root;
                 // Configure le module
                 button.setText(Modele.getSae().get(key).creerIntitule());
+                button.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+                button.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
                 button.setOnAction((event) -> {
                     try {
                         eltMenuSelectionner(button);
@@ -241,13 +247,25 @@ public class VueHomepageController {
             quitterModaliter();
         }
         if (!dansModifierModalite()) {
-            if (selected != null) {
-                selected.getStyleClass().remove("side-nav-element-active");
-                selected.getStyleClass().add("side-nav-element-inactive");
+            if (selected != button) {
+                if (selected != null) {
+                    selected.getStyleClass().remove("side-nav-element-active");
+                    selected.getStyleClass().remove("side-nav-element-active-not-hover");
+                    selected.getStyleClass().add("side-nav-element-inactive");
+                    selected.getStyleClass().add("side-nav-element-inactive-not-hover");
+                    selected.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+                    selected.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
+                    System.out.println("1 : " + selected.getStyleClass());
+                }
+                selected = button;
+                selected.getStyleClass().remove("side-nav-element-inactive");
+                selected.getStyleClass().remove("side-nav-element-inactive-hover");
+                selected.getStyleClass().add("side-nav-element-active");
+                selected.getStyleClass().add("side-nav-element-active-not-hover");
+                selected.setOnMouseEntered(null);
+                selected.setOnMouseExited(null);
+                System.out.println(selected.getStyleClass());
             }
-            selected = button;
-            selected.getStyleClass().remove("side-nav-element-inactive");
-            selected.getStyleClass().add("side-nav-element-active");
         }
     }
     
@@ -327,6 +345,24 @@ public class VueHomepageController {
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
     
+    void sideNavButtonInactiveEntered(MouseEvent event) {
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
+        bouton.getStyleClass().remove("side-nav-element-inactive-not-hover");
+        bouton.getStyleClass().add("side-nav-element-inactive-hover");
+        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
+    }
+    
+    void sideNavButtonInactiveExited(MouseEvent event) {
+        Button bouton = (Button) event.getSource();
+        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        bouton.getStyleClass().remove("side-nav-element-inactive-hover");
+        bouton.getStyleClass().add("side-nav-element-inactive-not-hover");
+        System.out.println(bouton.getText() + " |||"+ bouton.getStyleClass());
+    }
+    
     /**
      * Méthode appelée quand le bouton "Exporter" est pressé
      * @throws Exception 
@@ -341,7 +377,7 @@ public class VueHomepageController {
             if (ressource != null) {
                 annulerModalite(ressource);
             }
-            System.out.println("exporter presser");
+            EchangeurDeVue.launchPopUp("ve", "Exporter");
         }
         
     }
@@ -390,7 +426,7 @@ public class VueHomepageController {
      * Méthode appelée lorsque la souris entre sur bouton Utilisateur
      */
     @FXML
-    void utilisateurEntree(MouseEvent event) {
+    void userEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
@@ -402,7 +438,7 @@ public class VueHomepageController {
      * Methode appelée lors que la souris sort du bouton Utilisateur
      */
     @FXML
-    void utilisateurSortie(MouseEvent event) {
+    void userExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
@@ -424,7 +460,9 @@ public class VueHomepageController {
             if (ressource != null) {
                 annulerModalite(ressource);
             }
-            System.out.println("utilisateur presser");
+            EchangeurDeVue.launchPopUp("vcp", "Changement de nom d'utilisateur");
+            bienvenueX.setText("Bienvenue " + Modele.getUtilisateur().getPseudo());
+            boutonUtilisateur.setText(Modele.getUtilisateur().getPseudo());
         }
         
     }
@@ -436,11 +474,16 @@ public class VueHomepageController {
      */
     @FXML
     void afficherMesMoyennesPresser(ActionEvent event) throws Exception {
-        quitterModaliter();
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
         if (!dansModifierModalite()) {
             if (selected != null) {
                 selected.getStyleClass().remove("side-nav-element-active");
+                selected.getStyleClass().remove("side-nav-element-active-not-hover");
                 selected.getStyleClass().add("side-nav-element-inactive");
+                selected.getStyleClass().add("side-nav-element-inactive-not-hover");
+                afficherMesMoyennesPresserStopNavMenuOnAction();
                 selected = null;
             }
             viderZonePrincipale();
@@ -462,6 +505,10 @@ public class VueHomepageController {
             }
         }
     }
+    private void afficherMesMoyennesPresserStopNavMenuOnAction() {
+        selected.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+        selected.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
+    }
     
     /*
      * Ajoute le titre de la sae
@@ -472,7 +519,7 @@ public class VueHomepageController {
                     EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            Text titre = (Text) hbox.getChildren().get(0);
+            Label titre = (Label) hbox.getChildren().get(0);
             titre.setText("Affichage des moyennes calculables");
             zoneTitre.getChildren().add(hbox);
         } catch (Exception e) {
@@ -492,7 +539,7 @@ public class VueHomepageController {
             Parent root = fxmlloader.load();
             HBox hboxTitre = (HBox) root;
             // Lui associe le bon titre puis l'affiche
-            Text titre = (Text) hboxTitre.getChildren().get(0);
+            Label titre = (Label) hboxTitre.getChildren().get(0);
             titre.setText("COMPETENCES");
             listePrincipale.getChildren().add(hboxTitre);
             // Vérifie pour chaque compétences si elles sont calculables
@@ -509,7 +556,7 @@ public class VueHomepageController {
                     // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
-                    titre = (Text) zoneEcriture.getChildren().get(0);
+                    titre = (Label) zoneEcriture.getChildren().get(0);
                     HBox zoneDroite = (HBox) hbox.getChildren().get(1);
                     Button oeil = (Button) zoneDroite.getChildren().get(1);
                     HBox zoneNote = (HBox) zoneDroite.getChildren().get(0);
@@ -553,7 +600,7 @@ public class VueHomepageController {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hboxTitre = (HBox) root;
-            Text titre = (Text) hboxTitre.getChildren().get(0);
+            Label titre = (Label) hboxTitre.getChildren().get(0);
             // Lui associe le bon titre puis l'affiche
             titre.setText("RESSOURCES");
             listePrincipale.getChildren().add(hboxTitre);
@@ -570,7 +617,7 @@ public class VueHomepageController {
                     // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
-                    titre = (Text) zoneEcriture.getChildren().get(0);
+                    titre = (Label) zoneEcriture.getChildren().get(0);
                     HBox zoneDroite = (HBox) hbox.getChildren().get(1);
                     Button oeuil = (Button) zoneDroite.getChildren().get(1);
                     HBox zoneNote = (HBox) zoneDroite.getChildren().get(0);
@@ -614,7 +661,7 @@ public class VueHomepageController {
             Parent root = fxmlloader.load();
             HBox hboxTitre = (HBox) root;
             // Lui associe le bon titre puis l'affiche
-            Text titre = (Text) hboxTitre.getChildren().get(0);
+            Label titre = (Label) hboxTitre.getChildren().get(0);
             titre.setText("SAE");
             listePrincipale.getChildren().add(hboxTitre);
             // Vérifie pour chaque SAE si elles ont une note
@@ -630,7 +677,7 @@ public class VueHomepageController {
                     // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
-                    titre = (Text) zoneEcriture.getChildren().get(0);
+                    titre = (Label) zoneEcriture.getChildren().get(0);
                     HBox zoneDroite = (HBox) hbox.getChildren().get(1);
                     Button oeuil = (Button) zoneDroite.getChildren().get(1);
                     HBox zoneNote = (HBox) zoneDroite.getChildren().get(0);
@@ -709,7 +756,7 @@ public class VueHomepageController {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTC")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            Text titre = ((Text) ((HBox) hbox.getChildren().get(0)).getChildren().get(0));
+            Label titre = ((Label) ((HBox) hbox.getChildren().get(0)).getChildren().get(0));
             Text note = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
             Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
             titre.setText(competence.creerIntitule());
@@ -742,7 +789,7 @@ public class VueHomepageController {
             VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
             Text type = (Text) zoneEcriture.getChildren().get(1);
             HBox ligneHaut = (HBox) zoneEcriture.getChildren().get(0);
-            Text titre = (Text) ligneHaut.getChildren().get(1);
+            Label titre = (Label) ligneHaut.getChildren().get(1);
             Text ponderation = (Text) ((HBox) ligneHaut.getChildren().get(0)).getChildren().get(0);
             HBox zoneDroite = (HBox) hbox.getChildren().get(1);
             Button oeuil = (Button) zoneDroite.getChildren().get(1);
@@ -786,7 +833,7 @@ public class VueHomepageController {
             VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
             Text type = (Text) zoneEcriture.getChildren().get(1);
             HBox ligneHaut = (HBox) zoneEcriture.getChildren().get(0);
-            Text titre = (Text) ligneHaut.getChildren().get(1);
+            Label titre = (Label) ligneHaut.getChildren().get(1);
             Text ponderation = (Text) ((HBox) ligneHaut.getChildren().get(0)).getChildren().get(0);
             HBox zoneDroite = (HBox) hbox.getChildren().get(1);
             Button oeuil = (Button) zoneDroite.getChildren().get(1);
@@ -859,7 +906,7 @@ public class VueHomepageController {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTR")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            Text titre = (Text)((HBox) ((HBox) hbox.getChildren().get(0))
+            Label titre = (Label)((HBox) ((HBox) hbox.getChildren().get(0))
                                                    .getChildren().get(0))
                                                    .getChildren().get(0);
             Text note = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
@@ -907,7 +954,7 @@ public class VueHomepageController {
             VBox colonneGauche = (VBox) hbox.getChildren().get(0);
             HBox ligneHaute = (HBox) colonneGauche.getChildren().get(0);
             Text ponderation = (Text) ((HBox) ligneHaute.getChildren().get(0)).getChildren().get(0);
-            Text nomEval = (Text) ligneHaute.getChildren().get(1);
+            Label nomEval = (Label) ligneHaute.getChildren().get(1);
             HBox ligneBasse = (HBox) colonneGauche.getChildren().get(1);
             Text date = (Text) ligneBasse.getChildren().get(1);
             HBox colonneDroite = (HBox) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
@@ -1019,7 +1066,6 @@ public class VueHomepageController {
         ressourceModifier = ressource;
         evalTmpId = new ArrayList<>();
         evalTmpIdRemoved = new ArrayList<>();
-        System.out.println("i\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
         // Vide la vue principale
         viderZonePrincipale();
         // Insere le titre
@@ -1048,7 +1094,7 @@ public class VueHomepageController {
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
             HBox hboxInterne = (HBox) hbox.getChildren().get(0);
-            Text titre = (Text) hboxInterne.getChildren().get(0);
+            Label titre = (Label) hboxInterne.getChildren().get(0);
             Button boutonValider = (Button) hboxInterne.getChildren().get(1);
             Button boutonAnnuler = (Button) hboxInterne.getChildren().get(2);
             titre.setText(ressource.creerIntitule());
@@ -1114,7 +1160,6 @@ public class VueHomepageController {
                 boutonSupprimer.setOnAction((event) -> retirer(hbox));
             }
             evalTmpId.add(index);
-            System.out.println("addElt\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
             listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (11) : " + e.getMessage());
@@ -1151,7 +1196,6 @@ public class VueHomepageController {
     private void retirer(HBox hbox, int index) {
         int value = evalTmpId.remove(evalTmpId.indexOf(index));
         evalTmpIdRemoved.add(value);
-        System.out.println("addremove\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
         listePrincipale.getChildren().remove(hbox);
     }
     
@@ -1160,7 +1204,6 @@ public class VueHomepageController {
      */
     private void retirer(HBox hbox) {
         evalTmpId.remove(evalTmpId.size() - 1);
-        System.out.println("addremove\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
         listePrincipale.getChildren().remove(hbox);
     }
     
@@ -1305,7 +1348,7 @@ public class VueHomepageController {
                     EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
-            Text titre = (Text) hbox.getChildren().get(0);
+            Label titre = (Label) hbox.getChildren().get(0);
             titre.setText(sae.creerIntitule());
             zoneTitre.getChildren().add(hbox);
         } catch (Exception e) {

@@ -48,7 +48,7 @@ public class Main extends Application {
             scene.getRoot().requestFocus();
 
             // On définit les caractéristiques de la fenêtre et lui associe la scène
-            primaryStage.setTitle("Gestionnaire de note");
+            primaryStage.setTitle("Grade Tracker");
             EchangeurDeVue.setSceneCourante(scene);
             primaryStage.getIcons().add(
                                  new Image("vue/ressources/icone_application.png"));

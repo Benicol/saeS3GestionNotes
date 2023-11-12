@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
@@ -26,13 +27,16 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="90.0" promptText="Note" style="-fx-padding: 0 0 0 8px;" text="12.00" HBox.hgrow="ALWAYS">
+                  <TextField alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="90.0" promptText="Note" style="-fx-padding: 0 0 0 8px;" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                      <font>
                         <Font name="Verdana Bold" size="24.0" />
                      </font>
+                     <cursor>
+                        <Cursor fx:constant="TEXT" />
+                     </cursor>
                   </TextField>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="/20">
                      <font>

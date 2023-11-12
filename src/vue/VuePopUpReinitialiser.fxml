@@ -2,6 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -37,6 +38,9 @@
                   <String fx:value="secondary-button" />
                   <String fx:value="secondary-button-not-hover" />
                </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
             <Button mnemonicParsing="false" onAction="#supprimerToutesLesDonneesPresser" onMouseEntered="#primaryButtonEntered" onMouseExited="#primaryButtonExited" prefHeight="40.0" text="Supprimer toutes les données">
                <graphic>
@@ -51,6 +55,9 @@
                   <String fx:value="primary-button" />
                   <String fx:value="primary-button-not-hover" />
                </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>

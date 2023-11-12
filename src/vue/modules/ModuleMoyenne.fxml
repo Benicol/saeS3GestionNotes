@@ -2,7 +2,9 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -12,13 +14,13 @@
 
 <HBox spacing="16.0" styleClass="grade-info-band" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox spacing="4.0" HBox.hgrow="ALWAYS">
+      <VBox maxWidth="1000.0" spacing="4.0" HBox.hgrow="ALWAYS">
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="R2.01 - Qualité de développement">
+            <Label maxWidth="1000.0" styleClass="label-noir" text="Label">
                <font>
                   <Font name="Verdana Bold" size="24.0" />
                </font>
-            </Text>
+            </Label>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ressource">
                <font>
                   <Font name="Verdana Bold" size="16.0" />
@@ -54,6 +56,9 @@
                   <String fx:value="secondary-button" />
                   <String fx:value="secondary-button-not-hover" />
                </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </HBox>

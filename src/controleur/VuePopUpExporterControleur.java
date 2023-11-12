@@ -12,7 +12,7 @@ import javafx.scene.input.MouseEvent;
  * Controleur de la vue vue.VueExporter.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class VueExporterControleur {
+public class VuePopUpExporterControleur {
     /** TexteField contenant l'adresse ip */
     @FXML
     private TextField adresseIpInput;
@@ -39,7 +39,7 @@ public class VueExporterControleur {
      * - Bouton "Etablir une connexion"
      */
     @FXML
-    void boutonPleinEntree(MouseEvent event) {
+    void primaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -54,7 +54,7 @@ public class VueExporterControleur {
      * - Bouton "Etablir une connexion"
      */
     @FXML
-    void boutonPleinSortie(MouseEvent event) {
+    void primaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -69,7 +69,7 @@ public class VueExporterControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideEntree(MouseEvent event) {
+    void secondaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -85,7 +85,7 @@ public class VueExporterControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideSortie(MouseEvent event) {
+    void secondaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -102,7 +102,7 @@ public class VueExporterControleur {
     void etablirUneConnexionPresser(ActionEvent event) {
     	  Button bouton = (Button) event.getSource();
           
-          bouton.setText("NON IMPLEMENTER");
+          bouton.setText("Implémentation en cours");
     }
     /**
      * Methode appeler lors du clic sur le bouton "Modalités d'évaluation"
@@ -140,11 +140,11 @@ public class VueExporterControleur {
     }
     private void onMouseSwitch(Button bouton, String type) {
         if (type.equals("primary")) {
-            bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
-            bouton.setOnMouseExited((event) -> boutonPleinSortie(event));
+            bouton.setOnMouseEntered((event) -> primaryButtonEntered(event));
+            bouton.setOnMouseExited((event) -> primaryButtonExited(event));
         } else {
-            bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
-            bouton.setOnMouseExited((event) -> boutonVideSortie(event));
+            bouton.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+            bouton.setOnMouseExited((event) -> secondaryButtonExited(event));
         }
     }
 }
