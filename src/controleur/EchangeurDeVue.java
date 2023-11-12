@@ -62,6 +62,7 @@ public class EchangeurDeVue {
         cache = new HashMap<>();
         /* VUES */
         vues.put("h", "..\\vue\\Homepage.fxml");
+        vues.put("i", "..\\vue\\Importation.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
         modules.put("MEval", "..\\vue\\modules\\Evaluation.fxml");
