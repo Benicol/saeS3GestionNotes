@@ -62,8 +62,9 @@ public class EchangeurDeVue {
         cache = new HashMap<>();
         /* VUES */
         vues.put("h", "..\\vue\\Homepage.fxml");
-        vues.put("vr", "..\\vue\\VueReinitialiser.fxml");
+        vues.put("vpur", "..\\vue\\VuePopUpReinitialiser.fxml");
         vues.put("i", "..\\vue\\Importation.fxml");
+        vues.put("vpui", "..\\vue\\VuePopUpImporter.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
         modules.put("MEval", "..\\vue\\modules\\ModuleEvaluation.fxml");
@@ -180,11 +181,8 @@ public class EchangeurDeVue {
                 popUpStage.initModality(Modality.APPLICATION_MODAL);
             }
             popUpStage.setTitle(nomFenetre);
-            popUpStage.showAndWait();
-        } catch (IOException erreur) {
-            System.out.println("Echec du chargement de la vue de code " + codeVue + " => " + erreur.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
-
-    
 }

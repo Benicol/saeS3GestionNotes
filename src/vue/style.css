@@ -2,6 +2,11 @@
 	-fx-background-color : #29222A;
 }
 
+#navigation {
+	-fx-background-color : #E8E3E8;
+	-fx-background-radius : 16px;
+}
+
 .scroll-pane {
 	-fx-background-color: transparent;
 }
@@ -41,11 +46,6 @@
 	-fx-font-family : verdana;
 	-fx-font-weight : bold;
 	-fx-font-size : 12px;
-}
-
-#navigation {
-	-fx-background-color : #E8E3E8;
-	-fx-background-radius : 16px;
 }
 
 .grade-info-band {
@@ -107,5 +107,4 @@
 	-fx-border-color: #9555E8;
 	-fx-text-fill : #9555E8;
 }
- 
 

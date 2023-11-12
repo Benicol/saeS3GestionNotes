@@ -27,6 +27,9 @@ import javafx.scene.layout.HBox;
  * Controleur de la vue vue.Homepage.fxml
  */
 public class VueHomepageController {
+    /** Text donnant le numero du semestre et parcours */
+    @FXML
+    private Text nbSemestreParcours;
     /** Bouton invisible contenant le nom de l'utilisateur*/
     @FXML
     private Button boutonUtilisateur;
@@ -53,6 +56,7 @@ public class VueHomepageController {
     
     /**
      * Effectue les traitement suivant dans cette ordre : 
+     * - initialise le semestre et parcours
      * - Initialise selected à null
      * - Si le parametrage = null, alors lance la vue importer
      * - Met en grand la fenetre
@@ -66,6 +70,9 @@ public class VueHomepageController {
      */
     @FXML
     void initialize() throws Exception {
+        // initialise le semestre et parcours
+        nbSemestreParcours.setText("Semestre " + Modele.getParametrage().getSemestre()
+                                   + " - Parcours " + Modele.getParametrage().getParcours());
         // Initialise selected à null
         selected = null;
         // Met en grand la fenetre

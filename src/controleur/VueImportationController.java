@@ -20,8 +20,9 @@ public class VueImportationController {
     @FXML
     void initialize() {
         EchangeurDeVue.getPrimaryStage().setMaximized(false);
-        EchangeurDeVue.getPrimaryStage().setHeight(500);
-        EchangeurDeVue.getPrimaryStage().setWidth(900);
+        EchangeurDeVue.getPrimaryStage().setHeight(600);
+        EchangeurDeVue.getPrimaryStage().setWidth(1000);
+        boutonUtilisateur.setText(Modele.getUtilisateur().getPseudo());
     }
 
     @FXML
