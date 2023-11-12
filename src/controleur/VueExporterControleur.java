@@ -22,6 +22,9 @@ public class VueExporterControleur {
     @FXML
     private ImageView logoProgramme;
     
+    private boolean modalites = false;
+    private boolean programme = false;
+    
     /**
      * Methode appeler lors du clic sur le bouton "annuler"
      */
@@ -99,56 +102,49 @@ public class VueExporterControleur {
     void etablirUneConnexionPresser(ActionEvent event) {
     	  Button bouton = (Button) event.getSource();
           
-          bouton.setText("Connexion en cours");
+          bouton.setText("NON IMPLEMENTER");
     }
     /**
      * Methode appeler lors du clic sur le bouton "Modalités d'évaluation"
      */
     @FXML
-    void modalitesEvaluationPresser(ActionEvent event) {
+    void boutonSelectionPresser(ActionEvent event) {
     	Button bouton = (Button) event.getSource();
-        if(bouton.getStyleClass().equals("secondary-button")) {
-        	Image image = new Image(getClass().getResource("../vue/ressources/remove_icone.png").toExternalForm());
+    	System.out.println(bouton.getId());
+    	Image image;
+        if(bouton.getStyleClass().contains("secondary-button")) {
+        	image = new Image(getClass().getResource("../vue/ressources/icone_moins.png").toExternalForm());
         	bouton.getStyleClass().remove("secondary-button");
         	bouton.getStyleClass().remove("secondary-button-hover");
         	bouton.getStyleClass().add("primary-button");
         	bouton.getStyleClass().add("primary-button-hover");
-        	
-        	logoModalites.setImage(image);
-        	bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
-        	bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
+        	onMouseSwitch(bouton, "primary");
         	
         } else {
-        	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());
+        	image = new Image(getClass().getResource("../vue/ressources/icone_plus.png").toExternalForm());
+        	bouton.getStyleClass().remove("primary-button");
         	bouton.getStyleClass().remove("primary-button-hover");
+        	bouton.getStyleClass().add("secondary-button");
         	bouton.getStyleClass().add("secondary-button-hover");
-        	logoModalites.setImage(image);
-        	//bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
-        	//bouton.setOnMouseExited((event) -> boutonVideEntree(event));
+        	onMouseSwitch(bouton, "secondary");
+        }
+        if (bouton.getId().equals("programmeNational")) {
+            programme = !programme;
+            logoProgramme.setImage(image);
+        } else {
+            modalites = !modalites;
+            logoModalites.setImage(image);
+        }
+        System.out.println("programme : " + programme);
+        System.out.println("modalites : " + modalites);
+    }
+    private void onMouseSwitch(Button bouton, String type) {
+        if (type.equals("primary")) {
+            bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
+            bouton.setOnMouseExited((event) -> boutonPleinSortie(event));
+        } else {
+            bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
+            bouton.setOnMouseExited((event) -> boutonVideSortie(event));
         }
     }
-    /**
-     * Methode appeler lors du clic sur le bouton "Programme nationnal"
-     */
-    @FXML
-    void programmeNationnalPresser(ActionEvent event) {
-    	Button bouton = (Button) event.getSource();
-        if(bouton.getStyleClass().equals("secondary-button-hover")) {
-        	Image image = new Image(getClass().getResource("../vue/ressources/remove_icone.png").toExternalForm());
-        	bouton.getStyleClass().remove("secondary-button-hover");
-        	bouton.getStyleClass().add("primary-button-hover");
-        	//bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
-        	//bouton.setOnMouseExited((event) -> boutonPleinEntree(event));
-        	logoProgramme.setImage(image);
-        	
-        }else {
-        	Image image = new Image(getClass().getResource("../vue/ressources/icone_plus_violet.png").toExternalForm());
-        	bouton.getStyleClass().remove("primary-button-hover");
-        	bouton.getStyleClass().add("secondary-button-hover");
-        	//bouton.setOnMouseEntered((event) -> boutonVideEntree(event));
-        	//bouton.setOnMouseExited((event) -> boutonVideEntree(event));
-        	logoProgramme.setImage(image);
-        }
-    }
-
 }
