@@ -115,7 +115,7 @@
                                  <children>
                                     <VBox spacing="8.0">
                                        <children>
-                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Semestre 3 - Parcours A">
+                                          <Text fx:id="nbSemestreParcours" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="title" text="Semestre 3 - Parcours A">
                                              <font>
                                                 <Font name="System Bold" size="24.0" />
                                              </font>
