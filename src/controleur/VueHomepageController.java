@@ -10,10 +10,13 @@ import modele.Modele;
 import modele.Ressource;
 import modele.Sae;
 
-import java.awt.image.DirectColorModel;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,12 +24,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.layout.HBox;
 
@@ -40,6 +43,9 @@ public class VueHomepageController {
     /** Bouton invisible contenant le nom de l'utilisateur*/
     @FXML
     private Button boutonUtilisateur;
+    /** zone pour les tritre de la liste principale */
+    @FXML
+    private VBox zoneTitre;
     /** listePrincipal, VBox central de l'application */
     @FXML
     private VBox listePrincipale;
@@ -58,6 +64,15 @@ public class VueHomepageController {
     private ArrayList<Integer> evalTmpId;
     /** Utiliser pour la modification des modalitées d'une évluation */
     private ArrayList<Integer> evalTmpIdRemoved;
+    
+    private Ressource ressourceModifier = null;
+    
+    private boolean dansModifierModalite() {
+        return ressourceModifier != null;
+    }
+    
+    /** thread pour l'affichage de texte temporaire */
+    private static HashMap<Label,Thread> currentThreads = new HashMap<>();
     
     //Zone d'initialisation de l'application
     
@@ -193,21 +208,47 @@ public class VueHomepageController {
     }
     
     /* Vide la liste principale de tous ces éléments */
-    private void viderListePrincipale() {
+    private void viderZonePrincipale() {
         while (!listePrincipale.getChildren().isEmpty()) {
             listePrincipale.getChildren().remove(0);
         }
+        while (!zoneTitre.getChildren().isEmpty()) {
+            zoneTitre.getChildren().remove(0);
+        }
     }
-    
+    private void quitterModaliter() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("ATTENTION");
+        alert.setHeaderText("Êtes-vous sûr de vouloir quitter sans sauvegarder ?");
+
+        // Ajoutez des boutons personnalisés
+        ButtonType buttonTypeOui = new ButtonType("Oui");
+        ButtonType buttonTypeNon = new ButtonType("Non");
+
+        alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
+
+        // Affichez la boîte de dialogue et attendez la réponse de l'utilisateur
+        alert.showAndWait().ifPresent(response -> {
+            if (response == buttonTypeOui) {
+                // L'utilisateur a cliqué sur "Oui"
+                ressourceModifier = null;
+            }
+        });
+    }
     /* Change quel bouton est visuellement sélectionné dans le menu */
     private void eltMenuSelectionner(Button button) {
-        if (selected != null) {
-            selected.getStyleClass().remove("side-nav-element-active");
-            selected.getStyleClass().add("side-nav-element-inactive");
+        if (dansModifierModalite()) {
+            quitterModaliter();
         }
-        selected = button;
-        selected.getStyleClass().remove("side-nav-element-inactive");
-        selected.getStyleClass().add("side-nav-element-active");
+        if (!dansModifierModalite()) {
+            if (selected != null) {
+                selected.getStyleClass().remove("side-nav-element-active");
+                selected.getStyleClass().add("side-nav-element-inactive");
+            }
+            selected = button;
+            selected.getStyleClass().remove("side-nav-element-inactive");
+            selected.getStyleClass().add("side-nav-element-active");
+        }
     }
     
     // Zone Reactivitée
@@ -288,28 +329,60 @@ public class VueHomepageController {
     
     /**
      * Méthode appelée quand le bouton "Exporter" est pressé
+     * @throws Exception 
      */
     @FXML
-    void exporterPresser(ActionEvent event) {
-        System.out.println("exporter presser");
+    void exporterPresser(ActionEvent event) throws Exception {
+        Ressource ressource = ressourceModifier;
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
+        if (!dansModifierModalite()) {
+            if (ressource != null) {
+                annulerModalite(ressource);
+            }
+            System.out.println("exporter presser");
+        }
+        
     }
     
     /**
      * Méthode appelée quand le bouton "Importer" est pressé
+     * @throws Exception 
      */
     @FXML
-    void importerPresser(ActionEvent event) {
-        EchangeurDeVue.launchPopUp("vpui", "Importer");
+    void importerPresser(ActionEvent event) throws Exception {
+        Ressource ressource = ressourceModifier;
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
+        if (!dansModifierModalite()) {
+            if (ressource != null) {
+                annulerModalite(ressource);
+            }
+            EchangeurDeVue.launchPopUp("vpui", "Importer");
+        }
+        
     }
     
     /**
      * Méthode appelée quand le bouton "Reinitialiser" est pressé
+     * @throws Exception 
      */
     @FXML
-    void reinitialiserPresser(ActionEvent event) {
-        EchangeurDeVue.launchPopUp("vpur", "Réinitialisation");
-        if (!Modele.isParametrageInitialise()) {
-            EchangeurDeVue.echangerAvec("i", false);
+    void reinitialiserPresser(ActionEvent event) throws Exception {
+        Ressource ressource = ressourceModifier;
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
+        if (!dansModifierModalite()) {
+            if (ressource != null) {
+                annulerModalite(ressource);
+            }
+            EchangeurDeVue.launchPopUp("vpur", "Réinitialisation");
+            if (!Modele.isParametrageInitialise()) {
+                EchangeurDeVue.echangerAvec("i", false);
+            }
         }
     }
     
@@ -339,10 +412,21 @@ public class VueHomepageController {
 
     /**
      * Méthode appelée quand le bouton "Utilisateur" est pressé
+     * @throws Exception 
      */
     @FXML
-    void utilisateurPresser(ActionEvent event) {
-        System.out.println("utilisateur presser");
+    void utilisateurPresser(ActionEvent event) throws Exception {
+        Ressource ressource = ressourceModifier;
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
+        if (!dansModifierModalite()) {
+            if (ressource != null) {
+                annulerModalite(ressource);
+            }
+            System.out.println("utilisateur presser");
+        }
+        
     }
     
     //ZONE CALCUL DES MOYENNES
@@ -352,10 +436,48 @@ public class VueHomepageController {
      */
     @FXML
     void afficherMesMoyennesPresser(ActionEvent event) throws Exception {
-        viderListePrincipale();
-        competenceMoyennes();
-        ressourceMoyennes();
-        saeMoyennes();
+        quitterModaliter();
+        if (!dansModifierModalite()) {
+            if (selected != null) {
+                selected.getStyleClass().remove("side-nav-element-active");
+                selected.getStyleClass().add("side-nav-element-inactive");
+                selected = null;
+            }
+            viderZonePrincipale();
+            titreMoyennes();
+            competenceMoyennes();
+            ressourceMoyennes();
+            saeMoyennes();
+            if (listePrincipale.getChildren().size() == 0) {
+                try {
+                    FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MEvalV")));
+                    Parent root = fxmlloader.load();
+                    HBox hbox = (HBox) root;
+                    Text texte = (Text) hbox.getChildren().get(0);
+                    texte.setText("Aucune moyenne à calculer !");
+                    listePrincipale.getChildren().add(hbox);
+                } catch (Exception e) {
+                    throw new Exception("application corrompu (9) : " + e.getMessage() + ",");
+                }
+            }
+        }
+    }
+    
+    /*
+     * Ajoute le titre de la sae
+     */
+    private void titreMoyennes() throws Exception {
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                    EchangeurDeVue.getModule("MTS")));
+            Parent root = fxmlloader.load();
+            HBox hbox = (HBox) root;
+            Text titre = (Text) hbox.getChildren().get(0);
+            titre.setText("Affichage des moyennes calculables");
+            zoneTitre.getChildren().add(hbox);
+        } catch (Exception e) {
+            throw new Exception("application corrompu (5) : " + e.getMessage());
+        }
     }
     
     /**
@@ -368,11 +490,11 @@ public class VueHomepageController {
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
                                                   EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
-            HBox hbox = (HBox) root;
+            HBox hboxTitre = (HBox) root;
             // Lui associe le bon titre puis l'affiche
-            Text titre = (Text) hbox.getChildren().get(0);
+            Text titre = (Text) hboxTitre.getChildren().get(0);
             titre.setText("COMPETENCES");
-            listePrincipale.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hboxTitre);
             // Vérifie pour chaque compétences si elles sont calculables
             String[] cles = Modele.getCompetences().keySet().toArray(new String[0]);
             Arrays.sort(cles);
@@ -383,7 +505,7 @@ public class VueHomepageController {
                     fxmlloader = new FXMLLoader(getClass().getResource(
                                                    EchangeurDeVue.getModule("MM")));
                     root = fxmlloader.load();
-                    hbox = (HBox) root;
+                    HBox hbox = (HBox) root;
                     // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
@@ -395,7 +517,7 @@ public class VueHomepageController {
                     // Rempli les champs
                     type.setText("Competence");
                     titre.setText(competence.creerIntitule());
-                    note.setText(String.format("%.2f", competence.calculerMoyenne())); 
+                    note.setText(new DecimalFormat("#.##").format(competence.calculerMoyenne())); 
                     int boutonId = Integer.parseInt(competence.getIdentifiant().substring(3, 4)) - 1;
                     Button bouttonCompetence = (Button) listesCompetences.getChildren().get(boutonId);
                     oeil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
@@ -411,7 +533,10 @@ public class VueHomepageController {
                     // Met la HBox dans la liste principale
                     listePrincipale.getChildren().add(hbox);
                 }
-            } 
+            }
+            if (listePrincipale.getChildren().get(listePrincipale.getChildren().size() -1 ) == hboxTitre) {
+                listePrincipale.getChildren().remove(listePrincipale.getChildren().size() -1 );
+            }
         } catch (Exception e) {
             throw new Exception("application corrompu (4) : " + e.getMessage());
         }
@@ -427,11 +552,11 @@ public class VueHomepageController {
             // Charge la vue ModuleTitreSae
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
-            HBox hbox = (HBox) root;
-            Text titre = (Text) hbox.getChildren().get(0);
+            HBox hboxTitre = (HBox) root;
+            Text titre = (Text) hboxTitre.getChildren().get(0);
             // Lui associe le bon titre puis l'affiche
             titre.setText("RESSOURCES");
-            listePrincipale.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hboxTitre);
             // Verifie pour chaque ressources si ils sont calculables
             String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
             Arrays.sort(cles);
@@ -441,7 +566,7 @@ public class VueHomepageController {
                     // Charge la vue ModuleMoyenne
                     fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MM")));
                     root = fxmlloader.load();
-                    hbox = (HBox) root;
+                    HBox hbox = (HBox) root;
                     // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
@@ -453,7 +578,7 @@ public class VueHomepageController {
                     // Rempli les champs
                     type.setText("Ressource");
                     titre.setText(ressource.creerIntitule());
-                    note.setText(String.format("%.2f", ressource.calculerMoyenne())); 
+                    note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne())); 
                     int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
                     Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
                     
@@ -471,6 +596,9 @@ public class VueHomepageController {
                     listePrincipale.getChildren().add(hbox);
                 }
             }
+            if (listePrincipale.getChildren().get(listePrincipale.getChildren().size() -1 ) == hboxTitre) {
+                listePrincipale.getChildren().remove(listePrincipale.getChildren().size() -1 );
+            }
         } catch (Exception e) {
             throw new Exception("application corrompu (5) : " + e.getMessage());
         }
@@ -484,11 +612,11 @@ public class VueHomepageController {
             // Charge la vue ModuleTitreSae
             FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MTS")));
             Parent root = fxmlloader.load();
-            HBox hbox = (HBox) root;
+            HBox hboxTitre = (HBox) root;
             // Lui associe le bon titre puis l'affiche
-            Text titre = (Text) hbox.getChildren().get(0);
+            Text titre = (Text) hboxTitre.getChildren().get(0);
             titre.setText("SAE");
-            listePrincipale.getChildren().add(hbox);
+            listePrincipale.getChildren().add(hboxTitre);
             // Vérifie pour chaque SAE si elles ont une note
             String[] cles = Modele.getSae().keySet().toArray(new String[0]);
             Arrays.sort(cles);
@@ -498,7 +626,7 @@ public class VueHomepageController {
                     // Charge la vue ModuleMoyenne
                     fxmlloader = new FXMLLoader(getClass().getResource(EchangeurDeVue.getModule("MM")));
                     root = fxmlloader.load();
-                    hbox = (HBox) root;
+                    HBox hbox = (HBox) root;
                     // Va chercher les champs
                     VBox zoneEcriture = (VBox) hbox.getChildren().get(0);
                     Text type = (Text) zoneEcriture.getChildren().get(1);
@@ -510,7 +638,7 @@ public class VueHomepageController {
                     // Rempli les champs
                     type.setText("SAE");
                     titre.setText(sae.creerIntitule());
-                    note.setText(String.format("%.2f", sae.getNote())); 
+                    note.setText(new DecimalFormat("#.##").format(sae.getNote())); 
                     Button bouton = null;
                     for (Node node : listeSaes.getChildren()) {
                         bouton = (Button) node;
@@ -533,6 +661,9 @@ public class VueHomepageController {
                     listePrincipale.getChildren().add(hbox);
                 }
             }
+            if (listePrincipale.getChildren().get(listePrincipale.getChildren().size() -1 ) == hboxTitre) {
+                listePrincipale.getChildren().remove(listePrincipale.getChildren().size() -1 );
+            }
         } catch (Exception e) {
             throw new Exception("application corrompu (17) : " + e.getMessage());
         }
@@ -544,26 +675,28 @@ public class VueHomepageController {
      * S'active quand un bouton compétence est pressé dans le menu
      */
     private void competenceCliquer(Competence competence) throws Exception {
-        // Vide la vue principale
-        viderListePrincipale();
-        // Ajoute le titre de la compétence
-        ajouterTitreComeptence(competence);
-        // Pour chaque ressource associé, les affiche
-        String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
-        Arrays.sort(cles);
-        for(String cle : cles) {
-            if (competence.getListeRessources().keySet().contains(Modele.getRessources().get(cle))) {
-                Ressource ressource = Modele.getRessources().get(cle);
-                ajouterRessourceComeptence(ressource, competence.getListeRessources().get(ressource));
+        if (!dansModifierModalite()) {
+            // Vide la vue principale
+            viderZonePrincipale();
+            // Ajoute le titre de la compétence
+            ajouterTitreComeptence(competence);
+            // Pour chaque ressource associé, les affiche
+            String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
+            Arrays.sort(cles);
+            for(String cle : cles) {
+                if (competence.getListeRessources().keySet().contains(Modele.getRessources().get(cle))) {
+                    Ressource ressource = Modele.getRessources().get(cle);
+                    ajouterRessourceComeptence(ressource, competence.getListeRessources().get(ressource));
+                }
             }
-        }
-        // Pour chaque ressource associée, les affiche
-        cles = Modele.getSae().keySet().toArray(new String[0]);
-        Arrays.sort(cles);
-        for(String cle : cles) {
-            if (competence.getListeSaes().keySet().contains(Modele.getSae().get(cle))) {
-                Sae sae = Modele.getSae().get(cle);
-                ajouterSaeComeptence(sae, competence.getListeSaes().get(sae));
+            // Pour chaque ressource associée, les affiche
+            cles = Modele.getSae().keySet().toArray(new String[0]);
+            Arrays.sort(cles);
+            for(String cle : cles) {
+                if (competence.getListeSaes().keySet().contains(Modele.getSae().get(cle))) {
+                    Sae sae = Modele.getSae().get(cle);
+                    ajouterSaeComeptence(sae, competence.getListeSaes().get(sae));
+                }
             }
         }
     }
@@ -581,7 +714,7 @@ public class VueHomepageController {
             Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
             titre.setText(competence.creerIntitule());
             if (competence.isCalculable()) {
-                note.setText(String.format("%.2f", competence.calculerMoyenne())); 
+                note.setText(new DecimalFormat("#.##").format(competence.calculerMoyenne())); 
                 if (competence.calculerMoyenne() > 10) {
                     note.setFill(Color.LIMEGREEN);
                 } else if (competence.calculerMoyenne() > 8){
@@ -593,7 +726,7 @@ public class VueHomepageController {
                 note.setText("Moyenne incalculable");
                 diviseur.setText("");
             }
-            listePrincipale.getChildren().add(hbox);
+            zoneTitre.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (4) : " + e.getMessage());
         }
@@ -620,7 +753,7 @@ public class VueHomepageController {
             type.setText("Ressource");
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
-                note.setText(String.format("%.2f", ressource.calculerMoyenne())); 
+                note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne())); 
             } else {
                 note.setText("Moyenne incalculable");
                 diviseur.setText("");
@@ -664,7 +797,7 @@ public class VueHomepageController {
             type.setText("SAE");
             titre.setText(sae.creerIntitule());
             if (sae.getNote() != null) {
-                note.setText(String.format("%.2f", sae.getNote())); 
+                note.setText(new DecimalFormat("#.##").format(sae.getNote())); 
             } else {
                 note.setText("Note indéfinie");
                 diviseur.setText("");
@@ -699,20 +832,22 @@ public class VueHomepageController {
      * Est appelée quand une ressource est sélectionnée
      */
     private void ressourceCliquer(Ressource ressource) throws Exception {
-        // Vide la vbox principale
-        viderListePrincipale();
-        // Ajoute le titre de la ressource
-        ajouterTitreRessource(ressource);
-        /*
-         * Pour chaque évaluation associée, ajoute son cadre,
-         * et s'il n'y a pas d"évaluation, ajoute un cadre informatif 
-         */
-        ArrayList<Evaluation> listeEvaluation = ressource.getListeEvaluations();
-        if (listeEvaluation.isEmpty()){
-            afficherEvaluationVide();
-        } else {
-            for (Evaluation eval : listeEvaluation) {
-                ajouterEvaluation(eval, ressource);
+        if (!dansModifierModalite()) {
+            // Vide la vbox principale
+            viderZonePrincipale();
+            // Ajoute le titre de la ressource
+            ajouterTitreRessource(ressource);
+            /*
+             * Pour chaque évaluation associée, ajoute son cadre,
+             * et s'il n'y a pas d"évaluation, ajoute un cadre informatif 
+             */
+            ArrayList<Evaluation> listeEvaluation = ressource.getListeEvaluations();
+            if (listeEvaluation.isEmpty()){
+                afficherEvaluationVide();
+            } else {
+                for (Evaluation eval : listeEvaluation) {
+                    ajouterEvaluation(eval, ressource);
+                }
             }
         }
     }
@@ -742,7 +877,7 @@ public class VueHomepageController {
             });
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
-                note.setText(String.format("%.2f", ressource.calculerMoyenne()));  
+                note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne()));  
                 if (ressource.calculerMoyenne() > 10) {
                     note.setFill(Color.LIMEGREEN);
                 } else if (ressource.calculerMoyenne() > 8){
@@ -754,7 +889,7 @@ public class VueHomepageController {
                 note.setText("Moyenne incalculable");
                 diviseur.setText("");
             }
-            listePrincipale.getChildren().add(hbox);
+            zoneTitre.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (7) : " + e.getMessage());
         }
@@ -783,15 +918,15 @@ public class VueHomepageController {
             nomEval.setText(eval.getNom());
             date.setText(eval.getDate());
             Double note = eval.getNote();
+            if (note != null) {
+                noteText.setText(String.format("%.2f", note));
+            }
             noteText.setOnAction((Event) -> noteChangerEvaluation(eval, feedback, noteText, ressource));
             noteText.focusedProperty().addListener((observable, oldValue, newValue) -> {
                 if (oldValue) {
                     noteChangerEvaluation(eval, feedback, noteText, ressource);
                 }
             });
-            if (note != null) {
-                noteText.setText(note.toString());
-            }
             listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (8) : " + e.getMessage() + ",");
@@ -815,31 +950,47 @@ public class VueHomepageController {
      */
     private void noteChangerEvaluation(Evaluation eval, Label feedback, TextField noteText, Ressource ressource) {
         try {
-            eval.setNote(Double.parseDouble(noteText.getText()));
-            Modele.sauvegarder();
-            if (feedback.getStyleClass().contains("negatif")) {
-                feedback.getStyleClass().remove("negatif");
+            if (eval.getNote() == null || noteText.getText().equals("") || Double.parseDouble(noteText.getText()) != eval.getNote()) {
+                eval.setNote(noteText.getText().equals("") ? null : Double.parseDouble(noteText.getText()));
+                Modele.sauvegarder();
+                if (feedback.getStyleClass().contains("negatif")) {
+                    feedback.getStyleClass().remove("negatif");
+                }
+                feedback.getStyleClass().add("positif");
+                feedback.setText("Note sauvegardée");
+                threadFeedbackBack(feedback);
+            } else if (!feedback.getText().equals("") && Double.parseDouble(noteText.getText()) == eval.getNote()) {
+                if (feedback.getStyleClass().contains("negatif")) {
+                    feedback.getStyleClass().remove("negatif");
+                }
+                feedback.getStyleClass().add("positif");
+                feedback.setText("Note sauvegardée");
+                threadFeedbackBack(feedback);
             }
-            feedback.getStyleClass().add("positif");
-            feedback.setText("Note valide, sauvegarde effectuée");
         } catch (IllegalArgumentException e) {
+            // Vérifiez s'il existe déjà un thread en cours d'exécution
+            if (currentThreads.containsKey(feedback) && currentThreads.get(feedback).isAlive()) {
+                // Interrompez le thread en cours d'exécution
+                currentThreads.get(feedback).interrupt();
+            }
             if (feedback.getStyleClass().contains("positif")) {
                 feedback.getStyleClass().remove("positif");
             }
             feedback.getStyleClass().add("negatif");
-            feedback.setText("Note invalide, format non accepté");
+            feedback.setText("Note invalide, note pas enregistré");
         }
+        
         updateMoyenneEvaluation(ressource);
     }
     /*
      * Met à jour la moyenne suite au changement d'une note
      */
     private void updateMoyenneEvaluation(Ressource ressource) {
-        HBox hbox = (HBox) listePrincipale.getChildren().get(0);
+        HBox hbox = (HBox) zoneTitre.getChildren().get(0);
         Text note = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
         Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
         if (ressource.isCalculable()) {
-            note.setText(ressource.calculerMoyenne().toString()); 
+            note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne())); 
             diviseur.setText("/20");
             if (ressource.calculerMoyenne() > 10) {
                 note.setFill(Color.LIMEGREEN);
@@ -851,7 +1002,7 @@ public class VueHomepageController {
         } else {
             note.setText("Moyenne incalculable");
             diviseur.setText("");
-            note.setFill(Color.valueOf("#E8E3E8"));
+            note.setFill(Color.valueOf("#22ffd7"));
         }
     }
     
@@ -865,20 +1016,28 @@ public class VueHomepageController {
          *  Set ces tableaux qui permettrons de suivre quelles évluations 
          *  ont été supprimées etc.
          */
+        ressourceModifier = ressource;
         evalTmpId = new ArrayList<>();
         evalTmpIdRemoved = new ArrayList<>();
+        System.out.println("i\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
         // Vide la vue principale
-        viderListePrincipale();
+        viderZonePrincipale();
         // Insere le titre
         modaliteTitre(ressource);
         // Ajoute les évluations déjà existantes
-        int i = 0;
-        for (Evaluation eval : ressource.getListeEvaluations()) {
-            modaliteElement(eval, i);
-            i++;
+        if (ressource.getListeEvaluations().size() > 0) {
+            int i = 0;
+            for (Evaluation eval : ressource.getListeEvaluations()) {
+                modaliteElement(eval, i);
+                i++;
+            }
+            modaliteBouton();
+        } else {
+            modaliteBouton();
+            ajouter();
         }
         // Ajoute le bouton ajouter
-        modaliteBouton();
+        
     }
     /*
      * Ajoute le titre
@@ -911,7 +1070,7 @@ public class VueHomepageController {
                     e.printStackTrace();
                 }
             });
-            listePrincipale.getChildren().add(hbox);
+            zoneTitre.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (10) : " + e.getMessage());
         }
@@ -921,7 +1080,6 @@ public class VueHomepageController {
      * Ajoute un encadré évaluation
      */
     private void modaliteElement(Evaluation evaluation, int index) throws Exception {
-        
         try {
             String desc;
             String poids;
@@ -950,8 +1108,13 @@ public class VueHomepageController {
             tDate.setText(date);
             boutonSupprimer.setOnMouseEntered((event) -> primaryButtonEntered(event));
             boutonSupprimer.setOnMouseExited((event) -> primaryButtonExited(event));
-            boutonSupprimer.setOnAction((event) -> retirer(hbox, index));
+            if (index > -1) {
+                boutonSupprimer.setOnAction((event) -> retirer(hbox, index));
+            } else {
+                boutonSupprimer.setOnAction((event) -> retirer(hbox));
+            }
             evalTmpId.add(index);
+            System.out.println("addElt\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
             listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (11) : " + e.getMessage());
@@ -986,7 +1149,18 @@ public class VueHomepageController {
      * Retire une évaluation
      */
     private void retirer(HBox hbox, int index) {
-        evalTmpIdRemoved.add(evalTmpId.remove(evalTmpId.indexOf(index)));
+        int value = evalTmpId.remove(evalTmpId.indexOf(index));
+        evalTmpIdRemoved.add(value);
+        System.out.println("addremove\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
+        listePrincipale.getChildren().remove(hbox);
+    }
+    
+    /*
+     * Retire une évaluation
+     */
+    private void retirer(HBox hbox) {
+        evalTmpId.remove(evalTmpId.size() - 1);
+        System.out.println("addremove\nactual = " + evalTmpId.toString() + "\n" + "toRemove : " + evalTmpIdRemoved.toString());
         listePrincipale.getChildren().remove(hbox);
     }
     
@@ -1010,6 +1184,7 @@ public class VueHomepageController {
     private void annulerModalite(Ressource ressource) throws Exception {
         evalTmpId = null;
         evalTmpIdRemoved = null;
+        ressourceModifier = null;
         ressourceCliquer(ressource);
     }
     
@@ -1018,7 +1193,18 @@ public class VueHomepageController {
      */
     private void sauvegarderPresser(Ressource ressource) throws Exception {
         if (verifierModalite()) {
-            int i = 1;
+            Collections.sort(evalTmpIdRemoved, Collections.reverseOrder());
+            for (int elt : evalTmpIdRemoved) {
+                for (int i = 0; i < evalTmpId.size(); i++) {
+                    if (evalTmpId.get(i) > elt) {
+                        evalTmpId.set(i, evalTmpId.get(i) - 1);
+                    }
+                }
+            }
+            for (int index : evalTmpIdRemoved) {
+                ressource.supprimerEvaluation(index);
+            }
+            int i = 0;
             for (int index : evalTmpId) {
                 HBox racine = (HBox) listePrincipale.getChildren().get(i);
                 VBox colonne = (VBox) racine.getChildren().get(0);
@@ -1045,9 +1231,6 @@ public class VueHomepageController {
                 Modele.sauvegarder();
                 
             }
-            for (int index : evalTmpIdRemoved.reversed()) {
-                ressource.supprimerEvaluation(index);
-            }
             annulerModalite(ressource);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -1066,7 +1249,7 @@ public class VueHomepageController {
     private boolean verifierModalite() throws Exception {
         int poids = 0;
         boolean ok = true;
-        for (int i = 1; i < listePrincipale.getChildren().size() - 1 && ok; i++) {
+        for (int i = 0; i < listePrincipale.getChildren().size() - 1 && ok; i++) {
             HBox racine = (HBox) listePrincipale.getChildren().get(i);
             VBox colonne = (VBox) racine.getChildren().get(0);
             TextField tDesc = (TextField) ((HBox) colonne.getChildren().get(0))
@@ -1077,7 +1260,6 @@ public class VueHomepageController {
                 ok = false;
             }
             String poidsTexte = tPoids.getText().replaceAll("[^0-9.,]", "");
-            System.out.println("|" + poidsTexte + "|");
             if (poidsTexte.equals("")) {
                 ok = false;
             } else {
@@ -1105,12 +1287,14 @@ public class VueHomepageController {
      * Appelée lors du clic sur un boutopn sae dans le menu
      */
     private void saeCliquer(Sae sae) throws Exception {
-        // Vide la vue principale
-        viderListePrincipale();
-        // Ajoute le titre
-        ajouterTitreSae(sae);
-        // Ajoute la note de la sae
-        ajouterElementSae(sae);
+        if (!dansModifierModalite()) {
+            // Vide la vue principale
+            viderZonePrincipale();
+            // Ajoute le titre
+            ajouterTitreSae(sae);
+            // Ajoute la note de la sae
+            ajouterElementSae(sae);
+        }
     }
     /*
      * Ajoute le titre de la sae
@@ -1123,7 +1307,7 @@ public class VueHomepageController {
             HBox hbox = (HBox) root;
             Text titre = (Text) hbox.getChildren().get(0);
             titre.setText(sae.creerIntitule());
-            listePrincipale.getChildren().add(hbox);
+            zoneTitre.getChildren().add(hbox);
         } catch (Exception e) {
             throw new Exception("application corrompu (5) : " + e.getMessage());
         }
@@ -1149,7 +1333,7 @@ public class VueHomepageController {
             });
             Double note = sae.getNote();
             if (note != null) {
-                titre.setText(note.toString());
+                titre.setText(String.format("%.2f", note));
             }
             listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
@@ -1161,29 +1345,72 @@ public class VueHomepageController {
      */
     private void noteChangerSae(Sae sae) {
         Label feedback = (Label) ((HBox) ((HBox) ((HBox) listePrincipale
-                                                              .getChildren().get(1))
+                                                              .getChildren().get(0))
                                                               .getChildren().get(1))
                                                               .getChildren().get(0))
                                                               .getChildren().get(0);
         TextField reponse = (TextField) ((HBox) ((HBox) ((HBox) listePrincipale
-                                                              .getChildren().get(1))
+                                                              .getChildren().get(0))
                                                               .getChildren().get(1))
                                                               .getChildren().get(0))
                                                               .getChildren().get(1);
         try {
-            sae.setNote(Double.parseDouble(reponse.getText()));
-            Modele.sauvegarder();
-            if (feedback.getStyleClass().contains("negatif")) {
-                feedback.getStyleClass().remove("negatif");
+            if (sae.getNote() == null || reponse.getText().equals("") ||Double.parseDouble(reponse.getText()) != sae.getNote()) {
+                sae.setNote(reponse.getText().equals("") ? null : Double.parseDouble(reponse.getText()));
+                Modele.sauvegarder();
+                if (feedback.getStyleClass().contains("negatif")) {
+                    feedback.getStyleClass().remove("negatif");
+                }
+                feedback.getStyleClass().add("positif");
+                feedback.setText("Note sauvegardée");
+                threadFeedbackBack(feedback);
+            } else if (!feedback.getText().equals("") && Double.parseDouble(reponse.getText()) == sae.getNote()) {
+                if (feedback.getStyleClass().contains("negatif")) {
+                    feedback.getStyleClass().remove("negatif");
+                }
+                feedback.getStyleClass().add("positif");
+                feedback.setText("Note sauvegardée");
+                threadFeedbackBack(feedback);
             }
-            feedback.getStyleClass().add("positif");
-            feedback.setText("Note valide, sauvegarde effectuée");
         } catch (IllegalArgumentException e) {
+            // Vérifiez s'il existe déjà un thread en cours d'exécution
+            if (currentThreads.containsKey(feedback) && currentThreads.get(feedback).isAlive()) {
+                // Interrompez le thread en cours d'exécution
+                currentThreads.get(feedback).interrupt();
+            }
             if (feedback.getStyleClass().contains("positif")) {
                 feedback.getStyleClass().remove("positif");
             }
             feedback.getStyleClass().add("negatif");
-            feedback.setText("Note invalide, format non accepté");
+            feedback.setText("Note invalide, note pas enregistré");
         }
+    }
+
+    private static void threadFeedbackBack(Label feedback) {
+        if (currentThreads.containsKey(feedback)) {
+            currentThreads.get(feedback).interrupt();
+        }
+        // Créez une tâche (Task) pour effectuer le travail en arrière-plan
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                // Simulez un travail long (2 secondes dans cet exemple)
+                Thread.sleep(2000);
+                // Vérifiez si la tâche a été interrompue (si un autre thread a été lancé)
+                if (isCancelled()) {
+                    return null;  // Sortir de la tâche si elle a été interrompue
+                }
+                
+                // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                javafx.application.Platform.runLater(() -> {
+                    feedback.setText("");
+                });
+                currentThreads.remove(feedback);
+                return null;
+            }
+        };
+        // Démarrez la tâche dans un nouveau thread
+            currentThreads.put(feedback, new Thread(task));
+            currentThreads.get(feedback).start();
     }
 }

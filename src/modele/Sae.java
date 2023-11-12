@@ -41,8 +41,10 @@ public class Sae implements Enseignement, Serializable{
      * @param note
      */
     public void setNote(Double note) {
-        if (note < 0 || note > 20) {
-            throw new IllegalArgumentException();
+        if (note != null) {
+            if (note < 0 || note > 20) {
+                throw new IllegalArgumentException();
+            }
         }
         this.note = note;
     }

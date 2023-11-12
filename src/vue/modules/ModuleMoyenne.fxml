@@ -52,7 +52,7 @@
                </graphic>
                <styleClass>
                   <String fx:value="secondary-button" />
-                  <String fx:value="secondary-button-not-hovered" />
+                  <String fx:value="secondary-button-not-hover" />
                </styleClass>
             </Button>
          </children>

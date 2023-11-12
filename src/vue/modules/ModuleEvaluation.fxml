@@ -57,6 +57,9 @@
                      <font>
                         <Font name="Verdana Bold" size="14.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
                   </Label>
                   <TextField alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="90.0" promptText="Note" style="-fx-padding: 0 0 0 8px;">
                      <font>

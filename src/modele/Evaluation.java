@@ -143,7 +143,7 @@ public class Evaluation implements Serializable{
      * @return false si la note n'est pas correct (<0 ou >20), true sinon.
      */
     private static boolean isNoteValide(Double note) {
-        return note >= 0 && note <= 20;
+        return note == null || note >= 0 && note <= 20;
     }
 
 }

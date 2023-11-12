@@ -122,8 +122,6 @@ public class EchangeurDeVue {
     /** @param popUpStage nouvelle valeur de popUpStage */
     public static void setPopUpStage(Stage popUpStage) {
         EchangeurDeVue.popUpStage = popUpStage;
-        EchangeurDeVue.popUpStage.getIcons().add(
-                                 new Image("vue/ressources/icone_application.png"));
     }
     
     /**
@@ -180,7 +178,7 @@ public class EchangeurDeVue {
         try {
             Parent racine = FXMLLoader.load(EchangeurDeVue.class.getResource(getNomVue(codeVue)));
             if (scenePopUp == null) {
-                scenePopUp = new Scene(racine);
+                setScenePopUp(new Scene(racine));
             } else {
                 scenePopUp.setRoot(racine);
             }
@@ -189,6 +187,8 @@ public class EchangeurDeVue {
                 popUpStage.setScene(scenePopUp);
                 popUpStage.initModality(Modality.APPLICATION_MODAL);
             }
+            popUpStage.getIcons().add(
+                    new Image("vue/ressources/icone_application.png"));
             popUpStage.setTitle(nomFenetre);
             popUpStage.showAndWait();
         } catch (IOException e) {

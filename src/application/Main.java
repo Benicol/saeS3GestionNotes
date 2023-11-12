@@ -11,10 +11,14 @@ import controleur.VueHomepageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import modele.Modele;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 
 /** 
@@ -24,7 +28,6 @@ import javafx.scene.image.Image;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
-
         /*
          * Création d'un chargeur de code FXML et chargement de la vue de 
          * l'application
@@ -55,7 +58,6 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-
     /**
      * Programme principal
      * @param args non utilisé
