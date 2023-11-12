@@ -48,8 +48,6 @@ public class VueChoixPseudoControleur {
     @FXML
     void boutonPleinSortie(MouseEvent event) {
     	Button bouton = (Button) event.getSource();
-        
-        
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
@@ -86,8 +84,8 @@ public class VueChoixPseudoControleur {
      */
     @FXML
     void changerDePseudoPresser(ActionEvent event) {
-    	if ( pseudoInput.getPromptText().trim().length() !=0) {
-    		Modele.getUtilisateur().setPseudo(pseudoInput.getPromptText());
+    	if (!pseudoInput.getText().trim().equals("")) {
+    		Modele.getUtilisateur().setPseudo(pseudoInput.getText());
     	}
     }
 
