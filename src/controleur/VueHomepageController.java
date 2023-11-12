@@ -6,6 +6,7 @@ import modele.Modele;
 import modele.Ressource;
 import modele.Sae;
 
+import java.awt.image.DirectColorModel;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,6 +21,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.layout.HBox;
 
@@ -213,7 +216,7 @@ public class VueHomepageController {
      * - valider (modification des modalitées)
      */
     @FXML
-    void boutonPleinEntree(MouseEvent event) {
+    void primaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour assombrir le bouton.
@@ -232,7 +235,7 @@ public class VueHomepageController {
      * - valider (modification des modalitées)
      */
     @FXML
-    void boutonPleinSortie(MouseEvent event) {
+    void primaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
@@ -248,7 +251,7 @@ public class VueHomepageController {
      * - Annuler (modification de modalitées)
      */
     @FXML
-    void boutonVideEntree(MouseEvent event) {
+    void secondaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour assombrir le bouton.
@@ -264,7 +267,7 @@ public class VueHomepageController {
      * - Annuler (modification de modalitées)
      */
     @FXML
-    void boutonVideSortie(MouseEvent event) {
+    void secondaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
@@ -277,7 +280,6 @@ public class VueHomepageController {
      */
     @FXML
     void exporterPresser(ActionEvent event) {
-        EchangeurDeVue.echangerAvec("i", false);
         System.out.println("exporter presser");
     }
     
@@ -286,6 +288,7 @@ public class VueHomepageController {
      */
     @FXML
     void importerPresser(ActionEvent event) {
+        EchangeurDeVue.launchPopUp("vpui", "Importer");
         System.out.println("importer presser");
     }
     
@@ -294,7 +297,7 @@ public class VueHomepageController {
      */
     @FXML
     void reinitialiserPresser(ActionEvent event) {
-        EchangeurDeVue.launchPopUp("vr", "Réinitialisation");
+        EchangeurDeVue.launchPopUp("vpur", "Réinitialisation");
         if (!Modele.isParametrageInitialise()) {
             EchangeurDeVue.echangerAvec("i", false);
         }
@@ -382,8 +385,8 @@ public class VueHomepageController {
                     note.setText(String.format("%.2f", competence.calculerMoyenne())); 
                     int boutonId = Integer.parseInt(competence.getIdentifiant().substring(3, 4)) - 1;
                     Button bouttonCompetence = (Button) listesCompetences.getChildren().get(boutonId);
-                    oeuil.setOnMouseEntered((event) -> boutonVideEntree(event));
-                    oeuil.setOnMouseExited((event) -> boutonVideSortie(event));
+                    oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+                    oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
                     oeuil.setOnAction((event) -> {
                     eltMenuSelectionner(bouttonCompetence);
                     try {
@@ -440,8 +443,8 @@ public class VueHomepageController {
                     int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
                     Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
                     
-                    oeuil.setOnMouseEntered((event) -> boutonVideEntree(event));
-                    oeuil.setOnMouseExited((event) -> boutonVideSortie(event));
+                    oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+                    oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
                     oeuil.setOnAction((event) -> {
                     eltMenuSelectionner(bouttonRessource);
                     try {
@@ -502,8 +505,8 @@ public class VueHomepageController {
                         }
                     }
                     Button boutonCherche = bouton;
-                    oeuil.setOnMouseEntered((event) -> boutonVideEntree(event));
-                    oeuil.setOnMouseExited((event) -> boutonVideSortie(event));
+                    oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+                    oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
                     oeuil.setOnAction((event) -> {
                     eltMenuSelectionner(boutonCherche);
                     try {
@@ -565,6 +568,13 @@ public class VueHomepageController {
             titre.setText(competence.creerIntitule());
             if (competence.isCalculable()) {
                 note.setText(String.format("%.2f", competence.calculerMoyenne())); 
+                if (competence.calculerMoyenne() > 10) {
+                    note.setFill(Color.LIMEGREEN);
+                } else if (competence.calculerMoyenne() > 8){
+                    note.setFill(Color.ORANGE);
+                } else {
+                    note.setFill(Color.ORANGERED);
+                }
             } else {
                 note.setText("Moyenne indisponible");
                 diviseur.setText("");
@@ -604,14 +614,13 @@ public class VueHomepageController {
             int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
             Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
             listePrincipal.getChildren().add(hbox);
-            oeuil.setOnMouseEntered((event) -> boutonVideEntree(event));
-            oeuil.setOnMouseExited((event) -> boutonVideSortie(event));
+            oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+            oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
             oeuil.setOnAction((event) -> {
             eltMenuSelectionner(bouttonRessource);
             try {
                 ressourceCliquer(ressource);
             } catch (Exception e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             });
@@ -656,15 +665,13 @@ public class VueHomepageController {
             Button boutonCherche = bouton;
             
             listePrincipal.getChildren().add(hbox);
-            oeuil.setOnMouseEntered((event) -> boutonVideEntree(event));
-            oeuil.setOnMouseExited((event) -> boutonVideSortie(event));
+            oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+            oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
             oeuil.setOnAction((event) -> {
             eltMenuSelectionner(boutonCherche);
             try {
                 saeCliquer(sae);
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            } catch (Exception e) {                e.printStackTrace();
             }
             });
         } catch (Exception e) {
@@ -707,19 +714,25 @@ public class VueHomepageController {
             Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
             Button bouton = (Button)((HBox) hbox.getChildren().get(0))
                                                 .getChildren().get(1);
-            bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
-            bouton.setOnMouseExited((event) -> boutonPleinSortie(event));
+            bouton.setOnMouseEntered((event) -> primaryButtonEntered(event));
+            bouton.setOnMouseExited((event) -> primaryButtonExited(event));
             bouton.setOnAction((event) -> {
                 try {
                     modaliteCliquer(ressource);
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             });
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
                 note.setText(String.format("%.2f", ressource.calculerMoyenne()));  
+                if (ressource.calculerMoyenne() > 10) {
+                    note.setFill(Color.LIMEGREEN);
+                } else if (ressource.calculerMoyenne() > 8){
+                    note.setFill(Color.ORANGE);
+                } else {
+                    note.setFill(Color.ORANGERED);
+                }
             } else {
                 note.setText("Moyenne indisponible");
                 diviseur.setText("");
@@ -811,9 +824,17 @@ public class VueHomepageController {
         if (ressource.isCalculable()) {
             note.setText(ressource.calculerMoyenne().toString()); 
             diviseur.setText("/20");
+            if (ressource.calculerMoyenne() > 10) {
+                note.setFill(Color.LIMEGREEN);
+            } else if (ressource.calculerMoyenne() > 8){
+                note.setFill(Color.ORANGE);
+            } else {
+                note.setFill(Color.ORANGERED);
+            }
         } else {
             note.setText("Moyenne indisponible");
             diviseur.setText("");
+            note.setFill(Color.valueOf("#E8E3E8"));
         }
     }
     
@@ -852,15 +873,14 @@ public class VueHomepageController {
             Button boutonValider = (Button) hboxInterne.getChildren().get(1);
             Button boutonAnnuler = (Button) hboxInterne.getChildren().get(2);
             titre.setText(ressource.creerIntitule());
-            boutonValider.setOnMouseEntered((event) -> boutonPleinEntree(event));
-            boutonValider.setOnMouseExited((event) -> boutonPleinSortie(event));
-            boutonAnnuler.setOnMouseEntered((event) -> boutonVideEntree(event));
-            boutonAnnuler.setOnMouseExited((event) -> boutonVideSortie(event));
+            boutonValider.setOnMouseEntered((event) -> primaryButtonEntered(event));
+            boutonValider.setOnMouseExited((event) -> primaryButtonExited(event));
+            boutonAnnuler.setOnMouseEntered((event) -> secondaryButtonEntered(event));
+            boutonAnnuler.setOnMouseExited((event) -> secondaryButtonExited(event));
             boutonValider.setOnAction((event) -> {
                 try {
                     sauvegarderPresser(ressource);
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             });
@@ -868,7 +888,6 @@ public class VueHomepageController {
                 try {
                     annulerModalite(ressource);
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             });
@@ -909,8 +928,8 @@ public class VueHomepageController {
             tDesc.setText(desc);
             tPoids.setText(poids);
             tDate.setText(date);
-            boutonSupprimer.setOnMouseEntered((event) -> boutonPleinEntree(event));
-            boutonSupprimer.setOnMouseExited((event) -> boutonPleinSortie(event));
+            boutonSupprimer.setOnMouseEntered((event) -> primaryButtonEntered(event));
+            boutonSupprimer.setOnMouseExited((event) -> primaryButtonExited(event));
             boutonSupprimer.setOnAction((event) -> retirer(hbox, index));
             evalTmpId.add(index);
             listePrincipal.getChildren().add(hbox);
@@ -928,13 +947,12 @@ public class VueHomepageController {
             Parent root = fxmlloader.load();
             HBox hbox = (HBox) root;
             Button bouton = (Button) hbox.getChildren().get(0);
-            bouton.setOnMouseEntered((event) -> boutonPleinEntree(event));
-            bouton.setOnMouseExited((event) -> boutonPleinSortie(event));
+            bouton.setOnMouseEntered((event) -> primaryButtonEntered(event));
+            bouton.setOnMouseExited((event) -> primaryButtonExited(event));
             bouton.setOnAction((event) -> {
                 try {
                     ajouter();
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             });
@@ -987,7 +1005,7 @@ public class VueHomepageController {
                 TextField tPoids = (TextField) ((HBox) colonne.getChildren().get(1)).getChildren().get(1);
                 TextField tDate = (TextField) ((HBox) colonne.getChildren().get(2)).getChildren().get(1);
                 String description = tDesc.getText();
-                Double ponderation = (Double.parseDouble(tPoids.getText().replace("%", "").trim()) / 100);
+                Double ponderation = (Double.parseDouble(tPoids.getText().replaceAll("[^0-9.,]", "")) / 100);
                 String date = tDate.getText();
                 if (index > -1) {
                     Evaluation eval = ressource.getListeEvaluations().get(index);
@@ -1027,11 +1045,11 @@ public class VueHomepageController {
             VBox colonne = (VBox) racine.getChildren().get(0);
             TextField tDesc = (TextField) ((HBox) colonne.getChildren().get(0)).getChildren().get(1);
             TextField tPoids = (TextField) ((HBox) colonne.getChildren().get(1)).getChildren().get(1);
-            TextField tDate = (TextField) ((HBox) colonne.getChildren().get(2)).getChildren().get(1);
             if (tDesc.getText().equals("")) {
                 ok = false;
             }
-            String poidsTexte = tPoids.getText().replace("%", "").trim();
+            String poidsTexte = tPoids.getText().replaceAll("[^0-9.,]", "");
+            System.out.println("|" + poidsTexte + "|");
             if (poidsTexte.equals("")) {
                 ok = false;
             } else {

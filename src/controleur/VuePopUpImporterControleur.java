@@ -19,7 +19,7 @@ import modele.OutilReseau;
  * Controleur de la vue vue.VueExporter.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class VueImporterControleur {
+public class VuePopUpImporterControleur {
     
     /**
      * Methode appeler lors du clic sur le bouton "afficher l'adresse IP"
@@ -55,7 +55,7 @@ public class VueImporterControleur {
      * - Bouton "Etablir une connexion"
      */
     @FXML
-    void boutonPleinEntree(MouseEvent event) {
+    void primaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -73,7 +73,7 @@ public class VueImporterControleur {
      * - Bouton "Etablir une connexion"
      */
     @FXML
-    void boutonPleinSortie(MouseEvent event) {
+    void primaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -89,7 +89,7 @@ public class VueImporterControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideEntree(MouseEvent event) {
+    void secondaryButtonEntered(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
@@ -105,7 +105,7 @@ public class VueImporterControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideSortie(MouseEvent event) {
+    void secondaryButtonExited(MouseEvent event) {
         // On va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         

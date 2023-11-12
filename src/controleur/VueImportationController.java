@@ -59,7 +59,10 @@ public class VueImportationController {
     
     @FXML
     void boutonImporterPresser(ActionEvent event) {
-        EchangeurDeVue.launchPopUp(null, null);
+        EchangeurDeVue.launchPopUp("vpui", "Importer");
+        if (Modele.isParametrageInitialise()) {
+            EchangeurDeVue.echangerAvec("h", false);
+        }
     }
     
     @FXML

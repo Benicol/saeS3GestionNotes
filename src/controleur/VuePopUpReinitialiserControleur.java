@@ -10,7 +10,7 @@ import modele.Modele;
  * Controleur de la vue vue.VueReinitialiser.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class VueReinitialiserControleur {
+public class VuePopUpReinitialiserControleur {
     /**
      * Methode appelée lors du clic sur le bouton "annuler"
      */
@@ -26,7 +26,7 @@ public class VueReinitialiserControleur {
      * - Bouton "Supprimer toutes les données"
      */
     @FXML
-    void boutonPleinEntree(MouseEvent event) {
+    void primaryButtonEntered(MouseEvent event) {
         // Récupère le bouton appelant
         Button bouton = (Button) event.getSource();
         
@@ -41,7 +41,7 @@ public class VueReinitialiserControleur {
      * - Bouton "Supprimer toutes les données"
      */
     @FXML
-    void boutonPleinSortie(MouseEvent event) {
+    void primaryButtonExited(MouseEvent event) {
         // Récupère le bouton appelant
         Button bouton = (Button) event.getSource();
         
@@ -56,7 +56,7 @@ public class VueReinitialiserControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideEntree(MouseEvent event) {
+    void secondaryButtonEntered(MouseEvent event) {
         // Récupère le bouton appelant
         Button bouton = (Button) event.getSource();
         
@@ -71,7 +71,7 @@ public class VueReinitialiserControleur {
      * - Bouton "Annuler"
      */
     @FXML
-    void boutonVideSortie(MouseEvent event) {
+    void secondaryButtonExited(MouseEvent event) {
         // Récupère le bouton appelant
         Button bouton = (Button) event.getSource();
         

@@ -10,9 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="193.0" prefWidth="482.0" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.VueReinitialiserControleur">
+<VBox id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="193.0" prefWidth="482.0" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.VuePopUpReinitialiserControleur">
    <children>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous vous apprêtez à supprimer l'intégralité de vos données (notes, modalités, paramètres)." wrappingWidth="430.0">
+      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Vous vous apprêtez à supprimer l'intégralité de vos données (notes, modalités, paramètres).&#10;Êtes-vous sûr(e) de votre choix ?" wrappingWidth="430.0">
          <VBox.margin>
             <Insets bottom="4.0" left="32.0" right="32.0" top="24.0" />
          </VBox.margin>
@@ -20,17 +20,9 @@
             <Font name="Verdana Bold" size="16.0" />
          </font>
       </Text>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Êtes-vous sûr(e) de votre choix ?" wrappingWidth="430.0">
-         <VBox.margin>
-            <Insets bottom="16.0" left="32.0" right="32.0" top="4.0" />
-         </VBox.margin>
-         <font>
-            <Font name="Verdana Bold" size="16.0" />
-         </font>
-      </Text>
       <HBox alignment="CENTER" prefHeight="64.0" prefWidth="482.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#annulerPresser" onMouseEntered="#boutonVideEntree" onMouseExited="#boutonVideSortie" text="Annuler">
+            <Button mnemonicParsing="false" onAction="#annulerPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" text="Annuler">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -46,7 +38,7 @@
                   <String fx:value="secondary-button-not-hover" />
                </styleClass>
             </Button>
-            <Button mnemonicParsing="false" onAction="#supprimerToutesLesDonneesPresser" onMouseEntered="#boutonPleinEntree" onMouseExited="#boutonPleinSortie" text="Supprimer toutes les données">
+            <Button mnemonicParsing="false" onAction="#supprimerToutesLesDonneesPresser" onMouseEntered="#primaryButtonEntered" onMouseExited="#primaryButtonExited" prefHeight="40.0" text="Supprimer toutes les données">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                   	<Image url="@../vue/ressources/icone_supprimer.png" />
