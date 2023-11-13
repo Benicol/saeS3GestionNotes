@@ -25,6 +25,10 @@
     -fx-background-color : #49424A;
 }
 
+.secondary-button-white-hover {
+    -fx-background-color : #C8C3C8;
+}
+
 .secondary-button-not-hover {
     -fx-background-color : transparent;
 }

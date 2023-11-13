@@ -258,11 +258,17 @@ public class VueHomepageController {
                 }
                 selected = button;
                 selected.getStyleClass().remove("side-nav-element-inactive");
-                selected.getStyleClass().remove("side-nav-element-inactive-hover");
+                if (selected.getStyleClass().contains("side-nav-element-inactive-hover")) {
+                    selected.getStyleClass().remove("side-nav-element-inactive-hover");
+                }
+                if (selected.getStyleClass().contains("side-nav-element-inactive-not-hover")) {
+                    selected.getStyleClass().remove("side-nav-element-inactive-not-hover");
+                }
                 selected.getStyleClass().add("side-nav-element-active");
                 selected.getStyleClass().add("side-nav-element-active-not-hover");
                 selected.setOnMouseEntered(null);
                 selected.setOnMouseExited(null);
+                System.out.println(selected.getStyleClass());
             }
         }
     }
@@ -314,7 +320,6 @@ public class VueHomepageController {
      * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
      * - Reinitialiser
-     * - oeuil (Competences et afficher les moyennes)
      * - Annuler (modification de modalitées)
      */
     @FXML
@@ -331,7 +336,6 @@ public class VueHomepageController {
      * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
      * - Reinitialiser
-     * - oeuil (Competences et afficher les moyennes)
      * - Annuler (modification de modalitées)
      */
     @FXML
@@ -340,6 +344,36 @@ public class VueHomepageController {
         Button bouton = (Button) event.getSource();
         // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
+        bouton.getStyleClass().add("secondary-button-not-hover");
+    }
+    
+    /**
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
+     * Boutons utilisant cette méthode : 
+     * - oeuil (Competences et afficher les moyennes)
+     */
+    @FXML
+    void secondaryButtonWhiteEntered(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour assombrir le bouton.
+        bouton.getStyleClass().remove("secondary-button-not-hover");
+        bouton.getStyleClass().add("secondary-button-white-hover");
+    }
+    
+    /**
+     * Méthode appelé lors de la sortie de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
+     * Boutons utilisant cette méthode : 
+     * - oeuil (Competences et afficher les moyennes)
+     */
+    @FXML
+    void secondaryButtonWhiteExited(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        bouton.getStyleClass().remove("secondary-button-white-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
     
@@ -473,12 +507,14 @@ public class VueHomepageController {
         }
         if (!dansModifierModalite()) {
             if (selected != null) {
-                selected.getStyleClass().remove("side-nav-element-active");
-                selected.getStyleClass().remove("side-nav-element-active-not-hover");
-                selected.getStyleClass().add("side-nav-element-inactive");
-                selected.getStyleClass().add("side-nav-element-inactive-not-hover");
-                afficherMesMoyennesPresserStopNavMenuOnAction();
-                selected = null;
+                if (selected != null) {
+                    selected.getStyleClass().remove("side-nav-element-active");
+                    selected.getStyleClass().remove("side-nav-element-active-not-hover");
+                    selected.getStyleClass().add("side-nav-element-inactive");
+                    selected.getStyleClass().add("side-nav-element-inactive-not-hover");
+                    afficherMesMoyennesPresserStopNavMenuOnAction();
+                    selected = null;
+                }
             }
             viderZonePrincipale();
             titreMoyennes();
@@ -558,7 +594,7 @@ public class VueHomepageController {
                     // Rempli les champs
                     type.setText("Competence");
                     titre.setText(competence.creerIntitule());
-                    note.setText(new DecimalFormat("#.##").format(competence.calculerMoyenne())); 
+                    note.setText((new DecimalFormat("#.##").format(competence.calculerMoyenne()).replace(",", "."))); 
                     int boutonId = Integer.parseInt(competence.getIdentifiant().substring(3, 4)) - 1;
                     Button bouttonCompetence = (Button) listesCompetences.getChildren().get(boutonId);
                     oeil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
@@ -619,12 +655,12 @@ public class VueHomepageController {
                     // Rempli les champs
                     type.setText("Ressource");
                     titre.setText(ressource.creerIntitule());
-                    note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne())); 
+                    note.setText((new DecimalFormat("#.##").format(ressource.calculerMoyenne()).replace(",", "."))); 
                     int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
                     Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
                     
-                    oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
-                    oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
+                    oeuil.setOnMouseEntered((event) -> secondaryButtonWhiteEntered(event));
+                    oeuil.setOnMouseExited((event) -> secondaryButtonWhiteExited(event));
                     oeuil.setOnAction((event) -> {
                     eltMenuSelectionner(bouttonRessource);
                     try {
@@ -679,7 +715,7 @@ public class VueHomepageController {
                     // Rempli les champs
                     type.setText("SAE");
                     titre.setText(sae.creerIntitule());
-                    note.setText(new DecimalFormat("#.##").format(sae.getNote())); 
+                    note.setText((new DecimalFormat("#.##").format(sae.getNote())).replace(",", ".")); 
                     Button bouton = null;
                     for (Node node : listeSaes.getChildren()) {
                         bouton = (Button) node;
@@ -688,8 +724,8 @@ public class VueHomepageController {
                         }
                     }
                     Button boutonCherche = bouton;
-                    oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
-                    oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
+                    oeuil.setOnMouseEntered((event) -> secondaryButtonWhiteEntered(event));
+                    oeuil.setOnMouseExited((event) -> secondaryButtonWhiteExited(event));
                     oeuil.setOnAction((event) -> {
                     eltMenuSelectionner(boutonCherche);
                     try {
@@ -755,7 +791,7 @@ public class VueHomepageController {
             Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
             titre.setText(competence.creerIntitule());
             if (competence.isCalculable()) {
-                note.setText(new DecimalFormat("#.##").format(competence.calculerMoyenne())); 
+                note.setText((new DecimalFormat("#.##").format(competence.calculerMoyenne()).replace(",", "."))); 
                 if (competence.calculerMoyenne() > 10) {
                     note.setFill(Color.LIMEGREEN);
                 } else if (competence.calculerMoyenne() > 8){
@@ -794,7 +830,7 @@ public class VueHomepageController {
             type.setText("Ressource");
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
-                note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne())); 
+                note.setText((new DecimalFormat("#.##").format(ressource.calculerMoyenne()).replace(",", "."))); 
             } else {
                 note.setText("Moyenne incalculable");
                 diviseur.setText("");
@@ -802,8 +838,8 @@ public class VueHomepageController {
             int boutonId = Integer.parseInt(ressource.getIdentifiant().substring(3, 5)) - 1;
             Button bouttonRessource = (Button) listeRessources.getChildren().get(boutonId);
             listePrincipale.getChildren().add(hbox);
-            oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
-            oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
+            oeuil.setOnMouseEntered((event) -> secondaryButtonWhiteEntered(event));
+            oeuil.setOnMouseExited((event) -> secondaryButtonWhiteExited(event));
             oeuil.setOnAction((event) -> {
             eltMenuSelectionner(bouttonRessource);
             try {
@@ -838,7 +874,7 @@ public class VueHomepageController {
             type.setText("SAE");
             titre.setText(sae.creerIntitule());
             if (sae.getNote() != null) {
-                note.setText(new DecimalFormat("#.##").format(sae.getNote())); 
+                note.setText((new DecimalFormat("#.##").format(sae.getNote()).replace(",", "."))); 
             } else {
                 note.setText("Note indéfinie");
                 diviseur.setText("");
@@ -853,8 +889,8 @@ public class VueHomepageController {
             Button boutonCherche = bouton;
             
             listePrincipale.getChildren().add(hbox);
-            oeuil.setOnMouseEntered((event) -> secondaryButtonEntered(event));
-            oeuil.setOnMouseExited((event) -> secondaryButtonExited(event));
+            oeuil.setOnMouseEntered((event) -> secondaryButtonWhiteEntered(event));
+            oeuil.setOnMouseExited((event) -> secondaryButtonWhiteExited(event));
             oeuil.setOnAction((event) -> {
             eltMenuSelectionner(boutonCherche);
             try {
@@ -918,7 +954,7 @@ public class VueHomepageController {
             });
             titre.setText(ressource.creerIntitule());
             if (ressource.isCalculable()) {
-                note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne()));  
+                note.setText((new DecimalFormat("#.##").format(ressource.calculerMoyenne()).replace(",", ".")));  
                 if (ressource.calculerMoyenne() > 10) {
                     note.setFill(Color.LIMEGREEN);
                 } else if (ressource.calculerMoyenne() > 8){
@@ -960,7 +996,7 @@ public class VueHomepageController {
             date.setText(eval.getDate());
             Double note = eval.getNote();
             if (note != null) {
-                noteText.setText(String.format("%.2f", note));
+                noteText.setText(String.format("%.2f", note).replace(",","."));
             }
             noteText.setOnAction((Event) -> noteChangerEvaluation(eval, feedback, noteText, ressource));
             noteText.focusedProperty().addListener((observable, oldValue, newValue) -> {
@@ -991,19 +1027,20 @@ public class VueHomepageController {
      */
     private void noteChangerEvaluation(Evaluation eval, Label feedback, TextField noteText, Ressource ressource) {
         try {
-            if (eval.getNote() == null || noteText.getText().equals("") || Double.parseDouble(noteText.getText()) != eval.getNote()) {
-                eval.setNote(noteText.getText().equals("") ? null : Double.parseDouble(noteText.getText()));
+            System.out.println(feedback.getStyleClass());
+            if (feedback.getStyleClass().contains("negatif")) {
+                feedback.getStyleClass().remove("negatif");
+            }
+            if (feedback.getStyleClass().contains("positif")) {
+                feedback.getStyleClass().remove("positif");
+            }
+            if (eval.getNote() == null || noteText.getText().equals("") || Double.parseDouble(noteText.getText().replace(",", ".")) != eval.getNote()) {
+                eval.setNote(noteText.getText().equals("") ? null : Double.parseDouble(noteText.getText().replace(",", ".")));
                 Modele.sauvegarder();
-                if (feedback.getStyleClass().contains("negatif")) {
-                    feedback.getStyleClass().remove("negatif");
-                }
                 feedback.getStyleClass().add("positif");
                 feedback.setText("Note sauvegardée");
                 threadFeedbackBack(feedback);
             } else if (!feedback.getText().equals("") && Double.parseDouble(noteText.getText()) == eval.getNote()) {
-                if (feedback.getStyleClass().contains("negatif")) {
-                    feedback.getStyleClass().remove("negatif");
-                }
                 feedback.getStyleClass().add("positif");
                 feedback.setText("Note sauvegardée");
                 threadFeedbackBack(feedback);
@@ -1014,11 +1051,8 @@ public class VueHomepageController {
                 // Interrompez le thread en cours d'exécution
                 currentThreads.get(feedback).interrupt();
             }
-            if (feedback.getStyleClass().contains("positif")) {
-                feedback.getStyleClass().remove("positif");
-            }
             feedback.getStyleClass().add("negatif");
-            feedback.setText("Note invalide, note pas enregistré");
+            feedback.setText("Note invalide");
         }
         
         updateMoyenneEvaluation(ressource);
@@ -1031,7 +1065,7 @@ public class VueHomepageController {
         Text note = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
         Text diviseur = (Text) ((HBox) hbox.getChildren().get(1)).getChildren().get(1);
         if (ressource.isCalculable()) {
-            note.setText(new DecimalFormat("#.##").format(ressource.calculerMoyenne())); 
+            note.setText((new DecimalFormat("#.##").format(ressource.calculerMoyenne()).replace(",", "."))); 
             diviseur.setText("/20");
             if (ressource.calculerMoyenne() > 10) {
                 note.setFill(Color.LIMEGREEN);
@@ -1370,7 +1404,7 @@ public class VueHomepageController {
             });
             Double note = sae.getNote();
             if (note != null) {
-                titre.setText(String.format("%.2f", note));
+                titre.setText(String.format("%.2f", note).replace(",","."));
             }
             listePrincipale.getChildren().add(hbox);
         } catch (Exception e) {
@@ -1392,8 +1426,9 @@ public class VueHomepageController {
                                                               .getChildren().get(0))
                                                               .getChildren().get(1);
         try {
-            if (sae.getNote() == null || reponse.getText().equals("") ||Double.parseDouble(reponse.getText()) != sae.getNote()) {
-                sae.setNote(reponse.getText().equals("") ? null : Double.parseDouble(reponse.getText()));
+            if (sae.getNote() == null || reponse.getText().equals("") ||Double.parseDouble(reponse.getText().replace(",", ".")) != sae.getNote()) {
+                System.out.println("test");
+                sae.setNote(reponse.getText().equals("") ? null : Double.parseDouble(reponse.getText().replace(",", ".")));
                 Modele.sauvegarder();
                 if (feedback.getStyleClass().contains("negatif")) {
                     feedback.getStyleClass().remove("negatif");
@@ -1419,7 +1454,7 @@ public class VueHomepageController {
                 feedback.getStyleClass().remove("positif");
             }
             feedback.getStyleClass().add("negatif");
-            feedback.setText("Note invalide, note pas enregistré");
+            feedback.setText("Note invalide");
         }
     }
 
