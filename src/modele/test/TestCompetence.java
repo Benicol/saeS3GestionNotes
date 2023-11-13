@@ -43,7 +43,7 @@ class TestCompetence {
     public void initialisation() {
         libelleTest = "libelleTest";
         identifiantTest = "identifiantTest";
-        intituleTest = "identifiantTest" + " " +  "libelleTest";
+        intituleTest = "identifiantTest" + " : " +  "libelleTest";
         
         competenceTest = new Competence(identifiantTest, libelleTest);
         listeRessourcesTest = new HashMap<Ressource, Double>();

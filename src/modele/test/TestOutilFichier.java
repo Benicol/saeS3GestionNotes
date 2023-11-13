@@ -10,10 +10,10 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 
 import modele.OutilFichier;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  * Tests en JUnit de la classe "OutilFichier".

@@ -93,7 +93,7 @@ public class TestModele {
 	public void testImporter() {
 	    Modele.reset();
 	    //Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv");
-        assertDoesNotThrow(() -> Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv"));
+        assertDoesNotThrow(() -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv"));
         assertEquals("2", Modele.getParametrage().getSemestre());
         assertEquals("Tous", Modele.getParametrage().getParcours());
         assertEquals(6, Modele.getCompetences().size());
@@ -106,13 +106,48 @@ public class TestModele {
         assertEquals(4,Modele.getRessources().get("R2.01").getListeEvaluations().size());
         assertEquals(0,Modele.getRessources().get("R2.03").getListeEvaluations().size());
         assertThrows(IllegalArgumentException.class,
-                () -> Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv"));
+                () -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv"));
         Modele.reset();
         assertThrows(IllegalArgumentException.class,
-                () -> Modele.importer(".\\src\\modele\\test\\fichierEvidemmentInvalide.csv"));
+                () -> Modele.importer(".\\src\\modele\\test\\csv\\fichierEvidemmentInvalide.csv"));
+        Modele.reset();
         
+        // tests sans semestre
+        assertThrows(IllegalArgumentException.class, () -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide1.csv"));
+        Modele.reset();
         
+        // tests sans parcours
+        assertThrows(IllegalArgumentException.class, () -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide2.csv"));
         
+        // tests sans ligne vide entre 2 tableaux
+        assertThrows(IllegalArgumentException.class, () -> {
+            Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide3.csv");
+        });
+        
+        // tests avec un tableau qui ne commence pas par ressource ou compétence
+        assertThrows(IllegalArgumentException.class, () -> {
+            Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide4.csv");
+        });
+        
+        // tests où la pondération s'aditionne pas à 100
+        assertThrows(IllegalArgumentException.class, () -> {
+            Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide5.csv");
+        });
+        
+        // tests avec un identifiant invalide
+        assertThrows(IllegalArgumentException.class, () -> {
+            Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide6.csv");
+        });
+        
+        // tests avec le titre d'une ressource vide
+        assertThrows(IllegalArgumentException.class, () -> {
+            Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide7.csv");
+        });
+        
+        // tests avec un élément d'une competence qui n'a pas de nom
+        assertThrows(IllegalArgumentException.class, () -> {
+            Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide8.csv");
+        });
 	}
 	
 	/**
@@ -124,66 +159,6 @@ public class TestModele {
 	    Modele.reset();
 	    assertFalse(Modele.isParametrageInitialise());
 	}
-	
-    /** 
-     * Test de la méthode verifierFormatDonnees() de la classe Modèle
-     */
-    @Test
-    public void testVerifierFormatDonnees() {
-        //Préparation
-        String fichier = OutilFichier.lire(".\\src\\modele\\test\\testModeleParametrage.csv");
-        String[][] donneesTests = OutilCSV.formaterToDonnees(fichier);
-        String[][] donneesInvalides = donneesTests;
-        
-        // test conditions normales
-        assertTrue(Modele.verifierFormatDonnees(donneesTests)); 
-        
-        // tests sans semestre
-        donneesInvalides[1][1] = "";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests sans parcours
-        donneesInvalides[2][0] = "un truc là";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests sans ligne vide entre 2 tableaux
-        donneesInvalides[3] = new String[1];
-        donneesInvalides[3][0] = "COUCOU C'EST MOI";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests avec un tableau qui ne commence pas par ressource ou compétence
-        donneesInvalides[13][0] = "SAE";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests où la pondération s'aditionne pas à 100
-        donneesInvalides[17][0] = "196";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests avec un identifiant invalide
-        donneesInvalides[24][1] = "R2.4";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests avec le titre d'une ressource vide
-        donneesInvalides[31][2] = "";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests avec un élément d'une competence qui n'a pas de nom
-        donneesInvalides[27][0] = "";
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-        
-        // tests avec un identifiant null
-        donneesInvalides[36][1] = null;
-        assertFalse(Modele.verifierFormatDonnees(donneesInvalides));
-        donneesInvalides = donneesTests;
-    }
     
     /**
      * test de la methode getListRessources()
@@ -223,8 +198,8 @@ public class TestModele {
      */
     @Test
     public void testGetUtilisateur() {
-        Utilisateur user = new Utilisateur();
-        assertEquals(user.getPseudo(), Modele.getUtilisateur().getPseudo());
+        Modele.getUtilisateur().setPseudo("Utilisateur");
+        assertEquals("Utilisateur", Modele.getUtilisateur().getPseudo());
         assertNotEquals(null, Modele.getUtilisateur());
     }
 }

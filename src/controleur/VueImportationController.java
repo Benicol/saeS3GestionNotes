@@ -6,7 +6,9 @@ package controleur;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -79,19 +81,27 @@ public class VueImportationController {
 
     @FXML
     void onDragOver(DragEvent event) {
-        Dragboard dragboard = event.getDragboard();
-        boolean success = false;
-        if (dragboard.hasFiles()) {
-            // Récupérer le fichier déposé
-            String file = dragboard.getFiles().get(0).getPath();
-            Modele.importer(file);
-            success = true;
-            
-        }
-        event.setDropCompleted(success);
-        event.consume();
-        if (success) {
-            EchangeurDeVue.echangerAvec("h", false);
+        try {
+            Dragboard dragboard = event.getDragboard();
+            boolean success = false;
+            if (dragboard.hasFiles()) {
+                // Récupérer le fichier déposé
+                String file = dragboard.getFiles().get(0).getPath();
+                Modele.importer(file);
+                success = true;
+                
+            }
+            event.setDropCompleted(success);
+            event.consume();
+            if (success) {
+                EchangeurDeVue.echangerAvec("h", false);
+            }
+        } catch (IllegalArgumentException e) {
+            // Gestion de l'exception
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setHeaderText("L'importation a rencontrée un problème...");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
         }
     }
 }

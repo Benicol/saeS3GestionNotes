@@ -16,7 +16,6 @@ import java.io.ObjectInputStream;
 /**
  * Modele.java                                                                                 21/10/2015
  * No copyright. 
-=======
  * Classe représentant le modèle de l'application (gérée selon un modèle MVC).
  * Responsabilités principales :
  *     - Gérer la sauvegarde et le chargement des données.
@@ -120,178 +119,128 @@ public class Modele {
         } else {
             throw new IllegalArgumentException("Le fichier n'existe pas");
         }
-        
-        /* Vérifie si le format des données du CSV est valide */
-        if (donnees != null && verifierFormatDonnees(donnees)) {
+        try {
+            boolean donneesValide = true;
+            /* Vérifie si le format des données du CSV est valide */
+            if (donnees == null || !(donneesValide = donnees[1].length >= 2 
+                                                                    && donnees[1][0].equals("Semestre") 
+                                                                    && isNumeric(donnees[1][1])
+                                                                    && donnees[2].length >= 2 
+                                                                    && donnees[2][0].equals("Parcours") 
+                                                                    && donnees[2][1].length() != 0)) {
+                donneesValide = false;
+            }
             /* Déclaration des variables pour stocker les informations du CSV */
-            String semestre;
-            String parcours;
+            String semestre = "";
+            String parcours = "";
             HashMap<String, String> listeSae = new HashMap<>();
             HashMap<String, String> listeRessource = new HashMap<>();
             ArrayList<String[][]> listeCompetence = new ArrayList<>();
             HashMap<String,ArrayList<Evaluation>> ressource = new HashMap<>();
-            
-            /* Récupère le semestre et le parcours depuis les 1e lignes du CSV */
-            semestre = donnees[1][1];
-            parcours = donnees[2][1];
-            
-            /* Parcours des lignes du CSV à partir de la troisième ligne */
-            for (int i = 3; i < donnees.length; i++) {
-                /* Si la ligne concerne une compétence */
-                if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
-                    ArrayList<String[]> competence = new ArrayList<>();;
-                    String[] infoLigne = new String[2];
-                    infoLigne[0] = donnees[i][1];
-                    infoLigne[1] = donnees[i][2];
-                    competence.add(infoLigne.clone());
-                    int poids = 0;
-                    i++;
-                    
-                    /* Parcours des lignes suivantes pour récupérer les informations
-                     * (ressources et saé) liés à la compétence
-                     */
-                    while (poids != 100) {
-                        i++;
+            if (donneesValide) {
+                /* Récupère le semestre et le parcours depuis les 1e lignes du CSV */
+                semestre = donnees[1][1];
+                parcours = donnees[2][1];
+                /* Parcours des lignes du CSV à partir de la troisième ligne */
+                for (int i = 3; i < donnees.length; i++) {
+                    /* Si la ligne concerne une compétence */
+                    if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
+                        ArrayList<String[]> competence = new ArrayList<>();;
+                        String[] infoLigne = new String[2];
                         infoLigne[0] = donnees[i][1];
-                        infoLigne[1] = donnees[i][3];
-                        /* Vérifie si la ligne concerne une ressource ou une SAE */
-                        if (donnees[i][0].equals("Ressource") 
-                                && !listeRessource.containsKey(infoLigne[0])) {
-                            listeRessource.put(infoLigne[0], donnees[i][2]);
-                        } else if (!donnees[i][0].equals("Ressource") 
-                                && !listeSae.containsKey(infoLigne[0])) {
-                            listeSae.put(infoLigne[0], donnees[i][2]);
-                        }
-                        
+                        infoLigne[1] = donnees[i][2];
                         competence.add(infoLigne.clone());
-                        poids += Integer.parseInt(donnees[i][3]);
-                    }
-                    /* Ajoute la compétence à la liste des compétences */
-                    listeCompetence.add(competence.toArray(new String[0][0]));
-                } else if (donnees[i].length >= 1 // Si la ligne concerne une ressource
-                        && donnees[i][0].equals("Ressource")) { 
-                    
-                    ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
-                    String[] infoEvaluation = new String[3];
-                    String key = donnees[i][1];
-                    int poids = 0;
-                    i++;
-                    
-                    /* Parcours des lignes suivantes pour récupérer les évaluations 
-                     * de la ressource */
-                    while (poids != 100) {
+                        int poids = 0;
                         i++;
-                        infoEvaluation[0] = donnees[i][0];
-                        infoEvaluation[1] = donnees[i][1];
-                        infoEvaluation[2] = donnees[i][2];
                         
-                        poids += Integer.parseInt(donnees[i][2]);
-                        listeEvaluation.add(new Evaluation(infoEvaluation[0],
-                                Double.parseDouble(infoEvaluation[2]) / 100, 
-                                infoEvaluation[1]));
+                        /* Parcours des lignes suivantes pour récupérer les informations
+                         * (ressources et saé) liés à la compétence
+                         */
+                        while (poids != 100 && donneesValide) {
+                            if (donnees[i][2].length() == 0) {
+                                donneesValide = false;
+                            }
+                            i++;
+                            infoLigne[0] = donnees[i][1];
+                            infoLigne[1] = donnees[i][3];
+                            /* Vérifie si la ligne concerne une ressource ou une SAE */
+                            if (donnees[i][0].equals("Ressource")) {
+                                if (!listeRessource.containsKey(infoLigne[0])) {
+                                    listeRessource.put(infoLigne[0], donnees[i][2]);
+                                }
+                            } else if ((donnees[i][0].equals("Portfolio") || donnees[i][0].equals("SAE"))) {
+                                if (!listeSae.containsKey(infoLigne[0])) {
+                                    listeSae.put(infoLigne[0], donnees[i][2]);
+                                }
+                            } else {
+                                donneesValide = false;
+                            }
+                            competence.add(infoLigne.clone());
+                            poids += Integer.parseInt(donnees[i][3]);
+                            if (poids > 100) {
+                                donneesValide = false;
+                            }
+                        }
+                        i++;
+                        /* Ajoute la compétence à la liste des compétences */
+                        listeCompetence.add(competence.toArray(new String[0][0]));
+                    } else if (donnees[i].length >= 1 // Si la ligne concerne une ressource
+                            && donnees[i][0].equals("Ressource")) { 
+                        
+                        ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
+                        String[] infoEvaluation = new String[3];
+                        String key = donnees[i][1];
+                        int poids = 0;
+                        i++;
+                        /* Parcours des lignes suivantes pour récupérer les évaluations 
+                         * de la ressource */
+                        while (poids != 100 && donneesValide) {
+                            i++;
+                            /* Vérifie si la composition de la ligne est bien :
+                             * 1. Type d'évaluation, 2. poids
+                             */
+                            donneesValide = donnees[i][0].length() != 0;
+                            donneesValide = donneesValide && isNumeric(donnees[i][2]);
+                            
+                            // Si la ligne est valide, ajoute le poids de l'évaluation au poids total
+                            if (donneesValide) {
+                                poids += Integer.parseInt(donnees[i][2]);
+                                infoEvaluation[0] = donnees[i][0];
+                                infoEvaluation[1] = donnees[i][1];
+                                infoEvaluation[2] = donnees[i][2];
+                                listeEvaluation.add(new Evaluation(infoEvaluation[0],
+                                    Double.parseDouble(infoEvaluation[2]) / 100, 
+                                    infoEvaluation[1]));
+                            }
+                            
+                        }
+                        i++;
+                        /* Ajoute les évaluations de la ressource à la liste des ressources */
+                        ressource.put(key, listeEvaluation);
                     }
-                    /* Ajoute les évaluations de la ressource à la liste des ressources */
-                    ressource.put(key, listeEvaluation);
                 }
             }
-            
-            /* Crée un nouveau paramétrage avec les informations récupérées */
-            parametrage = new Parametrage(semestre, parcours, 
-                    listeCompetence.toArray(new String[0][0][0]) , 
-                    listeSae, listeRessource);
-            
-            /* Ajoute les évaluations des ressources au paramétrage */
-            for (String key : ressource.keySet()) {
-                for (Evaluation evaluation : ressource.get(key)) {
-                    parametrage.getListeRessources().get(key).ajouterEvaluation(evaluation);
-                }
+            if (!donneesValide) {
+                throw new IllegalArgumentException();
             }
-        } else {
+            if (donneesValide) {
+                /* Crée un nouveau paramétrage avec les informations récupérées */
+                parametrage = new Parametrage(semestre, parcours, 
+                        listeCompetence.toArray(new String[0][0][0]) , 
+                        listeSae, listeRessource);
+                
+                /* Ajoute les évaluations des ressources au paramétrage */
+                for (String key : ressource.keySet()) {
+                    for (Evaluation evaluation : ressource.get(key)) {
+                        parametrage.getListeRessources().get(key).ajouterEvaluation(evaluation);
+                    }
+                }
+                sauvegarder();
+            }
+        } catch (Exception e) {
             throw new IllegalArgumentException("Le fichier n'est pas valide");
         }
-        sauvegarder();
-    }
-    
-    /**
-     * Vérifie si les données fournies dans le CSV sont correctes ou non
-     * @param donnees sous formes de tableau bidimensionnel 
-     * (utilisation de la méthode formaterToDonnees de OutilCSV)
-     * @return true si les donnees sont valide, false sinon
-     */
-    public static boolean verifierFormatDonnees(String[][] donnees) {
-        /* Vérifie la validité des données semestre et parcours en 2d et 3e ligne. */
-        boolean donneesValide = donnees[1].length >= 2 
-                             && donnees[1][0].equals("Semestre") 
-                             && isNumeric(donnees[1][1])
-                             && donnees[2].length >= 2 
-                             && donnees[2][0].equals("Parcours") 
-                             && donnees[2][1].length() != 0;
-                             
-        /* Scanne chaque ligne de la suite du tableau à la recherche de "Compétence"
-         *  ou "Ressource" */
-        for (int i = 3; i < donnees.length && donneesValide; i++) {
-            // Si la ligne commence par "Compétence"
-            if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
-                // Vérifie la validité de la ligne avec "Compétence"
-                donneesValide = donnees[i].length >= 3 && isIdentifiant(donnees[i][1]) && donnees[i][2].length() != 0;
-                if (donneesValide) {
-                    i++; // Passe la ligne suivante avec les intitulés des colonnes
-                }
-                int poids = 0; // poids total des ressources
-                while (poids != 100 && donneesValide 
-                        && i < donnees.length 
-                        && donnees[i].length >= 4) { // Tant que poids total != 100
-                    i++; // Passe à la ligne suivante
-                    
-                    /* Vérifie si la composition de la ligne est bien : 
-                     * 1. type d'évaluation, 2. identifiant, 3. libellé, 4. poids
-                     */
-                    donneesValide = donnees[i][0].matches("[A-Z][A-Za-z]*");
-                    donneesValide = donneesValide && isIdentifiant(donnees[i][1]);
-                    donneesValide = donneesValide && donnees[i][2].length() != 0;
-                    donneesValide = donneesValide && isNumeric(donnees[i][3]);
-                    
-                    /* Si la ligne est valide, ajoute le poids de l'évaluation 
-                     * au poids total
-                     */
-                    if (donneesValide) {
-                        poids += Integer.parseInt(donnees[i][3]);
-                    }
-                }
-                // donneesValide est valide si le poids total est égal à 100 seulement.
-                donneesValide = poids == 100;
-            // Si la ligne commence par "Ressource"
-            } else if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource")){
-                // Vérifie la validité de la ligne avec "Ressource"
-                donneesValide = donnees[i].length >= 3 
-                        && isIdentifiant(donnees[i][1]) 
-                        && donnees[i][2].length() != 0;
-                if (donneesValide) {
-                    i++; // Passe la ligne suivante avec les intitulés des colonnes
-                }
-                int poids = 0; // Poids total des évaluations
-                while (poids != 100 && donneesValide && i < donnees.length 
-                        && donnees[i].length >= 3) {
-                    i++; // Passe à la ligne suivante
-                    
-                    /* Vérifie si la composition de la ligne est bien :
-                     * 1. Type d'évaluation, 2. date, 3. poids
-                     */
-                    donneesValide = donnees[i][0].length() != 0;
-                    donneesValide = donneesValide && isNumeric(donnees[i][2]);
-                    
-                    // Si la ligne est valide, ajoute le poids de l'évaluation au poids total
-                    if (donneesValide) {
-                        poids += Integer.parseInt(donnees[i][2]);
-                    }
-                }
-            // donneesValide est valide si le poids total est égal à 100 seulement.
-            donneesValide = poids == 100;
-            } else {
-                donneesValide = donnees[i].length == 0;
-            }
-        }
-        return donneesValide;
+        
     }
 
     /* Méthode utilitaire pour vérifier si une chaîne est composés de chiffres */
