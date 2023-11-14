@@ -118,4 +118,17 @@ public class OutilCryptographie {
         int indexDecode = (index - decalage + alphabet.length()) % alphabet.length();
         return alphabet.charAt(indexDecode);
     }
+    
+    /** Permet de générer aléatoirement une clé de cryptage
+     * @return cle
+     */
+    public static String creerCle() {
+        String cle = "";
+        int index = 0;
+        for (int i = 0; i < 20; i++) {
+            index = (int)(Math.random() * alphabet.length());
+            cle += alphabet.charAt(index);
+        }
+        return cle;
+    }
 }
