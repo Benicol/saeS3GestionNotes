@@ -87,7 +87,7 @@ public class Ressource implements Enseignement, Serializable {
      * @param ponderations La liste des pondérations des évaluations.
      * @return true si les pondérations sont valides, sinon false.
      */
-    private boolean verifierPonderationComplette() {
+    private boolean verifierPonderationComplete() {
         return getPoidsTotal() == 1;
     }
     
@@ -149,7 +149,7 @@ public class Ressource implements Enseignement, Serializable {
     public boolean isCalculable() {
         boolean calculOk;
         calculOk = false;
-        if (verifierPonderationComplette()) {
+        if (verifierPonderationComplete()) {
             calculOk = true;
             for (int i = 0; i < this.listeEvaluations.size() && calculOk; i++) {
                 if (listeEvaluations.get(i).getNote() == null) { 
