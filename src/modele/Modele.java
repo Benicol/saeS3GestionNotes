@@ -132,7 +132,6 @@ public class Modele {
     		competence[2] = getCompetences().get(i).getLibelle();
     		donnees[j] = competence;
     		for(int r = 0; r<getCompetences().get(i).getListeRessources().size(); r++) {
-    			//ressource[1] = getCompetences().get(i).getListeRessources();
     		}
     	}
     }
