@@ -138,7 +138,7 @@ public class Evaluation implements Serializable{
     }
     
     /**
-     * Méthode permettant de vérifier la date d'une évaluation.
+     * Méthode permettant de vérifier la note d'une évaluation.
      * @param note la note à vérifier.
      * @return false si la note n'est pas correct (<0 ou >20), true sinon.
      */

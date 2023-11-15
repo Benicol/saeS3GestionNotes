@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modele.Evaluation;
+import modele.OutilReseau;
 
 /**
  * Tests en JUnit de la classe "Evaluation".
@@ -32,6 +33,7 @@ public class TestEvaluation {
      */
     @Test
     public void testConstructeur() {
+    	assertDoesNotThrow(() -> new Evaluation("Controle de java", 0.5, "10/12/23"));
         assertEquals("Examen de math", evaluation.getNom());
         assertEquals(0.4, evaluation.getPoids());
         assertEquals("15/11/2023", evaluation.getDate());
@@ -44,15 +46,19 @@ public class TestEvaluation {
     @Test
     public void testSetters() {
         evaluation.setNom("Devoir d'histoire");
+        assertNotEquals("Examen de math", evaluation.getNom());
         assertEquals("Devoir d'histoire", evaluation.getNom());
 
         evaluation.setPoids(0.3);
+        assertNotEquals(0.4, evaluation.getPoids());
         assertEquals(0.3, evaluation.getPoids());
 
         evaluation.setDate("20/11/2023");
+        assertNotEquals("10/12/23", evaluation.getDate());
         assertEquals("20/11/2023", evaluation.getDate());
 
         evaluation.setNote(18.5);
+        assertNotNull(evaluation.getNote());
         assertEquals(18.5, evaluation.getNote(), 0.01); // Vérifie la note avec une tolérance de 0.01
     }
 
@@ -63,8 +69,12 @@ public class TestEvaluation {
     public void testSettersOutOfRange() {
         assertThrows(IllegalArgumentException.class, () -> evaluation.setNote(25.0));
         assertThrows(IllegalArgumentException.class, () -> evaluation.setNote(-5.0));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setNote(-0.1));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setNote(20.1));
         assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(1.5));
         assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(-1.0));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(1.1));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setPoids(-0.1));
     }
 
     /**
@@ -73,5 +83,6 @@ public class TestEvaluation {
     @Test
     public void testSettersInvalidValues() {
         assertThrows(IllegalArgumentException.class, () -> evaluation.setNom(""));
+        assertThrows(IllegalArgumentException.class, () -> evaluation.setNom("      "));
     }
 }
