@@ -95,6 +95,54 @@ public class Modele {
     }
     
     /**
+     * Méthode permettant d'exporter les informations dans 
+     * un fichier CSV spécifié.
+     * @param chemin Chemin du fichier CSV à créer.
+     * @throws IllegalArgumentException Si le paramétrage n'est pas déjà initialisé
+     */
+    public static void exporter(String chemin) {
+    	String[][] donnees = null;
+    	String[] semestre = null;
+    	String[] parcours  = null;
+    	String[] competence  = null;
+    	String[] ressource  = null;
+    	String[] sae  = null;
+    	String[] lignevide  = null;
+    	int j = 2;
+    	lignevide[0] = "";
+    	if (!isParametrageInitialise()) {
+            throw new IllegalArgumentException("L'application ne contient pas de données");
+        }
+    	competence[0] = "Competences";
+    	ressource[0] = "Ressource";
+    	
+    	sae[0] = "Sae";
+    	semestre[0] = "Semestre";
+    	semestre[1] = getParametrage().getSemestre();
+    	
+    	parcours[0] = "Parcours";
+    	parcours[1] = getParametrage().getParcours();
+    	
+    	donnees[0] = semestre;
+    	donnees[1] = parcours;
+    	for(int i = 0; i<getCompetences().size();i++) {
+    		donnees[j] = lignevide;
+    		j++;
+    		competence[1] = getCompetences().get(i).getIdentifiant();
+    		competence[2] = getCompetences().get(i).getLibelle();
+    		donnees[j] = competence;
+    		for(int r = 0; r<getCompetences().get(i).getListeRessources().size(); r++) {
+    			ressource[1] = getCompetences().get(i).getListeRessources().;
+    		}
+    	}
+    	competence[1] = getCompetences().get().getIdentifiant();
+    	ressource[1] = getRessources().get().getIdentifiant();
+
+
+    	
+    }
+    
+    /**
      * Méthode permettant d'importer les informations depuis 
      * un fichier CSV spécifié.
      * @param chemin Chemin du fichier CSV à importer.
