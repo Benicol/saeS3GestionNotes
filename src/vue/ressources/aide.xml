@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contenu>
+	<section nom="GradeTracker, c'est quoi ?">
+		<partie nom="Généralités">
+			<paragraphe>L’application GradeTracker est une application de gestion de note à destination des étudiants d’informatique en BUT. Elle pourrait être utilisée par d’autres utilisateurs - notamment tous les étudiants en BUT, mais les spécificités des autres filières n’ont pas été prises en compte dans cette version.</paragraphe> 
+			<paragraphe>Concrètement, GradeTracker donne accès au programme national d’un semestre donné, avec toutes les spécificités de celui-ci : les compétences, les ressources et les SAé . C’est à l’étudiant de choisir le semestre dont il souhaite obtenir le programme. A partir de là, l’application stockera toutes les informations concernant les différents enseignements que l’étudiant sera amené à étudier et sur lesquels il sera évalué. Ainsi, au fur et à mesure du semestre, lorsque l’étudiant obtiendra les notes de différentes évaluations, il pourra les renseigner dans l’application, ce qui lui permettra :</paragraphe>
+			<paragraphe>    - De les garder en mémoire au cours du semestre</paragraphe>
+			<paragraphe>    - De calculer ses moyennes  lorsque toutes les notes liés à un enseignements seront renseignées</paragraphe>
+			<paragraphe>L’intérêt principal pour l’étudiant étant de faciliter la gestion des notes, pour mieux savoir où il en est, s’organiser, se préparer, sans avoir à attendre son bulletin de notes.</paragraphe>
+		</partie>
+	</section>
+	<section nom="Structure et explications des pages">
+		<partie nom="Structure du site">
+			<paragraphe>GradeTracker fonctionne au travers d’une seule vue principale qui s’adapte aux actions de l’utilisateur et de plusieurs Pop-Up qui s'ouvrent selon les boutons sur lesquels l’utilisateur appuie. La vue principale, qui va permettre de voir et saisir toutes les notes, s’articule en plusieurs zones différentes :</paragraphe>
+			<paragraphe>    - Une barre de navigation linéaire</paragraphe>
+			<paragraphe>    - Une barre de navigation latérale</paragraphe>
+			<paragraphe>    - La zone principale qui va afficher les différents enseignements</paragraphe>
+		</partie>
+		<image chemin="..//vues//ressources//..." width="" height=""/>
+		<partie nom="L'importation en drag-and-drop">
+			<paragraphe>Il existe en réalité une unique vue secondaire auquel l’utilisateur peut accéder en dehors de la vue principale et des différentes pop-ups. Il s’agit de la vue ‘Importation’.</paragraphe>
+			<image chemin="..//vues//ressources//..." width="" height=""/>
+			<paragraphe>Cette vue ne se lance que dans l’unique cas où l’utilisateur n’a aucun programme national sauvegardé sur son application. La seule action qui lui est disponible est alors d’importer un programme national. Pour ce faire, deux solutions sont possibles :</paragraphe>
+			<paragraphe>    - Cliquer sur la zone : cela ouvre une pop-up pour l’importation des données dont le fonctionnement sera expliqué par la suite</paragraphe>
+			<paragraphe>    - Faire glisser un fichier .csv dans l’application : auquel cas, une vérification est faite concernant le fichier déposé, et s’il est correct, les données du programme national sont importées. Sinon, une pop-up informe l’utilisateur des raisons qui ont provoqué l’impossibilité d’importer. Cela peut être lié à une mauvaise extension,  à un format inadéquat du csv, … </paragraphe>
+			<paragraphe>Dès l’instant où un programme national est inséré dans l’application, l’utilisateur est redirigé vers la vue principale. </paragraphe>
+		</partie>
+		<partie nom="Page principale : Barre de navigation linéaire">
+			<titre>Titre de l'application</titre>
+			<paragraphe>L'application s'appelle "GradeTracker", et c'est ce nom que vous pouvez voir en haut à droite. Celui-ci n'a pas d'utilité à proprement parler, hormis celle de se souvenir quel est le nom de l’application…</paragraphe>
+			<titre>Nom de l'utilisateur</titre>
+			<paragraphe>Le nom affiché permet de voir, mais aussi de modifier le nom de l’utilisateur. Pour modifier ce nom, il suffit simplement à l’utilisateur de cliquer sur le texte. Une pop-up apparaît alors pour permettre à l’utilisateur de changer son nom. Certaines règles sont à respecter quant au choix de ce pseudo : </paragraphe>
+			<paragraphe>    - Il faut impérativement un pseudo : si l’utilisateur essaye de modifier son pseudo pour ne rien mettre, l’application ne le permettra pas.</paragraphe>
+			<paragraphe>    - Un pseudo de plus de 40 caractères n’est pas pris en compte.</paragraphe>
+			<paragraphe>    - Si l’utilisateur ne souhaite pas choisir son pseudo, alors son nom par défaut dans GradeTracker sera ‘Utilisateur’.</paragraphe>
+			<paragraphe>Si l’utilisateur essaye d’outrepasser ces règles - en choisissant un pseudo trop long, par exemple - une alerte se déclenche pour lui signifier l’impossibilité de changer son pseudo.</paragraphe> 
+			
+			<titre>Bouton importer</titre>
+			<paragraphe>Ce bouton permet d’ouvrir une pop-up nommée ‘Importation’. Dans cette pop-up, 2 choix s’offriront à l’utilisateur :</paragraphe>
+			<paragraphe>    - Importer depuis un fichier .csv</paragraphe>
+			<paragraphe>    - Importer depuis un autre ordinateur</paragraphe>
+			<paragraphe>La première option consiste à sélectionner un fichier de type .csv à partir d’un explorateur de fichier et de choisir un fichier qui contient le programme national pour un semestre donné. (Ce type de fichier est normalement fourni par l’IUT !).</paragraphe>
+			<paragraphe>La seconde option consiste à obtenir le paramétrage au travers d’un second utilisateur, qui aurait installé l’application sur son ordinateur. Pour ce faire, le second utilisateur doit appuyer sur le bouton ‘Exporter’, que nous allons expliciter immédiatement.</paragraphe>
+			<paragraphe>Les détails de l'importation sont davantage développés dans la section 'Importation' et 'Exportation'
+
+			<titre>Bouton exporter</titre>
+			<paragraphe>Ce bouton permet d’ouvrir une pop-up nommée ‘Exportation’. Ce bouton est l’autre pendant du bouton ‘Importer’. Ainsi, il permet de transmettre les données stockées dans l’application à un autre utilisateur. On peut transmettre deux éléments différents :</paragraphe>
+			<paragraphe>    - Le programme national, ce qui permet d’éviter à l’autre étudiant de trouver un csv pour le semestre.</paragraphe>
+			<paragraphe>    - Les modalités d’évaluation que l’étudiant exportateur a déjà saisi. De cette manière, l’étudiant importateur n’a pas à ajouter à la main toutes les modalités d’évaluation (qui ne sont pas fournies par le csv).</paragraphe>
+
+			<titre>Bouton réinitialiser</titre>
+			<paragraphe>Ce bouton permet d’ouvrir une pop-up nommée ‘Réinitialiser les données’. Son fonctionnement est simple : toutes les données sauvegardées dans l’application, que ce soit le programme national ou les modalités d’évaluations sont remises à zéro. Comme plus aucune donnée n’est présente dans l’application, la vue change alors pour se mettre sur la vue ‘importation’ permettant le drag and drop. </paragraphe>
+			<paragraphe>Cette fonctionnalité est utile à la fin d’un semestre, lorsque l’utilisateur souhaite vider son application afin de charger le programme national d’un nouveau semestre.</paragraphe> 
+			<paragraphe>A noter toutefois qu’une unique donnée est sauvegardée en cas de réinitialisation : le pseudo de l’utilisateur.</paragraphe>
+
+		</partie>
+		<partie nom="Page principale : Barre de navigation latérale">
+			<paragraphe>Cette barre de navigation, située sur la gauche de l’écran, permet tout simplement de naviguer entre les différents enseignements disponibles (les différentes compétences, les différentes ressources, les différentes SAé). Pour se faire, il suffit de cliquer sur l’enseignement que nous souhaitons voir s’afficher. Il va alors changer de couleur dans la liste pour indiquer que l’utilisateur est actuellement en train de visionner cet élément spécifique, et les détails de cet enseignement vont s’afficher dans la zone principale. Bien sûr, ces détails varient en fonction du type d’enseignement sélectionné. Cependant, les notes sont toutes gérées de la même manière : toutes les notes sont sur vingt, et il est impossible de changer une note pour mettre une valeur négative ou une valeur supérieure à vingt. Les nombres à virgule sont bien évidemment acceptés.</paragraphe>
+			<titre>Cliquer sur une SAE</titre>
+			<paragraphe>Cet affichage est le plus simple de tous. En effet, la seule action disponible pour l’utilisateur sera de modifier la note obtenue à cette SAE. Pour ce faire, il suffit de cliquer sur l’encadré ‘saisir une note’ et de rentrer la note de son choix. Il reste possible de modifier cette note, voire de la supprimer en entrant à nouveau dans l’encadré.</paragraphe>
+			<image chemin="..//vues//ressources//..." width="" height=""/>
+			
+			<titre>Cliquer sur une ressource</titre>
+			<paragraphe>Cet affichage permet d’afficher une ressource. Or, une ressource est composée de différentes évaluations. Ainsi, c’est via cet écran que l’utilisateur va pouvoir saisir de nouvelles modalités d’évaluation. Pour ce faire, il faut cliquer sur ‘Editer les modalités d’évaluation’.</paragraphe>
+			<image chemin="..//vues//ressources//..." width="" height=""/>
+			<paragraphe>Il suffit alors d’ajouter des évaluations, qui sont composées de trois éléments : </paragraphe>
+			<paragraphe>    - Une description, qui fait office de titre et peut également détailler les prérequis liés à l’évaluation, par exemple.</paragraphe>
+			<paragraphe>    - Une pondération, qui doit impérativement être égale à pile 100 une fois cumulée avec toutes les évaluations.</paragraphe>
+			<paragraphe>    - Une date, qui peut être saisie mais qui n’est pas obligatoire.</paragraphe>
+			<paragraphe>Un bouton ‘Ajouter’ permet d’ajouter autant d’évaluation que nécessaire. Lorsque toutes les évaluations sont renseignées (il faut bien faire attention au total des pondérations !), l’utilisateur peut choisir de valider, ce qui sauvegarde ses changements. Annuler ou changer de vue ne sauvegarde pas les changements effectués. </paragraphe>
+			<paragraphe>Lorsque toutes les modalités sont renseignées, l’utilisateur peut alors entrer une note par évaluation, de la même manière que pour entrer une note de SAE. La différence fondamentale est lié à la moyenne : il y aura un calcul de la moyenne de la ressource dès lors que toutes les notes de toutes les évaluations liées à cette ressource seront renseignées.</paragraphe>
+			<image chemin="..//vues//ressources//..." width="" height=""/>
+
+			<titre>Cliquer sur une compétence</titre>
+			<image chemin="..//vues//ressources//..." width="" height=""/>
+			<paragraphe>Cet affichage ne permet pas directement de saisir une note. En effet, une compétence dépend de ressources, dont la moyenne n’est calculée que si les évaluations qu’elles contiennent sont toutes renseignées, et de SAE. Si toutes les notes de toutes les ressources et SAE sont renseignées, alors la note de la compétence est affichée. Sinon, seule la liste des ressources et SAE qui composent la compétence sont visibles (avec leurs notes s’il y en a). Un bouton lié à chaque ressource et SAE permet de rejoindre rapidement la ressource/SAE en question : il suffit de cliquer sur le bouton en forme d'œil. </paragraphe>
+
+			<titre>Cliquer sur le bouton 'Afficher mes moyennes'</titre>
+			<image chemin="..//vues//ressources//..." width="" height=""/>
+			<paragraphe>En cliquant sur ce bouton, le dernier élément important de la barre de navigation latérale, on lance une fonctionnalité qui permet d’afficher absolument toutes les moyennes calculables, que ce soient celles liées à une compétence, à une ressource, ou à une SAE. Pour plus de clarté, elles sont triées par type et classées dans l’ordre alphabétique.</paragraphe>
+		</partie>
+		<partie nom="Les pop-ups">
+			<paragraphe>Concernant les pop-ups, il faut garder principalement deux choses en tête :</paragraphe>
+			<paragraphe>    - Lorsqu'une pop-up est ouverte, il est IMPOSSIBLE d'interagir avec la page principale. Vous ne pouvez ni cliquer dessus, ni déplacer la fenêtre. Pour avoir à nouveau accès à celle-ci, il vous faut tout d'abord impérativement fermer la pop-up.</paragraphe>
+			<paragraphe>    - Pour fermer une pop-up, rien de plus simple : vous pouvez, au choix, appuyer sur la croix rouge ou bien cliquer sur le bouton "retour", présent sur toutes les pop-ups.</paragraphe>
+		</partie>
+	</section>
+	<section nom="Importation">
+		<partie id ="Le format .csv">
+			<titre>Où trouver le bon fichier</titre>
+			<paragraphe>Le .csv à importer dans l'application est fourni par les professeurs en début de semestre, il vous suffit de le récupérer. Il sera au bon format, la seule chose qui vous restera à faire sera de l'importer. Dans le cas où le .csv ait été modifié et soit par conséquent incorrect, vous serez dans l'incapacité de l'importer. Un message d'erreur devrait alors vous informer de où se situe le problème pour vous aider à le résoudre. Le mieux à faire restant toujours de re-télécharger le fichier fourni par les professeurs dont vous êtes sûr sera au bon format...</paragraphe>
+		</partie>
+		<partie id ="Changer de semestre">
+			<paragraphe>GradeTracker ne permet de gérer qu'un semestre à la fois. En effet, à la fin du semestre, il vous faudra changer le programme national importé dans l'application afin de passer au semestre suivant.</paragraphe>
+			<paragraphe>Pour pouvoir importer le nouveau .csv du semestre suivant, il vous faudra d'abord vous débarrasser du semestre actuel. Pour ce faire, rien de plus simple : il suffit d'appuyer sur le bouton 'Réinitialiser' situé en haut à droite dans la barre de navigation linéaire. Attention cependant : cette action est IRREVERSIBLE, vous perdrez toutes vos notes et toutes vos modalités d'évaluation une fois ce choix fait.</paragraphe>
+		</partie>
+	</section>
+	<section nom="Exportation">
+		<partie nom ="Communication entre 2 ordinateurs">
+			<paragraphe>La communication entre 2 ordinateurs permet de partager à un pair le programme national, mais également les modalités d'évaluation, ce qui permet à l'utilisateur les recevant de ne rien avoir à paramétrer lui-même : il a une application "clé en main" après l'importation.</paragraphe>
+			<titre>Envoyer et recevoir des données</titre>
+			<paragraphe>Le fonctionnement est assez simple : en parallèle, deux utilisateurs doivent cliquer sur ‘Importer’ et sur ‘Exporter’. La personne qui souhaite exporter ses données veut obtenir l’adresse IP de la personne qui souhaite importer les données. Pour ce faire, sur l’écran d’importation, il suffit de cliquer sur ‘Afficher l’adresse IP’. Il ne reste alors plus qu’à donner à l’autre personne l’adresse, que celle-ci peut taper de son côté dans la pop-up ‘Exporter’. A partir de là, l’utilisateur sur ‘importer’ peut cliquer sur le bouton ‘Établir une connexion’. Il se met alors en attente jusqu’à l’obtention des données par l’autre utilisateur. Celui-ci a un choix à faire : comme dit précédemment, il peut exporter deux types de fichiers différents, et doit choisir d’en exporter un, l’autre, ou les deux. Pour ce faire, il lui suffit de cliquer sur le bouton correspondant (qui change alors pour devenir violet). Lorsqu’il a fait son choix quant aux données à transmettre, il clique sur ‘Transmettre les données’. Si de son côté, l’importateur a bien cliqué sur ‘Établir une connexion’, une connexion devrait s’établir et les données devraient se transmettre. Un cas d’erreur peut se manifester si :</paragraphe> 
+			<paragraphe>    - L’adresse IP a mal été saisie</paragraphe>
+			<paragraphe>    - La connexion échoue</paragraphe>
+		</partie>
+	</section>	
+</contenu>
