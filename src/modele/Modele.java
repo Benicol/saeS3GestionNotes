@@ -95,48 +95,6 @@ public class Modele {
     }
     
     /**
-     * Méthode permettant d'exporter les informations dans 
-     * un fichier CSV spécifié.
-     * @param chemin Chemin du fichier CSV à créer.
-     * @throws IllegalArgumentException Si le paramétrage n'est pas déjà initialisé
-     */
-    public static void exporter(String chemin) {
-    	String[][] donnees = null;
-    	String[] semestre = null;
-    	String[] parcours  = null;
-    	String[] competence  = null;
-    	String[] ressource  = null;
-    	String[] sae  = null;
-    	String[] lignevide  = null;
-    	int j = 2;
-    	lignevide[0] = "";
-    	if (!isParametrageInitialise()) {
-            throw new IllegalArgumentException("L'application ne contient pas de données");
-        }
-    	competence[0] = "Competences";
-    	ressource[0] = "Ressource";
-    	
-    	sae[0] = "Sae";
-    	semestre[0] = "Semestre";
-    	semestre[1] = getParametrage().getSemestre();
-    	
-    	parcours[0] = "Parcours";
-    	parcours[1] = getParametrage().getParcours();
-    	
-    	donnees[0] = semestre;
-    	donnees[1] = parcours;
-    	for(int i = 0; i<getCompetences().size();i++) {
-    		donnees[j] = lignevide;
-    		j++;
-    		competence[1] = getCompetences().get(i).getIdentifiant();
-    		competence[2] = getCompetences().get(i).getLibelle();
-    		donnees[j] = competence;
-    		for(int r = 0; r<getCompetences().get(i).getListeRessources().size(); r++) {
-    		}
-    	}
-    }
-    
-    /**
      * Méthode permettant d'importer les informations depuis 
      * un fichier CSV spécifié.
      * @param chemin Chemin du fichier CSV à importer.
@@ -145,7 +103,7 @@ public class Modele {
      * attendu.
      */
     public static void importer(String chemin) {
-        
+        String messageErreur = "";
         /* Déclaration du tableau bidimensionnel qui contiendra les données du CSV */
         String[][] donnees = null;
         
@@ -171,6 +129,7 @@ public class Modele {
                                                                     && donnees[2][0].equals("Parcours") 
                                                                     && donnees[2][1].length() != 0)) {
                 donneesValide = false;
+                messageErreur = "des données sont éroné ligne 1 et 2 (semestre et parcours)";
             }
             /* Déclaration des variables pour stocker les informations du CSV */
             String semestre = "";
@@ -187,6 +146,7 @@ public class Modele {
                 for (int i = 3; i < donnees.length; i++) {
                     /* Si la ligne concerne une compétence */
                     if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
+                        messageErreur = "erreur lors de l'importation de la compétence ligne : " + i; 
                         ArrayList<String[]> competence = new ArrayList<>();;
                         String[] infoLigne = new String[2];
                         infoLigne[0] = donnees[i][1];
@@ -199,27 +159,34 @@ public class Modele {
                          * (ressources et saé) liés à la compétence
                          */
                         while (poids != 100 && donneesValide) {
+                            messageErreur = "Erreur lors de l'importation des informations de la compétence ligne : " + i;
                             if (donnees[i][2].length() == 0) {
                                 donneesValide = false;
                             }
                             i++;
+                            int iComp = i;
                             infoLigne[0] = donnees[i][1];
                             infoLigne[1] = donnees[i][3];
                             /* Vérifie si la ligne concerne une ressource ou une SAE */
                             if (donnees[i][0].equals("Ressource")) {
                                 if (!listeRessource.containsKey(infoLigne[0])) {
+                                    messageErreur = "Erreur lors de l'importation des informations de la ressource ligne : " + i;
                                     listeRessource.put(infoLigne[0], donnees[i][2]);
                                 }
                             } else if ((donnees[i][0].equals("Portfolio") || donnees[i][0].equals("SAE"))) {
                                 if (!listeSae.containsKey(infoLigne[0])) {
+                                    messageErreur = "Erreur lors de l'importation des informations de la sae/du portoflio ligne : " + i;
                                     listeSae.put(infoLigne[0], donnees[i][2]);
                                 }
                             } else {
+                                messageErreur = "Erreur lors de l'importation des informations de la ressource/sae/du portoflio ligne : " + i;
                                 donneesValide = false;
                             }
+                            messageErreur = "Erreur lors de l'importation des informations de la compétence : " + iComp;
                             competence.add(infoLigne.clone());
                             poids += Integer.parseInt(donnees[i][3]);
                             if (poids > 100) {
+                                messageErreur = "Le poids de la ressource ligne : " + iComp + " est pas correcte ( " + poids + " ).";
                                 donneesValide = false;
                             }
                         }
@@ -228,7 +195,8 @@ public class Modele {
                         listeCompetence.add(competence.toArray(new String[0][0]));
                     } else if (donnees[i].length >= 1 // Si la ligne concerne une ressource
                             && donnees[i][0].equals("Ressource")) { 
-                        
+                        int iRess = i;
+                        messageErreur = "erreur lors de l'importation de la ressource ligne : " + i; 
                         ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
                         String[] infoEvaluation = new String[3];
                         String key = donnees[i][1];
@@ -238,6 +206,7 @@ public class Modele {
                          * de la ressource */
                         while (poids != 100 && donneesValide) {
                             i++;
+                            messageErreur = "erreur lors de l'importation de la ressource ligne : " + i; 
                             /* Vérifie si la composition de la ligne est bien :
                              * 1. Type d'évaluation, 2. poids
                              */
@@ -256,6 +225,10 @@ public class Modele {
                             }
                             
                         }
+                        if (poids > 100) {
+                            messageErreur = "Le poids de la ressource ligne : " + iRess + " est pas correcte ( " + poids + " ).";
+                            donneesValide = false;
+                        }
                         i++;
                         /* Ajoute les évaluations de la ressource à la liste des ressources */
                         ressource.put(key, listeEvaluation);
@@ -263,7 +236,7 @@ public class Modele {
                 }
             }
             if (!donneesValide) {
-                throw new IllegalArgumentException();
+                throw new IllegalArgumentException("Le fichier n'est pas valide : " + messageErreur);
             }
             if (donneesValide) {
                 /* Crée un nouveau paramétrage avec les informations récupérées */
@@ -280,7 +253,7 @@ public class Modele {
                 sauvegarder();
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException("Le fichier n'est pas valide");
+            throw new IllegalArgumentException("Le fichier n'est pas valide : " + messageErreur);
         }
         
     }
