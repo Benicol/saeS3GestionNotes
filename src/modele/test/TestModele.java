@@ -90,6 +90,32 @@ public class TestModele {
 	 * Test de la méthode 
 	 */
 	@Test
+	public void testExporter() {
+		Modele.reset();
+		Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv");
+		assertDoesNotThrow(() -> Modele.exporter());
+		OutilFichier.ecrire("test.csv", OutilCSV.formaterToCSV(Modele.exporter()));
+		Modele.reset();
+		Modele.importer("test.csv");
+		assertEquals("2", Modele.getParametrage().getSemestre());
+        assertEquals("Tous", Modele.getParametrage().getParcours());
+        assertEquals(6, Modele.getCompetences().size());
+        assertEquals(14, Modele.getRessources().size());
+        assertEquals(7, Modele.getSae().size());
+        assertEquals("U2.1",Modele.getCompetences().get("U2.1").getIdentifiant());
+        assertEquals("Réaliser un développement d’application",Modele.getCompetences().get("U2.1").getLibelle());
+        assertEquals(4,Modele.getCompetences().get("U2.1").getListeRessources().size());
+        assertEquals(2,Modele.getCompetences().get("U2.1").getListeSaes().size());
+        assertEquals(4,Modele.getRessources().get("R2.01").getListeEvaluations().size());
+        assertEquals(0,Modele.getRessources().get("R2.03").getListeEvaluations().size());
+		
+	
+	}
+	
+	/**
+	 * Test de la méthode 
+	 */
+	@Test
 	public void testImporter() {
 	    Modele.reset();
 	    //Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv");

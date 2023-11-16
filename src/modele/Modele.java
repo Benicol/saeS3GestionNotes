@@ -100,40 +100,96 @@ public class Modele {
      * @param chemin Chemin du fichier CSV à créer.
      * @throws IllegalArgumentException Si le paramétrage n'est pas déjà initialisé
      */
-    public static void exporter(String chemin) {
-    	String[][] donnees = null;
-    	String[] semestre = null;
-    	String[] parcours  = null;
-    	String[] competence  = null;
-    	String[] ressource  = null;
-    	String[] sae  = null;
-    	String[] lignevide  = null;
-    	int j = 2;
-    	lignevide[0] = "";
+    public static String[][] exporter() {
+    	ArrayList<ArrayList<String>> donnees = new ArrayList<>();
+    	ArrayList<String> donneesTmp = new ArrayList<>();
+    	
+    	donneesTmp.add("donnés exporter");
+    	donnees.add((ArrayList<String>) donneesTmp.clone());
+    	donneesTmp.clear();
     	if (!isParametrageInitialise()) {
             throw new IllegalArgumentException("L'application ne contient pas de données");
         }
-    	competence[0] = "Competences";
-    	ressource[0] = "Ressource";
+  
+    	donneesTmp.add("Semestre");
+    	donneesTmp.add(getParametrage().getSemestre());
+    	donnees.add((ArrayList<String>) donneesTmp.clone());
+    	donneesTmp.clear();
     	
-    	sae[0] = "Sae";
-    	semestre[0] = "Semestre";
-    	semestre[1] = getParametrage().getSemestre();
+    	donneesTmp.add("Parcours");
+    	donneesTmp.add(getParametrage().getParcours());
+    	donnees.add((ArrayList<String>) donneesTmp.clone());
+    	donneesTmp.clear();
+    	donnees.add((ArrayList<String>) donneesTmp.clone());
+    	for(Competence competence : getCompetences().values()) {
+    		donneesTmp.add("Compétence");
+    		donneesTmp.add(competence.getIdentifiant());
+    		donneesTmp.add(competence.getLibelle());
+    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    		donneesTmp.clear();
+    		donneesTmp.add("Type évaluations");
+    		donneesTmp.add("Identifiany");
+    		donneesTmp.add("Libelle");
+    		donneesTmp.add("Poids");
+    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    		donneesTmp.clear();
+    		for(Ressource ressource : getRessources().values()) {
+    			if(competence.getListeRessources().containsKey(ressource)){
+    				donneesTmp.add("Ressource");
+    				donneesTmp.add(ressource.getIdentifiant());
+    	    		donneesTmp.add(ressource.getLibelle());
+    	    		donneesTmp.add(String.valueOf(competence.getListeRessources().get(ressource)));	
+    	    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    	    		donneesTmp.clear();
+    			}
+    		}
+    		for(Sae sae : getSae().values()) {
+    			if(competence.getListeSaes().containsKey(sae)){
+    				donneesTmp.add("Sae");
+    				donneesTmp.add(sae.getIdentifiant());
+    	    		donneesTmp.add(sae.getLibelle());
+    	    		donneesTmp.add(String.valueOf(competence.getListeSaes().get(sae)));	
+    	    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    	    		donneesTmp.clear();
+    			}
+    		}
+    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    	}
     	
-    	parcours[0] = "Parcours";
-    	parcours[1] = getParametrage().getParcours();
-    	
-    	donnees[0] = semestre;
-    	donnees[1] = parcours;
-    	for(int i = 0; i<getCompetences().size();i++) {
-    		donnees[j] = lignevide;
-    		j++;
-    		competence[1] = getCompetences().get(i).getIdentifiant();
-    		competence[2] = getCompetences().get(i).getLibelle();
-    		donnees[j] = competence;
-    		for(int r = 0; r<getCompetences().get(i).getListeRessources().size(); r++) {
+    	for(Ressource ressource : getRessources().values()) {
+    		if(!ressource.getListeEvaluations().isEmpty()) {
+    			donneesTmp.add("Ressource");
+				donneesTmp.add(ressource.getIdentifiant());
+	    		donneesTmp.add(ressource.getLibelle());
+	    		donnees.add((ArrayList<String>) donneesTmp.clone());
+	    		donneesTmp.clear();
+	    		donneesTmp.add("Type évaluations");
+	    		donneesTmp.add("Date");
+	    		donneesTmp.add("Poids");
+	    		donnees.add((ArrayList<String>) donneesTmp.clone());
+	    		donneesTmp.clear();
+	    		for(Evaluation evaluation : ressource.getListeEvaluations()) {
+	    			donneesTmp.add(evaluation.getNom());
+		    		donneesTmp.add(evaluation.getDate());
+		    		donneesTmp.add(String.valueOf(evaluation.getPoids()));
+		    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    	    		donneesTmp.clear();
+	    		}
+	    		donnees.add((ArrayList<String>) donneesTmp.clone());
     		}
     	}
+    	String[][] donneesFinal = new String[donnees.size()][0];
+    	for (int i = 0; i < donneesFinal.length; i++) {
+    		donneesFinal[i] = donnees.get(i).toArray(new String[0]);
+    	}
+    	for(int i = 0; i < donneesFinal.length; i++) {
+    		for(int j = 0; j < donneesFinal[i].length; j++) {
+    			System.out.print(donneesFinal[i][j]);
+    		}
+    		System.out.println("");
+    	}
+		return donneesFinal;
+
     }
     
     /**
