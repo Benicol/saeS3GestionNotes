@@ -20,7 +20,7 @@ public class OutilCryptographie {
      * tous les caractères présents sur un clavier Azerty.*/
     private static final String alphabet = " AaÀàÂâÄäÃãBbCcçDdEeéÈèÊêËëFfGgHhI"
                                          + "iÌìÎîÏïJjKkLlMmNnÑñOoÒòÔôÖöÕõPpQqR"
-                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-'.,;:!?@"
+                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-\'.,;:!?@"
                                          + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
                                          + "+=%µ€$¤£";
     private static final int p = 9739;
@@ -169,7 +169,7 @@ public class OutilCryptographie {
     }
     
     /** Méthode permettant de décoder la clé de l'algorithme de Vigenère
-     * reçue avce l'échange de Diffie-Hellman
+     * reçue avec l'échange de Diffie-Hellman
      * @param cle_codee
      * @param a
      * @param b
@@ -180,11 +180,13 @@ public class OutilCryptographie {
         BigInteger cle_codee_divisee = cle_codee.divide(BigInteger.valueOf(code));
         
         int index = 0;
+        int compteur = 0;
         String cle_codee_str = cle_codee_divisee.toString();
         StringBuilder cle_decodee = new StringBuilder();
-        for (int i = 0; i < 20; i += 3) {
-            index = (int)(cle_codee_str.charAt(i) + cle_codee_str.charAt(i + 1) + cle_codee_str.charAt(i + 2));
+        for (int i = 0; i < 20; i ++) {
+            index = Integer.parseInt("" + cle_codee_str.charAt(compteur) + cle_codee_str.charAt(compteur + 1) + cle_codee_str.charAt(compteur + 2));
             cle_decodee.append(alphabet.charAt(index));
+            compteur += 3;
         }
         return cle_decodee.toString();
     }
