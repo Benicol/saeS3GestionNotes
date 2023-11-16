@@ -1,6 +1,9 @@
 package controleur;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -9,18 +12,22 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.io.File;
 
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextBoundsType;
 import modele.Modele;
 
 /** 
@@ -43,6 +50,11 @@ public class VuePopUpAideControleur {
     
     private static Document document;
     
+    private HashMap<Button,Element> infos = new HashMap<>();
+    
+    /** bouton Sélectionner dans le menu à gauche */
+    private Button selected;
+    
     
     /**
      * Effectue les traitement suivant dans cette ordre : 
@@ -61,10 +73,180 @@ public class VuePopUpAideControleur {
 
             document = db.parse(new File("src\\vue\\ressources\\aide.xml"));
             document.getDocumentElement().normalize();
+            NodeList sections = document.getElementsByTagName("section");
+            for (int i = 0; i < sections.getLength(); i++) {
+                Node section = sections.item(i);
+                FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                        EchangeurDeVue.getModule("MAM")));
+                Parent root = fxmlloader.load();
+                VBox vboxP = (VBox) root;
+                VBox vbox = (VBox) ((HBox) vboxP.getChildren().get(0)).getChildren().get(0);
+                Text text = (Text) vbox.getChildren().get(0);
+                text.setText(section.getAttributes().getNamedItem("nom").getNodeValue());
+                VBox contenu = (VBox) vbox.getChildren().get(1);
+                menu.getChildren().add(vboxP);
+                NodeList parties = section.getChildNodes();
+                for (int j = 0; j < parties.getLength(); j++) {
+                    Node partie = parties.item(j);
+                    if (partie.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement = (Element) partie;
+                        // Charge le module
+                        fxmlloader = new FXMLLoader(getClass().getResource(
+                                                         EchangeurDeVue.getModule("MSMB")));
+                        root = fxmlloader.load();
+                        Button button = (Button) root;
+                        // Configure le module
+                        if (partie.getNodeName() == "partie") {
+                            button.setText(eElement.getAttribute("nom"));
+                            button.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+                            button.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
+                            button.setOnAction((event) -> {
+                                try {
+                                    eltMenuSelectionner(button);
+                                    menuPressed(button);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            });
+                            infos.put(button, eElement);
+                            contenu.getChildren().add(button);
+                        }
+                    }
+                    
+                    
+                }
+            }
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
 
+    }
+    
+    private void menuPressed(Button button) {
+        viderZonePrincipale();
+        try {
+            FXMLLoader fxmlloader = new FXMLLoader(getClass().getResource(
+                    EchangeurDeVue.getModule("MTS")));
+            Parent root;
+            root = fxmlloader.load();
+            HBox hbox = (HBox) root;
+            Label label = (Label) hbox.getChildren().get(0);
+            label.setText("test");
+            listePrincipale.getChildren().add(label);
+            Element eElement = infos.get(button);
+            NodeList nListe = eElement.getChildNodes();
+            String textContent = "";
+            for (int j = 0; j < nListe.getLength(); j++) {
+                Node partie = nListe.item(j);
+                if (partie.getNodeType() == Node.ELEMENT_NODE) {
+                    Element currentElement = (Element) partie;
+                    
+                    if (currentElement.getNodeName() == "paragraphe") {
+                        System.out.println(currentElement.getNodeName() + "||" + currentElement.getTextContent());
+                        textContent += currentElement.getTextContent() + "\n";
+                    }
+                    if (currentElement.getNodeName() == "image") {
+                        if (!textContent.equals("")) {
+                            fxmlloader = new FXMLLoader(getClass().getResource(
+                                    EchangeurDeVue.getModule("MAT")));
+                            root = fxmlloader.load();
+                            hbox = (HBox) root;
+                            Label text = (Label) hbox.getChildren().get(0);
+                            text.prefWidthProperty().bind(text.textProperty().length().multiply(7));
+                            text.setWrapText(true);
+                            text.setText(textContent);
+                            listePrincipale.getChildren().add(hbox);
+                            textContent ="";
+                        }
+                        fxmlloader = new FXMLLoader(getClass().getResource(
+                                EchangeurDeVue.getModule("MAI")));
+                        root = fxmlloader.load();
+                        hbox = (HBox) root;
+                        listePrincipale.getChildren().add(hbox);
+                    }
+                }
+            }
+            if (!textContent.equals("")) {
+                fxmlloader = new FXMLLoader(getClass().getResource(
+                        EchangeurDeVue.getModule("MAT")));
+                root = fxmlloader.load();
+                hbox = (HBox) root;
+                Label text = (Label) hbox.getChildren().get(0);
+                text.prefWidthProperty().bind(text.textProperty().length().multiply(7));
+                text.setWrapText(true);
+                text.setText(textContent);
+                listePrincipale.getChildren().add(hbox);
+                textContent ="";
+            }
+            System.out.println(nListe.getLength());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+    }
+    
+    /* Vide la liste principale de tous ces éléments */
+    private void viderZonePrincipale() {
+        while (!listePrincipale.getChildren().isEmpty()) {
+            listePrincipale.getChildren().remove(0);
+        }
+    }
+
+    /* Change quel bouton est visuellement sélectionné dans le menu */
+    private void eltMenuSelectionner(Button button) {
+        if (selected != button) {
+            if (selected != null) {
+                selected.getStyleClass().remove("side-nav-element-active");
+                selected.getStyleClass().remove("side-nav-element-active-not-hover");
+                selected.getStyleClass().add("side-nav-element-inactive");
+                selected.getStyleClass().add("side-nav-element-inactive-not-hover");
+                selected.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
+                selected.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
+            }
+            selected = button;
+            selected.getStyleClass().remove("side-nav-element-inactive");
+            if (selected.getStyleClass().contains("side-nav-element-inactive-hover")) {
+                selected.getStyleClass().remove("side-nav-element-inactive-hover");
+            }
+            if (selected.getStyleClass().contains("side-nav-element-inactive-not-hover")) {
+                selected.getStyleClass().remove("side-nav-element-inactive-not-hover");
+            }
+            selected.getStyleClass().add("side-nav-element-active");
+            selected.getStyleClass().add("side-nav-element-active-not-hover");
+            selected.setOnMouseEntered(null);
+            selected.setOnMouseExited(null);
+            System.out.println(selected.getStyleClass());
+        }
+    }
+    
+    /**
+     * Méthode appelé lors de la sortie de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
+     * Boutons utilisant cette méthode : 
+     * - oeuil (Competences et afficher les moyennes)
+     */
+    @FXML
+    void secondaryButtonWhiteExited(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        bouton.getStyleClass().remove("secondary-button-white-hover");
+        bouton.getStyleClass().add("secondary-button-not-hover");
+    }
+    
+    void sideNavButtonInactiveEntered(MouseEvent event) {
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        bouton.getStyleClass().remove("side-nav-element-inactive-not-hover");
+        bouton.getStyleClass().add("side-nav-element-inactive-hover");
+    }
+    
+    void sideNavButtonInactiveExited(MouseEvent event) {
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        bouton.getStyleClass().remove("side-nav-element-inactive-hover");
+        bouton.getStyleClass().add("side-nav-element-inactive-not-hover");
     }
 
     /**

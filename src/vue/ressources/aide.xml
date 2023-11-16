@@ -15,8 +15,8 @@
 			<paragraphe>    - Une barre de navigation linéaire</paragraphe>
 			<paragraphe>    - Une barre de navigation latérale</paragraphe>
 			<paragraphe>    - La zone principale qui va afficher les différents enseignements</paragraphe>
-		</partie>
-		<image chemin="..//vues//ressources//..." width="" height=""/>
+		<image chemin="..//vues//ressources//..." width="" height="" /></partie>
+		
 		<partie nom="L'importation en drag-and-drop">
 			<paragraphe>Il existe en réalité une unique vue secondaire auquel l’utilisateur peut accéder en dehors de la vue principale et des différentes pop-ups. Il s’agit de la vue ‘Importation’.</paragraphe>
 			<image chemin="..//vues//ressources//..." width="" height=""/>
@@ -86,11 +86,11 @@
 		</partie>
 	</section>
 	<section nom="Importation">
-		<partie id ="Le format .csv">
+		<partie nom="Le format .csv">
 			<titre>Où trouver le bon fichier</titre>
 			<paragraphe>Le .csv à importer dans l'application est fourni par les professeurs en début de semestre, il vous suffit de le récupérer. Il sera au bon format, la seule chose qui vous restera à faire sera de l'importer. Dans le cas où le .csv ait été modifié et soit par conséquent incorrect, vous serez dans l'incapacité de l'importer. Un message d'erreur devrait alors vous informer de où se situe le problème pour vous aider à le résoudre. Le mieux à faire restant toujours de re-télécharger le fichier fourni par les professeurs dont vous êtes sûr sera au bon format...</paragraphe>
 		</partie>
-		<partie id ="Changer de semestre">
+		<partie nom="Changer de semestre">
 			<paragraphe>GradeTracker ne permet de gérer qu'un semestre à la fois. En effet, à la fin du semestre, il vous faudra changer le programme national importé dans l'application afin de passer au semestre suivant.</paragraphe>
 			<paragraphe>Pour pouvoir importer le nouveau .csv du semestre suivant, il vous faudra d'abord vous débarrasser du semestre actuel. Pour ce faire, rien de plus simple : il suffit d'appuyer sur le bouton 'Réinitialiser' situé en haut à droite dans la barre de navigation linéaire. Attention cependant : cette action est IRREVERSIBLE, vous perdrez toutes vos notes et toutes vos modalités d'évaluation une fois ce choix fait.</paragraphe>
 		</partie>

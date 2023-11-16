@@ -87,6 +87,9 @@ public class EchangeurDeVue {
         modules.put("MEvalV", "..\\vue\\modules\\ModuleEvaluationVide.fxml");
         modules.put("MM", "..\\vue\\modules\\ModuleMoyenne.fxml");
         modules.put("MB", "..\\vue\\modules\\ModuleBienvenue.fxml");
+        modules.put("MAM", "..\\vue\\modules\\ModuleAideMenu.fxml");
+        modules.put("MAT", "..\\vue\\modules\\ModuleAideText.fxml");
+        modules.put("MAI", "..\\vue\\modules\\ModuleAideImage.fxml");
     }
 
     /**

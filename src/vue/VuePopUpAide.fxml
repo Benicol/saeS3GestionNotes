@@ -88,6 +88,7 @@
                                     <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                                  </padding>
                               </HBox>
+                              <Line endX="359.0" stroke="#bfbfbf" />
                               <VBox fx:id="menu" />
                            </children>
                         </VBox>
@@ -96,7 +97,7 @@
                </children></VBox>
             <VBox>
                <children>
-                  <ScrollPane id="grades-view" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="1010.0" prefViewportWidth="1512.0">
+                  <ScrollPane id="grades-view" fitToWidth="true" hbarPolicy="NEVER" prefViewportHeight="1010.0" prefViewportWidth="1512.0">
                      <content>
                         <VBox id="grades-view" fx:id="listePrincipale" spacing="16.0" HBox.hgrow="ALWAYS">
                            <children>
