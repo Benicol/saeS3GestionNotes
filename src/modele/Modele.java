@@ -95,98 +95,138 @@ public class Modele {
     }
     
     /**
-     * Méthode permettant d'exporter les informations dans 
-     * un fichier CSV spécifié.
-     * @param chemin Chemin du fichier CSV à créer.
+     * Méthode qui renvoie un tableau bidimensionnel, contenant les données du 
+     * paramétrage de l'applications, dans un format permettant la conversion en CSV
+     * Afin de l'exporter vers un autre ordinateur
      * @throws IllegalArgumentException Si le paramétrage n'est pas déjà initialisé
      */
     public static String[][] exporter() {
+    	/*initialisation de la liste qui contiendras toute les données*/
     	ArrayList<ArrayList<String>> donnees = new ArrayList<>();
+    	/*initialisation de la liste qui permetras d'insérer les données dans la précédente*/
     	ArrayList<String> donneesTmp = new ArrayList<>();
     	
+    	/*Ajout d'un entête au données*/
     	donneesTmp.add("donnés exporter");
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
+    	
+    	/*vérifie que le paramétrage est déja initialisé*/
     	if (!isParametrageInitialise()) {
             throw new IllegalArgumentException("L'application ne contient pas de données");
         }
-  
+    	
+    	/*ajoute les infos du semestre au données*/
     	donneesTmp.add("Semestre");
     	donneesTmp.add(getParametrage().getSemestre());
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
     	
+    	/*ajoute les infos du parcours au données*/
     	donneesTmp.add("Parcours");
     	donneesTmp.add(getParametrage().getParcours());
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
+    	
+    	/*ajout d'une ligne vide*/
+    	donneesTmp.add("");
     	donnees.add((ArrayList<String>) donneesTmp.clone());
+    	donneesTmp.clear();
+    	
+    	/*boucle pour insérer les Compétence*/
     	for(Competence competence : getCompetences().values()) {
     		donneesTmp.add("Compétence");
     		donneesTmp.add(competence.getIdentifiant());
     		donneesTmp.add(competence.getLibelle());
     		donnees.add((ArrayList<String>) donneesTmp.clone());
     		donneesTmp.clear();
+    		
     		donneesTmp.add("Type évaluations");
-    		donneesTmp.add("Identifiany");
+    		donneesTmp.add("Identifians");
     		donneesTmp.add("Libelle");
     		donneesTmp.add("Poids");
     		donnees.add((ArrayList<String>) donneesTmp.clone());
     		donneesTmp.clear();
+    		
+    		/*Boucle pour insérer les ressource de la compétence*/
     		for(Ressource ressource : getRessources().values()) {
+    			/*vérifie que la ressource est bien dans la compétence*/
     			if(competence.getListeRessources().containsKey(ressource)){
+    				/*Insère les informations de la ressource*/
     				donneesTmp.add("Ressource");
     				donneesTmp.add(ressource.getIdentifiant());
     	    		donneesTmp.add(ressource.getLibelle());
-    	    		donneesTmp.add(String.valueOf(competence.getListeRessources().get(ressource)));	
+    	    		/*Mets le poids au bon format*/
+    	    		donneesTmp.add(String.format("%.0f",competence.getListeRessources().get(ressource)*100));	
     	    		donnees.add((ArrayList<String>) donneesTmp.clone());
     	    		donneesTmp.clear();
     			}
     		}
+    		
+    		/*Boucle pour insérer les Sae de la compétence*/
     		for(Sae sae : getSae().values()) {
+    			/*vérifie que la Sae est bien dans la compétence*/
     			if(competence.getListeSaes().containsKey(sae)){
-    				donneesTmp.add("Sae");
+    				/*Si le nom de la sae est Portfolio, alors le type d'évaluations insérer est Portfolio*/
+    				if(sae.getLibelle().equals("Portfolio")) {
+    					donneesTmp.add("Portfolio");
+    				}else {
+    					donneesTmp.add("SAE");
+    				}	
+    				/*Insère les informations de la Sae*/
     				donneesTmp.add(sae.getIdentifiant());
     	    		donneesTmp.add(sae.getLibelle());
-    	    		donneesTmp.add(String.valueOf(competence.getListeSaes().get(sae)));	
+    	    		/*Mets le poids au bon format*/
+    	    		donneesTmp.add(String.format("%.0f",competence.getListeSaes().get(sae)*100));	
     	    		donnees.add((ArrayList<String>) donneesTmp.clone());
     	    		donneesTmp.clear();
     			}
     		}
-    		donnees.add((ArrayList<String>) donneesTmp.clone());
+    		/*ajout d'une ligne vide*/
+    		donneesTmp.add("");
+        	donnees.add((ArrayList<String>) donneesTmp.clone());
+        	donneesTmp.clear();
     	}
-    	
+  
     	for(Ressource ressource : getRessources().values()) {
+    		/*vérifie si la ressource posséde des évaluations*/
     		if(!ressource.getListeEvaluations().isEmpty()) {
+    			/*Insère le nom et l'identifiant de la ressource*/
     			donneesTmp.add("Ressource");
 				donneesTmp.add(ressource.getIdentifiant());
 	    		donneesTmp.add(ressource.getLibelle());
 	    		donnees.add((ArrayList<String>) donneesTmp.clone());
 	    		donneesTmp.clear();
+	    		/*Insère le nom des colonne des données de l'évaluations*/
 	    		donneesTmp.add("Type évaluations");
 	    		donneesTmp.add("Date");
 	    		donneesTmp.add("Poids");
 	    		donnees.add((ArrayList<String>) donneesTmp.clone());
 	    		donneesTmp.clear();
 	    		for(Evaluation evaluation : ressource.getListeEvaluations()) {
+	    			/*Insère le nom la date et le poids de l'évaluations*/
 	    			donneesTmp.add(evaluation.getNom());
 		    		donneesTmp.add(evaluation.getDate());
-		    		donneesTmp.add(String.valueOf(evaluation.getPoids()));
+		    		/*Mets le poids au bon format*/
+		    		donneesTmp.add(String.format("%.0f",evaluation.getPoids()*100));
 		    		donnees.add((ArrayList<String>) donneesTmp.clone());
     	    		donneesTmp.clear();
 	    		}
-	    		donnees.add((ArrayList<String>) donneesTmp.clone());
+	    		/*ajout d'une ligne vide*/
+	    		donneesTmp.add("");
+	        	donnees.add((ArrayList<String>) donneesTmp.clone());
+	        	donneesTmp.clear();
     		}
     	}
+    	/*initialisation du tableau bidimensionnel qui contiendras les données à renvoyer*/
     	String[][] donneesFinal = new String[donnees.size()][0];
+    	
+    	/*
+    	 * On insère l'arrayList contenant les donnés du paramétrage 
+    	 * dans le tableau bidimensionnel renvoyer
+    	 */
     	for (int i = 0; i < donneesFinal.length; i++) {
     		donneesFinal[i] = donnees.get(i).toArray(new String[0]);
-    	}
-    	for(int i = 0; i < donneesFinal.length; i++) {
-    		for(int j = 0; j < donneesFinal[i].length; j++) {
-    			System.out.print(donneesFinal[i][j]);
-    		}
-    		System.out.println("");
     	}
 		return donneesFinal;
 

@@ -96,6 +96,7 @@ public class TestModele {
 		assertDoesNotThrow(() -> Modele.exporter());
 		OutilFichier.ecrire("test.csv", OutilCSV.formaterToCSV(Modele.exporter()));
 		Modele.reset();
+		
 		Modele.importer("test.csv");
 		assertEquals("2", Modele.getParametrage().getSemestre());
         assertEquals("Tous", Modele.getParametrage().getParcours());
