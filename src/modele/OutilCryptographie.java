@@ -5,6 +5,7 @@
 
 package modele;
 
+import java.math.BigInteger;
 
 /** Classe outil permettant de : 
  * - encoder un message à l'aide de l'algorithme de Vigenère et une clé fournie, 
@@ -15,12 +16,15 @@ package modele;
  */
 public class OutilCryptographie {
     
-    /* Alphabet utilisé pour le chiffrement. */
-    private static final String alphabet = " abcdefghijklmnopqrstuvwxyz"
-                                         + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                         + "àâæçéèêëîïôœùûüÿÀÂÆÇÉÈÊËÎÏÔŒÙÛÜŸ"
-                                         + "0123456789.,:;!?()[]{}'\"-/_=+*%";
-    
+    /* Alphabet utilisé pour le chiffrement correspondant à
+     * tous les caractères présents sur un clavier Azerty.*/
+    private static final String alphabet = " AaÀàÂâÄäÃãBbCcçDdEeéÈèÊêËëFfGgHhI"
+                                         + "iÌìÎîÏïJjKkLlMmNnÑñOoÒòÔôÖöÕõPpQqR"
+                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-\'.,;:!?@"
+                                         + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
+                                         + "+=%µ€$¤£";
+    private static final int p = 9739;
+    private static final int g = 1527;
     /**
      * Méthode qui permet de chiffrer un message.
      * @param cle la clé de chiffrement.
@@ -117,5 +121,73 @@ public class OutilCryptographie {
         int index = alphabet.indexOf(c);
         int indexDecode = (index - decalage + alphabet.length()) % alphabet.length();
         return alphabet.charAt(indexDecode);
+    }
+    
+    /** Getter de l'attribut alphabet
+     * @return alphabet
+     */
+    public static String getAlphabet() {
+        return alphabet;
+    }
+    
+    /** Permet de générer aléatoirement une clé de cryptage pour Vigenere
+     * @return cle
+     */
+    public static String creerCleVigenere() {
+        StringBuilder cle = new StringBuilder();
+        
+        int index = 0;
+        index = (int)(Math.random() * (alphabet.length() - 100) + 100);
+        cle.append(alphabet.charAt(index));
+        
+        for (int i = 1; i < 20; i++) {
+            index = (int)(Math.random() * alphabet.length());
+            cle.append(alphabet.charAt(index));
+        }
+        return cle.toString();
+    }
+    
+    /** Méthode permettant de coder la clé de l'algorithme de Vigenère
+     * afin de l'envoyer via l'échange de Diffie-Hellman
+     * @param cle 
+     * @param a
+     * @param b
+     * @return cle_codee
+     */
+    public static BigInteger coderCle(String cle, int a, int b) {
+        StringBuilder cle_codee_str = new StringBuilder();
+        int index = 0;
+        for (int i = 0; i < 20; i++) {
+            index = alphabet.indexOf(cle.charAt(i));
+            cle_codee_str.append(String.format("%03d", index));
+        }
+        
+        BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
+        int code = (int)(Math.pow(g, (a*b)) % p);
+        cle_codee = cle_codee.multiply(BigInteger.valueOf(code));
+        return cle_codee;
+    }
+    
+    /** Méthode permettant de décoder la clé de l'algorithme de Vigenère
+     * reçue avec l'échange de Diffie-Hellman
+     * @param cle_codee
+     * @param a
+     * @param b
+     * @return cle_decodee
+     */
+    public static String decoderCle(BigInteger cle_codee, int a, int b) {
+        int code = (int)(Math.pow(g, (a*b)) % p);
+        BigInteger cle_codee_divisee = cle_codee.divide(BigInteger.valueOf(code));
+        
+        int index = 0;
+        int compteur = 0;
+        String cle_codee_str = cle_codee_divisee.toString();
+        StringBuilder cle_decodee = new StringBuilder();
+        for (int i = 0; i < 20; i ++) {
+            index = Integer.parseInt("" + cle_codee_str.charAt(compteur) + cle_codee_str.charAt(compteur + 1) + cle_codee_str.charAt(compteur + 2));
+            cle_decodee.append(alphabet.charAt(index));
+            compteur += 3;
+        }
+        return cle_decodee.toString();
     }
 }
