@@ -451,6 +451,24 @@ public class VueHomepageController {
     }
     
     /**
+     * Méthode appelée quand le bouton "Reinitialiser" est pressé
+     * @throws Exception 
+     */
+    @FXML
+    void aidePresser(ActionEvent event) throws Exception {
+        Ressource ressource = ressourceModifier;
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
+        if (!dansModifierModalite()) {
+            if (ressource != null) {
+                annulerModalite(ressource);
+            }
+            EchangeurDeVue.launchPopUp("vpua", "Aide");
+        }
+    }
+    
+    /**
      * Méthode appelée lorsque la souris entre sur bouton Utilisateur
      */
     @FXML

@@ -59,7 +59,7 @@ public class VuePopUpAideControleur {
          // parse XML file
             DocumentBuilder db = dbf.newDocumentBuilder();
 
-            document = db.parse(new File("..\\vue\\ressources\\aide.xml"));
+            document = db.parse(new File("src\\vue\\ressources\\aide.xml"));
             document.getDocumentElement().normalize();
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();

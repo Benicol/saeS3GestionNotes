@@ -41,7 +41,7 @@
 			<paragraphe>    - Importer depuis un autre ordinateur</paragraphe>
 			<paragraphe>La première option consiste à sélectionner un fichier de type .csv à partir d’un explorateur de fichier et de choisir un fichier qui contient le programme national pour un semestre donné. (Ce type de fichier est normalement fourni par l’IUT !).</paragraphe>
 			<paragraphe>La seconde option consiste à obtenir le paramétrage au travers d’un second utilisateur, qui aurait installé l’application sur son ordinateur. Pour ce faire, le second utilisateur doit appuyer sur le bouton ‘Exporter’, que nous allons expliciter immédiatement.</paragraphe>
-			<paragraphe>Les détails de l'importation sont davantage développés dans la section 'Importation' et 'Exportation'
+			<paragraphe>Les détails de l'importation sont davantage développés dans la section 'Importation' et 'Exportation'</paragraphe>
 
 			<titre>Bouton exporter</titre>
 			<paragraphe>Ce bouton permet d’ouvrir une pop-up nommée ‘Exportation’. Ce bouton est l’autre pendant du bouton ‘Importer’. Ainsi, il permet de transmettre les données stockées dans l’application à un autre utilisateur. On peut transmettre deux éléments différents :</paragraphe>
