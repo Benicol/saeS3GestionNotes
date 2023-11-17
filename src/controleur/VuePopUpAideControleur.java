@@ -131,9 +131,9 @@ public class VuePopUpAideControleur {
             root = fxmlloader.load();
             HBox hbox = (HBox) root;
             Label label = (Label) hbox.getChildren().get(0);
-            label.setText("test");
-            listePrincipale.getChildren().add(label);
             Element eElement = infos.get(button);
+            label.setText(eElement.getAttribute("nom"));
+            listePrincipale.getChildren().add(label);
             NodeList nListe = eElement.getChildNodes();
             String textContent = "";
             for (int j = 0; j < nListe.getLength(); j++) {
@@ -180,7 +180,6 @@ public class VuePopUpAideControleur {
             }
             System.out.println(nListe.getLength());
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
