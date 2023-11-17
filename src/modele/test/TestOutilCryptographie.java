@@ -18,8 +18,10 @@ import modele.OutilCryptographie;
  */
 public class TestOutilCryptographie {
     
-    private static final int a = 17;
-    private static final int b = 4;
+    private static final BigInteger p = new BigInteger("9739");
+    private static final BigInteger g = new BigInteger("1527");
+    private static final BigInteger a = new BigInteger("17");
+    private static final BigInteger b = new BigInteger("4");
 
     /** 
      * Test de la methode encoder() de la classe outilCryptographie
@@ -87,9 +89,10 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testCoderCle() {
+        BigInteger gb = g.pow(b.intValue());
         String cle = "4Êtw£° $@²*~^`j0*éç.";
-        BigInteger cle_codee = new BigInteger("768110624352840053260847821400351269520621326734400756992004025");
-        assertEquals(OutilCryptographie.coderCle(cle, a, b), cle_codee);
+        BigInteger cle_codee = new BigInteger("604028584499288330644666711726313967975773259891383564932350335");
+        assertEquals(OutilCryptographie.coderCle(cle, a, gb, p), cle_codee);
     }
     
     /**
@@ -97,8 +100,9 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testDecoderCle() {
-        BigInteger cle_codee = new BigInteger("768110624352840053260847821400351269520621326734400756992004025");
+        BigInteger ga = g.pow(a.intValue());
+        BigInteger cle_codee = new BigInteger("604028584499288330644666711726313967975773259891383564932350335");
         String cle = "4Êtw£° $@²*~^`j0*éç.";
-        assertEquals(OutilCryptographie.decoderCle(cle_codee, a, b), cle);
+        assertEquals(OutilCryptographie.decoderCle(cle_codee, ga, b, p), cle);
     }
 }
