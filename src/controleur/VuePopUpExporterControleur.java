@@ -1,5 +1,14 @@
 package controleur;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -7,6 +16,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import modele.Modele;
+import modele.OutilCSV;
 
 /** 
  * Controleur de la vue vue.VueExporter.fxml
@@ -22,6 +33,7 @@ public class VuePopUpExporterControleur {
     @FXML
     private ImageView logoProgramme;
     
+    private static final int PORT = 20232;
     private boolean modalites = false;
     private boolean programme = false;
     
@@ -100,10 +112,25 @@ public class VuePopUpExporterControleur {
      */
     @FXML
     void etablirUneConnexionPresser(ActionEvent event) {
-    	  Button bouton = (Button) event.getSource();
+        Button bouton = (Button) event.getSource();
           
-          bouton.setText("Implémentation en cours");
+        bouton.setText("Implémentation en cours");
+        System.out.println(adresseIpInput.getText() + ":" + PORT);
+        try {
+            Socket socket = new Socket(adresseIpInput.getText(), PORT);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            
+            writer.write(OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
+            writer.flush();
+            writer.close();
+            reader.close();
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+    
     /**
      * Methode appeler lors du clic sur le bouton "Modalités d'évaluation"
      */

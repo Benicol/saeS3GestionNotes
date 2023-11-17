@@ -25,6 +25,7 @@ public class OutilCryptographie {
                                          + "+=%µ€$¤£";
     private static final int p = 9739;
     private static final int g = 1527;
+    
     /**
      * Méthode qui permet de chiffrer un message.
      * @param cle la clé de chiffrement.

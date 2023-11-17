@@ -93,8 +93,8 @@ public class TestModele {
 	public void testExporter() {
 		Modele.reset();
 		Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv");
-		assertDoesNotThrow(() -> Modele.exporter());
-		OutilFichier.ecrire("test.csv", OutilCSV.formaterToCSV(Modele.exporter()));
+		assertDoesNotThrow(() -> Modele.exporter(true, true));
+		OutilFichier.ecrire("test.csv", OutilCSV.formaterToCSV(Modele.exporter(true, true)));
 		Modele.reset();
 		
 		Modele.importer("test.csv");

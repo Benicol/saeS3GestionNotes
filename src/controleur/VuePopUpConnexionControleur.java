@@ -4,14 +4,40 @@
  */
 package controleur;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -22,7 +48,82 @@ import modele.OutilReseau;
  * Contrôleur de la vue vue.VueExporter.fxml
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
-public class VuePopUpImporterControleur {
+public class VuePopUpConnexionControleur {
+    
+    @FXML
+    private Text texte;
+    
+    private Thread enAttente;
+    
+    private Thread serveurSocket;
+    private ServerSocket serveur;
+    
+    /**
+     * Effectue les traitement suivant dans cette ordre : 
+     * @throws Exception 
+     */
+    @FXML
+    void initialize() throws Exception {
+        EchangeurDeVue.getPopUpStage().setOnCloseRequest((event) -> close());
+        texte.setText("En attente de connexion");
+        // Créez une tâche (Task) pour effectuer le travail en arrière-plan
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    try {
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
+                        return null;
+                    }
+                    // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                    javafx.application.Platform.runLater(() -> {
+                        texte.setText(texte.getText() + ".");
+                        if (texte.getText().equals("En attente de connexion....")) {
+                            texte.setText("En attente de connexion");
+                        }
+                    });
+                }
+            }
+        };
+        enAttente = new Thread(task);
+        enAttente.start();
+        serveur = new ServerSocket(20232);
+        serveurSocket = new Thread() {
+            public void run() {
+                try {
+                    System.out.println("serveur started");
+                    Socket client = serveur.accept();
+                    handleConnection(client);
+                } catch (IOException e) {
+                    return;
+                }
+            }
+        };
+        serveurSocket.start();
+    }
+    
+    private void handleConnection(Socket clientSocket) {
+        // Replace this with your own logic to handle the connection
+        System.out.println("Handling connection from: " + clientSocket.getInetAddress());
+        // Close the client socket when done
+        try {
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            while (true) {
+                String ligne = reader.readLine();
+                if (ligne != null) {
+                    System.out.println(ligne);
+                }
+            }
+            /*writer.flush();
+            writer.close();
+            reader.close();
+            clientSocket.close();*/
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * Méthode appelée lors du clic sur le bouton "afficher l'adresse IP"
@@ -46,7 +147,22 @@ public class VuePopUpImporterControleur {
      */
     @FXML
     void annulerPresser(ActionEvent event) {
-        EchangeurDeVue.getPopUpStage().close();
+        try {
+            serveur.close();
+        } catch (IOException e) {
+        }
+        enAttente.interrupt();
+        EchangeurDeVue.echangerAvecPopUp("vpui", "importer");
+    }
+    
+    void close() {
+        EchangeurDeVue.getPopUpStage().setOnCloseRequest(null);
+        try {
+            serveur.close();
+        } catch (IOException e) {
+        }
+        enAttente.interrupt();
+        EchangeurDeVue.echangerAvecPopUp("vpui", "importer");
     }
     
     /**
@@ -118,61 +234,5 @@ public class VuePopUpImporterControleur {
         // On change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
-    }
-    
-    /**
-     * Méthode appelée lors du clic sur le bouton "Etablir une connexion"
-     * Méthode NON IMPLEMENTEE 
-     * (change le texte du bouton en "Implémentation en cours"
-     */
-    @FXML
-    void etablirUneConnexionPresser(ActionEvent event) {
-        EchangeurDeVue.echangerAvecPopUp("vpuc", "Connexion en cours...");
-    }
-    
-    
-    /**
-     * Méthode appelée lors du clic sur le bouton "Importer"
-     * Lance un explorateur de fichier afin que l'utilisateur puisse 
-     * sélectionner un .csv et lance donc la méthode du Modele d'importer.
-     * Si le fichier choisi est invalide,  alors affiche une Pop-Up expliquant les 
-     * raison de l'échec de l'importation, si l'importation s'est bien déroulée,
-     * la Pop-Up confirme le bon déroulement de l'importation et l'utilisateur 
-     * retourne sur la homepage.
-     */
-    @FXML
-    void importerPresser(ActionEvent event) {
-        Button openExplorerButton = (Button) event.getSource();
-
-        FileChooser fileChooser = new FileChooser();
-        Stage stage = (Stage) openExplorerButton.getScene().getWindow();
-        
-        // Configure le FileChooser pour n'afficher que les fichiers .csv
-        fileChooser.setTitle("Sélectionnez un fichier CSV");
-        ExtensionFilter filter = new ExtensionFilter("Fichiers CSV", "*.csv");
-        fileChooser.getExtensionFilters().add(filter);
-
-        // Affiche la fenêtre de sélection de fichier
-        File selectedFile = fileChooser.showOpenDialog(stage);
-
-        if (selectedFile != null) {
-            try {
-                // Appel de la méthode qui peut potentiellement lancer une exception
-                Modele.importer(selectedFile.toString());
-                EchangeurDeVue.getPopUpStage().close();
-                Alert alert = new Alert(AlertType.INFORMATION);
-                alert.setTitle("Test");
-                alert.setHeaderText("Paramétrage effectué");
-                alert.setContentText("L'importation s'est déroulée sans accroc !");
-                alert.showAndWait();
-                
-            } catch (IllegalArgumentException e) {
-                // Gestion de l'exception
-                Alert alert = new Alert(AlertType.ERROR);
-                alert.setHeaderText("L'importation a rencontrée un problème...");
-                alert.setContentText(e.getMessage());
-                alert.showAndWait();
-            }
-        }
     }
 }

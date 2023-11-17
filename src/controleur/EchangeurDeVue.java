@@ -71,6 +71,8 @@ public class EchangeurDeVue {
         vues.put("vpui", "..\\vue\\VuePopUpImporter.fxml");
         vues.put("ve", "..\\vue\\VuePopUpExporter.fxml");
         vues.put("vcp", "..\\vue\\VuePopUpChoixPseudo.fxml");
+        vues.put("vpua", "..\\vue\\VuePopUpAide.fxml");
+        vues.put("vpuc", "..\\vue\\VuePopUpConnexion.fxml");
         /* MODULES */
         modules.put("ME", "..\\vue\\modules\\ModuleEnseignement.fxml");
         modules.put("MEval", "..\\vue\\modules\\ModuleEvaluation.fxml");
@@ -86,6 +88,9 @@ public class EchangeurDeVue {
         modules.put("MEvalV", "..\\vue\\modules\\ModuleEvaluationVide.fxml");
         modules.put("MM", "..\\vue\\modules\\ModuleMoyenne.fxml");
         modules.put("MB", "..\\vue\\modules\\ModuleBienvenue.fxml");
+        modules.put("MAM", "..\\vue\\modules\\ModuleAideMenu.fxml");
+        modules.put("MAT", "..\\vue\\modules\\ModuleAideText.fxml");
+        modules.put("MAI", "..\\vue\\modules\\ModuleAideImage.fxml");
     }
 
     /**
@@ -153,6 +158,33 @@ public class EchangeurDeVue {
                 }
             }
             sceneCourante.setRoot(racine);
+        } catch (IOException erreur) {
+            System.out.println("Echec du chargement de la vue de code " 
+                               + codeVue + " => " + erreur.getMessage());
+        }
+    }
+    
+    /**
+     * Modifie la vue associée à la scène courante, pour qu'elle devienne celle dont
+     * le code est donné en argument La scène courante doit avoir été initialisée
+     * 
+     * @param codeVue code de la vue à placer sur la scène courante
+     * @param nomFenetre nom de la fenetre
+     * @param garderEnMemoire true si on garde en mémoire la vue, false sinon
+     */
+    public static void echangerAvecPopUp(String codeVue, String nomFenetre) {
+        if (sceneCourante == null) {
+            // pas de scène courante : impossible de modifier sa vue
+            throw new IllegalStateException("Echange de vue impossible. "
+                                            + "Pas de scène courante.");
+        }
+
+        try {
+            Parent racine = FXMLLoader.load(EchangeurDeVue.class.getResource(
+                                                               getNomVue(codeVue)));
+            scenePopUp.setRoot(racine);
+            popUpStage.sizeToScene();
+            popUpStage.setTitle(nomFenetre);
         } catch (IOException erreur) {
             System.out.println("Echec du chargement de la vue de code " 
                                + codeVue + " => " + erreur.getMessage());
