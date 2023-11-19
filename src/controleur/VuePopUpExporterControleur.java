@@ -7,17 +7,25 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import modele.Modele;
 import modele.OutilCSV;
+import modele.OutilCryptographie;
 
 /** 
  * Controleur de la vue vue.VueExporter.fxml
@@ -109,26 +117,52 @@ public class VuePopUpExporterControleur {
     
     /**
      * Methode appeler lors du clic sur le bouton "Etablir une connexion"
+     * @throws InterruptedException 
      */
     @FXML
-    void etablirUneConnexionPresser(ActionEvent event) {
+    void etablirUneConnexionPresser(ActionEvent event) throws InterruptedException {
         Button bouton = (Button) event.getSource();
-          
-        bouton.setText("Implémentation en cours");
         System.out.println(adresseIpInput.getText() + ":" + PORT);
-        try {
-            Socket socket = new Socket(adresseIpInput.getText(), PORT);
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            
-            writer.write(OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
-            writer.flush();
-            writer.close();
-            reader.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                try {
+                    Socket socket = new Socket();
+                    socket.setSoTimeout(1000);
+                    socket.connect(new InetSocketAddress(adresseIpInput.getText(), PORT), 1000);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+                    System.out.println("1 : Attente de la clé");
+                    String cle = reader.readLine();
+                    System.out.println("2 : clé reçu" + cle);
+                    System.out.println("3 : encrpytage des données");
+                    System.out.println(Modele.exporter(true,true)[4]);
+                    String donneesCrypte = OutilCryptographie.encoder(cle, OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
+                    System.out.println(donneesCrypte);
+                    System.out.println("4 : envoie les données cryptés");
+                    writer.println(donneesCrypte);
+                    socket.close();
+                    // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                    javafx.application.Platform.runLater(() -> {
+                        Alert alert = new Alert(AlertType.INFORMATION);
+                        alert.setTitle("Transfert réussi");
+                        alert.setHeaderText("données transférer!");
+                        alert.setContentText("Verifiez que l'importation s'est bien passer sur l'autre ordinateur !");
+                        alert.showAndWait();
+                    });
+                } catch (IOException e) {
+                    javafx.application.Platform.runLater(() -> {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setTitle("IP ERROR");
+                        alert.setHeaderText("aucune application n'attend des données à cette adresse");
+                        alert.setContentText("Consultez l'aide pour plus d'informations sur comment transmettre vos données");
+                        alert.showAndWait();
+                    });
+                }
+                return null;
+            }
+        };
+        new Thread(task).start();
     }
     
     /**

@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -42,6 +43,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import modele.Modele;
+import modele.OutilCryptographie;
 import modele.OutilReseau;
 
 /** 
@@ -80,7 +82,7 @@ public class VuePopUpConnexionControleur {
                     javafx.application.Platform.runLater(() -> {
                         texte.setText(texte.getText() + ".");
                         if (texte.getText().equals("En attente de connexion....")) {
-                            texte.setText("En attente de connexion");
+                            texte.setText(texte.getText().substring(0,texte.getText().length() - 4));
                         }
                     });
                 }
@@ -104,22 +106,25 @@ public class VuePopUpConnexionControleur {
     }
     
     private void handleConnection(Socket clientSocket) {
-        // Replace this with your own logic to handle the connection
-        System.out.println("Handling connection from: " + clientSocket.getInetAddress());
-        // Close the client socket when done
         try {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream()));
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            while (true) {
-                String ligne = reader.readLine();
-                if (ligne != null) {
-                    System.out.println(ligne);
-                }
+            PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            String cle = OutilCryptographie.creerCleVigenere();
+            System.out.println("1 : Transmission de la cle" + cle);
+            texte.setText("Transfert des données en cours");
+            writer.println(cle);
+            System.out.println("2: Attente de la réception des données cryptes");
+            String ligne = reader.readLine();
+            StringBuilder completCrypte = new StringBuilder();
+            while (ligne != null) {
+                completCrypte.append(ligne + "\n");
+                ligne = reader.readLine();
             }
-            /*writer.flush();
-            writer.close();
-            reader.close();
-            clientSocket.close();*/
+            System.out.println("3 : données reçu ! : " + completCrypte);
+            enAttente.interrupt();
+            texte.setText("Transmission Terminé !");
+            System.out.println("4 : données décrypter : " + OutilCryptographie.decoder(cle, completCrypte.toString()));
+            clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

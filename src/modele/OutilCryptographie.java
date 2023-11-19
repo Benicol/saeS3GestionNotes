@@ -20,9 +20,9 @@ public class OutilCryptographie {
      * tous les caractères présents sur un clavier Azerty.*/
     private static final String alphabet = " AaÀàÂâÄäÃãBbCcçDdEeéÈèÊêËëFfGgHhI"
                                          + "iÌìÎîÏïJjKkLlMmNnÑñOoÒòÔôÖöÕõPpQqR"
-                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-\'.,;:!?@"
+                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-'’.,;:!?@"
                                          + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
-                                         + "+=%µ€$¤£";
+                                         + "+=%µ€$¤£\n";
     private static final int p = 9739;
     private static final int g = 1527;
     
@@ -93,8 +93,7 @@ public class OutilCryptographie {
      */
     private static int getDecalage(String cle, int index) {
         char c = cle.charAt(index);
-        int decalage = alphabet.indexOf(c) - alphabet.indexOf('a');
-        return decalage;
+        return alphabet.indexOf(c);
     }
 
     /**
@@ -120,7 +119,7 @@ public class OutilCryptographie {
      */
     private static char decoderCaractere(char c, int decalage) {
         int index = alphabet.indexOf(c);
-        int indexDecode = (index - decalage + alphabet.length()) % alphabet.length();
+        int indexDecode = (index - decalage + (alphabet.length())) % (alphabet.length());
         return alphabet.charAt(indexDecode);
     }
     
