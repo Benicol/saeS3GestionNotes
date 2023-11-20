@@ -37,7 +37,8 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                char cEncode = encoderCaractere(c, j);
+                int decalage = getDecalage(cle, j);
+                char cEncode = encoderCaractere(c, decalage);
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
             } else {
@@ -60,7 +61,8 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                char cDecode = decoderCaractere(c, j);
+                int decalage = getDecalage(cle, j);
+                char cDecode = decoderCaractere(c, decalage);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
             }
@@ -71,7 +73,18 @@ public class OutilCryptographie {
         }
         return sb.toString();
     }
-
+    
+    /**
+     * Classe permettant de connaître quel est le décalage pour le caractère à 
+     * l'index donné.
+     * @param index Index du caractère dans la clé.
+     * @return Decalage le décalage pour un caractère.
+     */
+    private static int getDecalage(String cle, int index) {
+        char c = cle.charAt(index);
+        System.out.println(c + " : " + index);
+        return alphabet.indexOf(c);
+    }
     /**
      * Vérifie si un caractère est valide, c'est à dire qu'il est présent dans
      * l'alphabet de la classe.
@@ -123,8 +136,7 @@ public class OutilCryptographie {
         StringBuilder cle = new StringBuilder();
         int taille = (int)(Math.random() * 50) + 20;
         
-        int index = 0;
-        index = (int)(Math.random() * (alphabet.length() - 100) + 100);
+        int index = (int)(Math.random() * (alphabet.length() - 100) + 100);
         cle.append(alphabet.charAt(index));
         
         for (int i = 1; i < taille; i++) {

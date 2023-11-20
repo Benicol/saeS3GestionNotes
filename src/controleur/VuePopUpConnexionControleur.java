@@ -44,6 +44,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import modele.Modele;
 import modele.OutilCryptographie;
+import modele.OutilFichier;
 import modele.OutilReseau;
 
 /** 
@@ -74,6 +75,9 @@ public class VuePopUpConnexionControleur {
             protected Void call() throws Exception {
                 while (true) {
                     try {
+                        if (enAttente.isInterrupted()) {
+                            return null;
+                        }
                         Thread.sleep(400);
                     } catch (InterruptedException e) {
                         return null;
@@ -81,7 +85,7 @@ public class VuePopUpConnexionControleur {
                     // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {
                         texte.setText(texte.getText() + ".");
-                        if (texte.getText().equals("En attente de connexion....")) {
+                        if (texte.getText().substring(texte.getText().length() - 4, texte.getText().length() - 1).equals("...")) {
                             texte.setText(texte.getText().substring(0,texte.getText().length() - 4));
                         }
                     });
@@ -110,14 +114,18 @@ public class VuePopUpConnexionControleur {
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             String cle = OutilCryptographie.creerCleVigenere();
+            OutilFichier.ecrire("test.txt", cle);
             texte.setText("Transfert des données en cours");
-            writer.println(cle);
+            writer.print(cle);
             String ligne = reader.readLine();
             StringBuilder completCrypte = new StringBuilder();
             while (ligne != null) {
                 completCrypte.append(ligne + "\n");
                 ligne = reader.readLine();
             }
+            completCrypte.delete(completCrypte.length() - 2, completCrypte.length() - 1);
+            String decrypter = OutilCryptographie.decoder(cle, completCrypte.toString());
+            OutilFichier.ecrire("test2.txt", decrypter);
             enAttente.interrupt();
             texte.setText("Transmission Terminé !");
             clientSocket.close();
