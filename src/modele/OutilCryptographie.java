@@ -38,7 +38,7 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                int decalage = getDecalage(cle, j);
+                int decalage = j;
                 char cEncode = encoderCaractere(c, decalage);
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
@@ -62,7 +62,7 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                int decalage = getDecalage(cle, j);
+                int decalage = j;
                 char cDecode = decoderCaractere(c, decalage);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
@@ -83,17 +83,6 @@ public class OutilCryptographie {
      */
     private static boolean isCaractereValide(char c) {
         return alphabet.indexOf(c) != -1;
-    }
-
-    /**
-     * Classe permettant de connaître quel est le décalage pour le caractère à 
-     * l'index donné.
-     * @param index Index du caractère dans la clé.
-     * @return Decalage le décalage pour un caractère.
-     */
-    private static int getDecalage(String cle, int index) {
-        char c = cle.charAt(index);
-        return alphabet.indexOf(c);
     }
 
     /**

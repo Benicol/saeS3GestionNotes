@@ -75,7 +75,7 @@
             </VBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="500.0">
                <children>
-                  <Button fx:id="programmeNational" mnemonicParsing="false" onAction="#boutonSelectionPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" text="Programme national">
+                  <Button fx:id="programmeNational" mnemonicParsing="false" onAction="#boutonSelectionPresser" onMouseEntered="#secondaryButtonWhiteEntered" onMouseExited="#secondaryButtonWhiteExited" prefHeight="40.0" text="Programme national">
                      <graphic>
                         <ImageView fx:id="logoProgramme" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -97,7 +97,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button fx:id="modalitesEvaluation" mnemonicParsing="false" onAction="#boutonSelectionPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" text="Modalités d'évaluation">
+                  <Button fx:id="modalitesEvaluation" mnemonicParsing="false" onAction="#boutonSelectionPresser" onMouseEntered="#secondaryButtonWhiteEntered" onMouseExited="#secondaryButtonWhiteExited" prefHeight="40.0" text="Modalités d'évaluation">
                      <graphic>
                         <ImageView fx:id="logoModalites" fitHeight="24.0" fitWidth="75.0" pickOnBounds="true" preserveRatio="true">
                            <image>

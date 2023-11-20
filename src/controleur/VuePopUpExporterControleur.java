@@ -113,6 +113,36 @@ public class VuePopUpExporterControleur {
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
+    
+    /**
+     * Méthode appelée lors de l'entrée de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
+     * Boutons utilisant cette méthode : 
+     * - oeuil (Competences et afficher les moyennes)
+     */
+    @FXML
+    void secondaryButtonWhiteEntered(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour assombrir le bouton.
+        bouton.getStyleClass().remove("secondary-button-not-hover");
+        bouton.getStyleClass().add("secondary-button-white-hover");
+    }
+    
+    /**
+     * Méthode appelé lors de la sortie de la souris dans un bouton de 
+     * style 'secondary-button' (bouton transparent avec contours violets)
+     * Boutons utilisant cette méthode : 
+     * - oeuil (Competences et afficher les moyennes)
+     */
+    @FXML
+    void secondaryButtonWhiteExited(MouseEvent event) {
+        // On va chercher le bouton précis que la souris a survolé
+        Button bouton = (Button) event.getSource();
+        // On change de classe dans le css pour rendre son style originel au bouton.
+        bouton.getStyleClass().remove("secondary-button-white-hover");
+        bouton.getStyleClass().add("secondary-button-not-hover");
+    }
 
     
     /**
@@ -121,8 +151,7 @@ public class VuePopUpExporterControleur {
      */
     @FXML
     void etablirUneConnexionPresser(ActionEvent event) throws InterruptedException {
-        Button bouton = (Button) event.getSource();
-        System.out.println(adresseIpInput.getText() + ":" + PORT);
+
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -132,14 +161,8 @@ public class VuePopUpExporterControleur {
                     socket.connect(new InetSocketAddress(adresseIpInput.getText(), PORT), 1000);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-                    System.out.println("1 : Attente de la clé");
                     String cle = reader.readLine();
-                    System.out.println("2 : clé reçu" + cle);
-                    System.out.println("3 : encrpytage des données");
-                    System.out.println(Modele.exporter(true,true)[4]);
                     String donneesCrypte = OutilCryptographie.encoder(cle, OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
-                    System.out.println(donneesCrypte);
-                    System.out.println("4 : envoie les données cryptés");
                     writer.println(donneesCrypte);
                     socket.close();
                     // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
@@ -201,8 +224,8 @@ public class VuePopUpExporterControleur {
             bouton.setOnMouseEntered((event) -> primaryButtonEntered(event));
             bouton.setOnMouseExited((event) -> primaryButtonExited(event));
         } else {
-            bouton.setOnMouseEntered((event) -> secondaryButtonEntered(event));
-            bouton.setOnMouseExited((event) -> secondaryButtonExited(event));
+            bouton.setOnMouseEntered((event) -> secondaryButtonWhiteEntered(event));
+            bouton.setOnMouseExited((event) -> secondaryButtonWhiteExited(event));
         }
     }
 }

@@ -110,20 +110,16 @@ public class VuePopUpConnexionControleur {
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
             String cle = OutilCryptographie.creerCleVigenere();
-            System.out.println("1 : Transmission de la cle" + cle);
             texte.setText("Transfert des données en cours");
             writer.println(cle);
-            System.out.println("2: Attente de la réception des données cryptes");
             String ligne = reader.readLine();
             StringBuilder completCrypte = new StringBuilder();
             while (ligne != null) {
                 completCrypte.append(ligne + "\n");
                 ligne = reader.readLine();
             }
-            System.out.println("3 : données reçu ! : " + completCrypte);
             enAttente.interrupt();
             texte.setText("Transmission Terminé !");
-            System.out.println("4 : données décrypter : " + OutilCryptographie.decoder(cle, completCrypte.toString()));
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();
