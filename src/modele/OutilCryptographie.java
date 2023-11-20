@@ -23,6 +23,8 @@ public class OutilCryptographie {
                                          + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-'’.,;:!?@"
                                          + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
                                          + "+=%µ€$¤£\n";
+    private static final BigInteger P = new BigInteger("9739");
+    private static final BigInteger G = new BigInteger("1527");
     /**
      * Méthode qui permet de chiffrer un message.
      * @param cle la clé de chiffrement.
@@ -179,5 +181,15 @@ public class OutilCryptographie {
             cle_decodee.append(alphabet.charAt(index));
         }
         return cle_decodee.toString();
+    }
+
+    /** @return valeur de p */
+    public static BigInteger getP() {
+        return P;
+    }
+
+    /** @return valeur de g */
+    public static BigInteger getG() {
+        return G;
     }
 }
