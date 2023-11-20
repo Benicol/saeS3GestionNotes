@@ -20,9 +20,9 @@ public class OutilCryptographie {
      * tous les caractères présents sur un clavier Azerty.*/
     private static final String alphabet = " AaÀàÂâÄäÃãBbCcçDdEeéÈèÊêËëFfGgHhI"
                                          + "iÌìÎîÏïJjKkLlMmNnÑñOoÒòÔôÖöÕõPpQqR"
-                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-\'.,;:!?@"
+                                         + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-'’.,;:!?@"
                                          + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
-                                         + "+=%µ€$¤£";
+                                         + "+=%µ€$¤£\n";
     /**
      * Méthode qui permet de chiffrer un message.
      * @param cle la clé de chiffrement.
@@ -35,8 +35,7 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                int decalage = getDecalage(cle, j);
-                char cEncode = encoderCaractere(c, decalage);
+                char cEncode = encoderCaractere(c, j);
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
             } else {
@@ -59,8 +58,7 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                int decalage = getDecalage(cle, j);
-                char cDecode = decoderCaractere(c, decalage);
+                char cDecode = decoderCaractere(c, j);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
             }
@@ -80,18 +78,6 @@ public class OutilCryptographie {
      */
     private static boolean isCaractereValide(char c) {
         return alphabet.indexOf(c) != -1;
-    }
-
-    /**
-     * Classe permettant de connaître quel est le décalage pour le caractère à 
-     * l'index donné.
-     * @param index Index du caractère dans la clé.
-     * @return Decalage le décalage pour un caractère.
-     */
-    private static int getDecalage(String cle, int index) {
-        char c = cle.charAt(index);
-        int decalage = alphabet.indexOf(c) - alphabet.indexOf('a');
-        return decalage;
     }
 
     /**
@@ -163,7 +149,7 @@ public class OutilCryptographie {
         }
         
         BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
-        BigInteger code = gb.modPow(a, p);
+        BigInteger code = gb.pow(a.intValue()).mod(p);
         cle_codee = cle_codee.multiply(code);
         return cle_codee;
     }
@@ -177,7 +163,7 @@ public class OutilCryptographie {
      * @return cle_decodee
      */
     public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b, BigInteger p) {
-        BigInteger code = ga.modPow(b, p);
+        BigInteger code = ga.pow(b.intValue()).mod(p);
         BigInteger cle_codee_divisee = cle_codee.divide(code);
         
         int index = 0;
@@ -186,7 +172,7 @@ public class OutilCryptographie {
         System.out.println(cle_codee_str);
         StringBuilder cle_decodee = new StringBuilder();
         int taille_finale = cle_codee.toString().length()/3;
-        for (int i = 0; i < taille_finale; i++) {
+        for (int i = 0; i < taille_finale-1; i++) {
             compteur = i*3;
             index = Integer.parseInt("" + cle_codee_str.charAt(compteur) + cle_codee_str.charAt(compteur + 1) + cle_codee_str.charAt(compteur + 2));
             System.out.println(index);

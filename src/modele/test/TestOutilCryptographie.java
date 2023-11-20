@@ -30,7 +30,7 @@ public class TestOutilCryptographie {
     public void testEncoder() {
         String cle = "tests junits";
         String[] messagesValides = {"Hello, world!", "", "test"};
-        String[] chiffrerValides = {"@ì[/0'ïc&?/XF", "", " ì€ "};
+        String[] chiffrerValides = {"HémNô@âzõÛòf!", "", "tétÙ"};
         String[] messagesInvalides = {"åøØøå", "J'aime l'argent 💸", "57×39"};
         try {
             for (int i = 0; i < messagesValides.length; i++) {
@@ -51,7 +51,7 @@ public class TestOutilCryptographie {
     @Test
     public void testDecoder() {
         String cle = "tests junits";
-        String[] chiffrementsValides = {"@ì[/0'ïc&?/XF", "", " ì€ "};
+        String[] chiffrementsValides = {"HémNô@âzõÛòf!", "", "tétÙ"};
         String[] chiffrementsInvalides = {"fghgåøØøåhfgjhk²", "gdfgb,;:!:!💸:;", "45jogji×cxfh7"};
         String[] messagesValides = {"Hello, world!", "", "test"};
         try {
@@ -91,7 +91,7 @@ public class TestOutilCryptographie {
     public void testCoderCle() {
         BigInteger gb = g.pow(b.intValue());
         String cle = "4Êtw£° $@²*~^`j0*éç.";
-        BigInteger cle_codee = new BigInteger("604028584499288330644666711726313967975773259891383564932350335");
+        BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
         assertEquals(OutilCryptographie.coderCle(cle, a, gb, p), cle_codee);
     }
     
@@ -101,7 +101,7 @@ public class TestOutilCryptographie {
     @Test
     public void testDecoderCle() {
         BigInteger ga = g.pow(a.intValue());
-        BigInteger cle_codee = new BigInteger("604028584499288330644666711726313967975773259891383564932350335");
+        BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
         String cle = "4Êtw£° $@²*~^`j0*éç.";
         assertEquals(OutilCryptographie.decoderCle(cle_codee, ga, b, p), cle);
     }
