@@ -23,9 +23,8 @@ public class OutilCryptographie {
                                          + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-'’.,;:!?@"
                                          + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
                                          + "+=%µ€$¤£\n";
-    private static final int p = 9739;
-    private static final int g = 1527;
-    
+    private static final BigInteger P = new BigInteger("9739");
+    private static final BigInteger G = new BigInteger("1527");
     /**
      * Méthode qui permet de chiffrer un message.
      * @param cle la clé de chiffrement.
@@ -38,8 +37,7 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                int decalage = j;
-                char cEncode = encoderCaractere(c, decalage);
+                char cEncode = encoderCaractere(c, j);
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
             } else {
@@ -62,8 +60,7 @@ public class OutilCryptographie {
         for (int i = 0; i < message.length(); i++) {
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
-                int decalage = j;
-                char cDecode = decoderCaractere(c, decalage);
+                char cDecode = decoderCaractere(c, j);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
             }
@@ -124,12 +121,13 @@ public class OutilCryptographie {
      */
     public static String creerCleVigenere() {
         StringBuilder cle = new StringBuilder();
+        int taille = (int)(Math.random() * 50) + 20;
         
         int index = 0;
         index = (int)(Math.random() * (alphabet.length() - 100) + 100);
         cle.append(alphabet.charAt(index));
         
-        for (int i = 1; i < 20; i++) {
+        for (int i = 1; i < taille; i++) {
             index = (int)(Math.random() * alphabet.length());
             cle.append(alphabet.charAt(index));
         }
@@ -139,44 +137,59 @@ public class OutilCryptographie {
     /** Méthode permettant de coder la clé de l'algorithme de Vigenère
      * afin de l'envoyer via l'échange de Diffie-Hellman
      * @param cle 
-     * @param a
-     * @param b
+     * @param a entier choisi
+     * @param gb entier reçu
+     * @param p entier premier
      * @return cle_codee
      */
-    public static BigInteger coderCle(String cle, int a, int b) {
+    public static BigInteger coderCle(String cle, BigInteger a, BigInteger gb, BigInteger p) {
         StringBuilder cle_codee_str = new StringBuilder();
         int index = 0;
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < cle.length(); i++) {
             index = alphabet.indexOf(cle.charAt(i));
             cle_codee_str.append(String.format("%03d", index));
         }
         
         BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
-        int code = (int)(Math.pow(g, (a*b)) % p);
-        cle_codee = cle_codee.multiply(BigInteger.valueOf(code));
+        BigInteger code = gb.pow(a.intValue()).mod(p);
+        cle_codee = cle_codee.multiply(code);
         return cle_codee;
     }
     
     /** Méthode permettant de décoder la clé de l'algorithme de Vigenère
      * reçue avec l'échange de Diffie-Hellman
      * @param cle_codee
-     * @param a
-     * @param b
+     * @param ga entier reçu
+     * @param b entier choisi
+     * @param p entier premier
      * @return cle_decodee
      */
-    public static String decoderCle(BigInteger cle_codee, int a, int b) {
-        int code = (int)(Math.pow(g, (a*b)) % p);
-        BigInteger cle_codee_divisee = cle_codee.divide(BigInteger.valueOf(code));
+    public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b, BigInteger p) {
+        BigInteger code = ga.pow(b.intValue()).mod(p);
+        BigInteger cle_codee_divisee = cle_codee.divide(code);
         
         int index = 0;
         int compteur = 0;
         String cle_codee_str = cle_codee_divisee.toString();
+        System.out.println(cle_codee_str);
         StringBuilder cle_decodee = new StringBuilder();
-        for (int i = 0; i < 20; i ++) {
+        int taille_finale = cle_codee.toString().length()/3;
+        for (int i = 0; i < taille_finale-1; i++) {
+            compteur = i*3;
             index = Integer.parseInt("" + cle_codee_str.charAt(compteur) + cle_codee_str.charAt(compteur + 1) + cle_codee_str.charAt(compteur + 2));
+            System.out.println(index);
             cle_decodee.append(alphabet.charAt(index));
-            compteur += 3;
         }
         return cle_decodee.toString();
+    }
+
+    /** @return valeur de p */
+    public static BigInteger getP() {
+        return P;
+    }
+
+    /** @return valeur de g */
+    public static BigInteger getG() {
+        return G;
     }
 }
