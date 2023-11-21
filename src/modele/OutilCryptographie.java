@@ -197,9 +197,26 @@ public class OutilCryptographie {
      * @return nombre généré
      */
     public static BigInteger genererAB() {
-        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 98)));
+        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * Math.sqrt(P.intValue()))));
         return nb;
-        
+    }
+    
+    /** Méthode permettant de génerer p
+     * @return p
+     */
+    public static BigInteger genererP() {
+        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 1000000 - 1000) + 1000));
+        BigInteger p = nb.nextProbablePrime();
+        return p;
+    }
+    
+    /** Méthode permettant de génerer g en fonction de p
+     * @param p 
+     * @return g
+     */
+    public static BigInteger genererG(BigInteger p) {
+        BigInteger g = new BigInteger("0");
+        return g;
     }
 
     /** @return valeur de p */
