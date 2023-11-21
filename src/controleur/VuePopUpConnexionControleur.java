@@ -123,12 +123,14 @@ public class VuePopUpConnexionControleur {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            BigInteger p = new BigInteger(reader.readLine());
+            BigInteger g = new BigInteger(reader.readLine());
             BigInteger ga = new BigInteger(reader.readLine());
-            BigInteger b = OutilCryptographie.genererAB();
-            BigInteger gb = OutilCryptographie.getG().pow(b.intValue());
+            BigInteger b = OutilCryptographie.genererAB(p);
+            BigInteger gb = g.pow(b.intValue());
             writer.println(gb.toString());
             BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("\\\\n", "\n"));
-            String cle = OutilCryptographie.decoderCle(cleCodee, ga, b);
+            String cle = OutilCryptographie.decoderCle(cleCodee, ga, b, p);
             String donneesCrypte = reader.readLine().replaceAll("\\\\n", "\n");
             String decrypter = OutilCryptographie.decoder(cle, donneesCrypte);
             OutilFichier.ecrire("test2.txt", decrypter);
