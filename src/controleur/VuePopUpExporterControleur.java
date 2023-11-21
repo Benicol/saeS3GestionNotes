@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -161,7 +162,13 @@ public class VuePopUpExporterControleur {
                     socket.connect(new InetSocketAddress(adresseIpInput.getText(), PORT), 1000);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-                    String cle = reader.readLine();
+                    BigInteger a = OutilCryptographie.genererAB();
+                    BigInteger ga = OutilCryptographie.getG().pow(a.intValue());
+                    writer.println(ga.toString());
+                    BigInteger gb = new BigInteger(reader.readLine());
+                    String cle = OutilCryptographie.creerCleVigenere();
+                    BigInteger cleCodee = OutilCryptographie.coderCle(cle, a, gb);
+                    writer.println(cleCodee.toString().replaceAll("\n", "\\\\n"));
                     String donneesCrypte = OutilCryptographie.encoder(cle, OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
                     writer.println(donneesCrypte);
                     socket.close();
@@ -169,7 +176,7 @@ public class VuePopUpExporterControleur {
                     javafx.application.Platform.runLater(() -> {
                         Alert alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Transfert réussi");
-                        alert.setHeaderText("données transférer!");
+                        alert.setHeaderText("Données transférées!");
                         alert.setContentText("Verifiez que l'importation s'est bien passer sur l'autre ordinateur !");
                         alert.showAndWait();
                     });

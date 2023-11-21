@@ -25,6 +25,7 @@ public class OutilCryptographie {
                                          + "+=%µ€$¤£\n";
     private static final BigInteger P = new BigInteger("9739");
     private static final BigInteger G = new BigInteger("1527");
+    
     /**
      * Méthode qui permet de chiffrer un message.
      * @param cle la clé de chiffrement.
@@ -82,7 +83,6 @@ public class OutilCryptographie {
      */
     private static int getDecalage(String cle, int index) {
         char c = cle.charAt(index);
-        System.out.println(c + " : " + index);
         return alphabet.indexOf(c);
     }
     /**
@@ -154,7 +154,7 @@ public class OutilCryptographie {
      * @param p entier premier
      * @return cle_codee
      */
-    public static BigInteger coderCle(String cle, BigInteger a, BigInteger gb, BigInteger p) {
+    public static BigInteger coderCle(String cle, BigInteger a, BigInteger gb) {
         StringBuilder cle_codee_str = new StringBuilder();
         int index = 0;
         for (int i = 0; i < cle.length(); i++) {
@@ -163,7 +163,7 @@ public class OutilCryptographie {
         }
         
         BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
-        BigInteger code = gb.pow(a.intValue()).mod(p);
+        BigInteger code = gb.pow(a.intValue()).mod(P);
         cle_codee = cle_codee.multiply(code);
         return cle_codee;
     }
@@ -176,23 +176,30 @@ public class OutilCryptographie {
      * @param p entier premier
      * @return cle_decodee
      */
-    public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b, BigInteger p) {
-        BigInteger code = ga.pow(b.intValue()).mod(p);
+    public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b) {
+        BigInteger code = ga.pow(b.intValue()).mod(P);
         BigInteger cle_codee_divisee = cle_codee.divide(code);
         
         int index = 0;
         int compteur = 0;
         String cle_codee_str = cle_codee_divisee.toString();
-        System.out.println(cle_codee_str);
         StringBuilder cle_decodee = new StringBuilder();
         int taille_finale = cle_codee.toString().length()/3;
         for (int i = 0; i < taille_finale-1; i++) {
             compteur = i*3;
             index = Integer.parseInt("" + cle_codee_str.charAt(compteur) + cle_codee_str.charAt(compteur + 1) + cle_codee_str.charAt(compteur + 2));
-            System.out.println(index);
             cle_decodee.append(alphabet.charAt(index));
         }
         return cle_decodee.toString();
+    }
+    
+    /** Méthode permettant de générer a et b
+     * @return nombre généré
+     */
+    public static BigInteger genererAB() {
+        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 98)));
+        return nb;
+        
     }
 
     /** @return valeur de p */

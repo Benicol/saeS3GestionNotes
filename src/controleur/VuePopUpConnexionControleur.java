@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -113,17 +114,19 @@ public class VuePopUpConnexionControleur {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            String cle = OutilCryptographie.creerCleVigenere();
-            OutilFichier.ecrire("test.txt", cle);
-            texte.setText("Transfert des données en cours");
-            writer.print(cle);
+            BigInteger ga = new BigInteger(reader.readLine());
+            BigInteger b = OutilCryptographie.genererAB();
+            BigInteger gb = OutilCryptographie.getG().pow(b.intValue());
+            writer.println(gb.toString());
+            BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("\\\\n", "\n"));
+            String cle = OutilCryptographie.decoderCle(cleCodee, ga, b);
             String ligne = reader.readLine();
             StringBuilder completCrypte = new StringBuilder();
             while (ligne != null) {
                 completCrypte.append(ligne + "\n");
                 ligne = reader.readLine();
             }
-            completCrypte.delete(completCrypte.length() - 2, completCrypte.length() - 1);
+            completCrypte.delete(completCrypte.length() - 2, completCrypte.length());
             String decrypter = OutilCryptographie.decoder(cle, completCrypte.toString());
             OutilFichier.ecrire("test2.txt", decrypter);
             enAttente.interrupt();
