@@ -193,7 +193,8 @@ public class OutilCryptographie {
         return cle_decodee.toString();
     }
     
-    /** Méthode permettant de générer a et b
+    /** 
+     * Méthode permettant de générer a et b
      * @param p entier premier modulo
      * @return nombre généré
      */
