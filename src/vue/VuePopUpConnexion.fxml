@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="700.0" spacing="16.0" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.VuePopUpConnexionControleur">
+<VBox id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="160.0" prefWidth="700.0" spacing="16.0" stylesheets="@../vue/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.VuePopUpConnexionControleur">
    <children>
       <HBox alignment="CENTER_LEFT" spacing="10.0" styleClass="grade-info-band">
          <children>
@@ -28,41 +28,30 @@
             <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
          </padding>
       </HBox>
-      <HBox spacing="10.0" styleClass="grade-info-band">
+      <HBox alignment="CENTER_RIGHT" spacing="16.0">
          <children>
-            <VBox alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#afficherAdresseIPPresser" onMouseEntered="#primaryButtonEntered" onMouseExited="#primaryButtonExited" prefHeight="40.0" prefWidth="223.0" text="AFFICHER L'ADRESSE IP">
-                     <graphic>
-                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../vue/ressources/icone_afficher_ip.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="primary-button" />
-                        <String fx:value="primary-button-not-hover" />
-                     </styleClass>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </VBox>
-         </children>
-         <padding>
-            <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER_RIGHT">
-         <children>
-            <Button mnemonicParsing="false" onAction="#annulerPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" text="ANNULER LA TENTATIVE CONNEXION">
+            <Button mnemonicParsing="false" onAction="#afficherAdresseIPPresser" onMouseEntered="#primaryButtonEntered" onMouseExited="#primaryButtonExited" prefHeight="40.0" prefWidth="223.0" text="AFFICHER L'ADRESSE IP">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../vue/ressources/icone_afficher_ip.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <styleClass>
+                  <String fx:value="primary-button" />
+                  <String fx:value="primary-button-not-hover" />
+               </styleClass>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="boutonAnnuler" mnemonicParsing="false" onAction="#annulerPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" text="ANNULER LA TENTATIVE CONNEXION">
                <font>
                   <Font name="Verdana Bold" size="12.0" />
                </font>
                <graphic>
-                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="boutonImageAnnuler" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../vue/ressources/icone_annuler.png" />
                      </image>

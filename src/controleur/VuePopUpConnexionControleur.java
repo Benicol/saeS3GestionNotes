@@ -36,6 +36,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -57,10 +59,17 @@ public class VuePopUpConnexionControleur {
     @FXML
     private Text texte;
     
+    @FXML
+    private Button boutonAnnuler;
+    
+    @FXML
+    private ImageView boutonImageAnnuler;
+    
     private Thread enAttente;
     
     private Thread serveurSocket;
     private ServerSocket serveur;
+    private boolean transfertOk = false;
     
     /**
      * Effectue les traitement suivant dans cette ordre : 
@@ -120,19 +129,18 @@ public class VuePopUpConnexionControleur {
             writer.println(gb.toString());
             BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("\\\\n", "\n"));
             String cle = OutilCryptographie.decoderCle(cleCodee, ga, b);
-            String ligne = reader.readLine();
-            StringBuilder completCrypte = new StringBuilder();
-            while (ligne != null) {
-                completCrypte.append(ligne + "\n");
-                ligne = reader.readLine();
-            }
-            completCrypte.delete(completCrypte.length() - 2, completCrypte.length());
-            String decrypter = OutilCryptographie.decoder(cle, completCrypte.toString());
+            String donneesCrypte = reader.readLine().replaceAll("\\\\n", "\n");
+            String decrypter = OutilCryptographie.decoder(cle, donneesCrypte);
             OutilFichier.ecrire("test2.txt", decrypter);
             enAttente.interrupt();
             texte.setText("Transmission Terminé !");
+            Thread.sleep(5000);
+            transfertOk = true;
             clientSocket.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -161,10 +169,13 @@ public class VuePopUpConnexionControleur {
     void annulerPresser(ActionEvent event) {
         try {
             serveur.close();
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
         enAttente.interrupt();
-        EchangeurDeVue.echangerAvecPopUp("vpui", "importer");
+        if (transfertOk) {
+            EchangeurDeVue.getPopUpStage().close();
+        } else {
+            EchangeurDeVue.echangerAvecPopUp("vpui", "importer");
+        }
     }
     
     void close() {

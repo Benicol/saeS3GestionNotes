@@ -170,7 +170,7 @@ public class VuePopUpExporterControleur {
                     BigInteger cleCodee = OutilCryptographie.coderCle(cle, a, gb);
                     writer.println(cleCodee.toString().replaceAll("\n", "\\\\n"));
                     String donneesCrypte = OutilCryptographie.encoder(cle, OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
-                    writer.println(donneesCrypte);
+                    writer.println(donneesCrypte.replaceAll("\n", "\\\\n"));
                     socket.close();
                     // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {
