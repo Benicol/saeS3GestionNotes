@@ -6,6 +6,8 @@
 package modele;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.TreeSet;
 
 /** Classe outil permettant de : 
  * - encoder un message à l'aide de l'algorithme de Vigenère et une clé fournie, 
@@ -23,8 +25,6 @@ public class OutilCryptographie {
                                          + "rSsTtUuÙùÛûÜüVvWwXxYyÿZz_-'’.,;:!?@"
                                          + "&§~^`¨°|(){}[]/\\<>\"#0123456789²*"
                                          + "+=%µ€$¤£\n";
-    private static final BigInteger P = new BigInteger("9739");
-    private static final BigInteger G = new BigInteger("1527");
     
     /**
      * Méthode qui permet de chiffrer un message.
@@ -151,10 +151,10 @@ public class OutilCryptographie {
      * @param cle 
      * @param a entier choisi
      * @param gb entier reçu
-     * @param p entier premier
+     * @param p entier premier modulo
      * @return cle_codee
      */
-    public static BigInteger coderCle(String cle, BigInteger a, BigInteger gb) {
+    public static BigInteger coderCle(String cle, BigInteger a, BigInteger gb, BigInteger p) {
         StringBuilder cle_codee_str = new StringBuilder();
         int index = 0;
         for (int i = 0; i < cle.length(); i++) {
@@ -163,7 +163,7 @@ public class OutilCryptographie {
         }
         
         BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
-        BigInteger code = gb.pow(a.intValue()).mod(P);
+        BigInteger code = gb.pow(a.intValue()).mod(p);
         cle_codee = cle_codee.multiply(code);
         return cle_codee;
     }
@@ -173,11 +173,11 @@ public class OutilCryptographie {
      * @param cle_codee
      * @param ga entier reçu
      * @param b entier choisi
-     * @param p entier premier
+     * @param p entier premier modulo
      * @return cle_decodee
      */
-    public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b) {
-        BigInteger code = ga.pow(b.intValue()).mod(P);
+    public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b, BigInteger p) {
+        BigInteger code = ga.pow(b.intValue()).mod(p);
         BigInteger cle_codee_divisee = cle_codee.divide(code);
         
         int index = 0;
@@ -194,15 +194,18 @@ public class OutilCryptographie {
     }
     
     /** Méthode permettant de générer a et b
+     * @param p entier premier modulo
      * @return nombre généré
      */
-    public static BigInteger genererAB() {
-        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * Math.sqrt(P.intValue()))));
+    public static BigInteger genererAB(BigInteger p) {
+        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * Math.sqrt(p.intValue()))));
         return nb;
     }
     
-    /** Méthode permettant de génerer p
-     * @return p
+    /** 
+     * Méthode permettant de génerer aléatoirement
+     * un entier premier p entre 1000 et 1000000
+     * @return p un entier premier entre 1000 et 1000000
      */
     public static BigInteger genererP() {
         BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 1000000 - 1000) + 1000));
@@ -210,22 +213,39 @@ public class OutilCryptographie {
         return p;
     }
     
-    /** Méthode permettant de génerer g en fonction de p
-     * @param p 
-     * @return g
+    /**
+     * Méthode permettant de génerer aléàtoirement
+     * un entier générateur g du modulo p
+     * @param p un entier premier servant de modulo
+     * @return g un entier générateur aléàtoire de p
      */
     public static BigInteger genererG(BigInteger p) {
-        BigInteger g = new BigInteger("0");
+        //Initialisation des variables
+        ArrayList<BigInteger> listeG = new ArrayList<>();
+        TreeSet<Integer> listeResultats = new TreeSet<>(); 
+        boolean ajoutOk;
+        int exposant;
+        
+        //Boucle permettant de parcourir tout les entiers entre 1 et p
+        for (int i = 1; i < p.intValue(); i++) {
+            listeResultats.clear();
+            ajoutOk = true;
+            exposant = 1;
+            //Boucle permettant de calculer tout les i exposant j
+            //pour tout j entre 1 et p
+            for (int j = 1 ; j < p.intValue() && ajoutOk ; j++) {
+                exposant = (exposant * i) % p.intValue();
+                ajoutOk = listeResultats.add(exposant);
+            }
+            //Vérifie que i est un entier générateur de p,
+            //et si oui, l'ajoute à listeG
+            if (listeResultats.size() == (p.intValue() - 1)) {
+                BigInteger gOk = new BigInteger(Integer.toString(i));
+                listeG.add(gOk);
+            }
+        }
+        //Prend un g aléàtoirement dans listeG
+        BigInteger g = listeG.get((int)(Math.random() * listeG.size()));
         return g;
-    }
-
-    /** @return valeur de p */
-    public static BigInteger getP() {
-        return P;
-    }
-
-    /** @return valeur de g */
-    public static BigInteger getG() {
-        return G;
     }
 }

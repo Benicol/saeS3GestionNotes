@@ -17,8 +17,8 @@ import modele.OutilCryptographie;
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class TestOutilCryptographie {
-    
-    
+    private static final BigInteger P = new BigInteger("9739");
+    private static final BigInteger G = new BigInteger("1527");
 
     /** 
      * Test de la methode encoder() de la classe outilCryptographie
@@ -86,12 +86,12 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testCoderCle() {
-        BigInteger a = OutilCryptographie.genererAB();
-        BigInteger b = OutilCryptographie.genererAB();
-        BigInteger gb = OutilCryptographie.getG().pow(b.intValue());
+        BigInteger a = OutilCryptographie.genererAB(P);
+        BigInteger b = OutilCryptographie.genererAB(P);
+        BigInteger gb = G.pow(b.intValue());
         String cle = "4Êtw£° $@²*~^`j0*éç.";
         BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
-        assertEquals(OutilCryptographie.coderCle(cle, a, gb), cle_codee);
+        assertEquals(OutilCryptographie.coderCle(cle, a, gb, P), cle_codee);
     }
     
     /**
@@ -99,11 +99,11 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testDecoderCle() {
-        BigInteger a = OutilCryptographie.genererAB();
-        BigInteger b = OutilCryptographie.genererAB();
-        BigInteger ga = OutilCryptographie.getG().pow(a.intValue());
+        BigInteger a = OutilCryptographie.genererAB(P);
+        BigInteger b = OutilCryptographie.genererAB(P);
+        BigInteger ga = G.pow(a.intValue());
         BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
         String cle = "4Êtw£° $@²*~^`j0*éç.";
-        assertEquals(OutilCryptographie.decoderCle(cle_codee, ga, b), cle);
+        assertEquals(OutilCryptographie.decoderCle(cle_codee, ga, b, P), cle);
     }
 }
