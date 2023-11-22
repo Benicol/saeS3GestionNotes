@@ -469,7 +469,6 @@ public class Modele {
                                 i++;
                             } while (donnees.length != i && donnees[i].length >= 1 &&
                                      !(donnees[i].length == 0));
-
                             // Ajoute les nouvelles évaluations à la ressource
                             for (Evaluation e : listeEvaluation) {
                                 r.ajouterEvaluation(e);
