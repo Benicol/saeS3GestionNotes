@@ -412,9 +412,12 @@ public class Modele {
     }
     
     /**
-     * Méthode permettant d'importer les informations depuis 
-     * un fichier importé depuis un autre ordinateur
-     * @param donnees tableau bidimensionnel contenant les données importées
+     * Méthode permettant d'importer les informations depuis un fichier importé 
+     * depuis un autre ordinateur.
+     *
+     * @param donnees Tableau bidimensionnel contenant les données importées.
+     * Les données sont organisées de manière à ce que donnees[i][j] représente
+     * la valeur à la ligne i et colonne j.
      * @throws IllegalArgumentException Si le paramétrage que l'utilisateur essaye
      * d'importer est incompatible avec les données déjà présentes dans 
      * l'application.
@@ -422,156 +425,66 @@ public class Modele {
     public static void importerReseau(String[][] donnees) {
         /* Vérifie si le paramétrage est déjà initialisé */
         if (!isParametrageInitialise()) {
+            // Si le paramétrage n'est pas initialisé, appelle la méthode générique d'importation
             importer(donnees);
         } else {
-            String messageErreur = "";
-            try {
-                boolean donneesValides = true;
-                
-                donneesValides = donnees[1][1] != parametrage.getSemestre() 
-                              && donnees[2][1] != parametrage.getParcours();
-                    
-                if(!donneesValides) {
-                    messageErreur = "Vous essayer d'importer un semestre ou un "
-                                  + "parcours qui ne correspond pas à celui que"
-                                  + " vous avez sur votre session.";
-                }
-                    
-                if (donneesValides) {
-                    /* 
-                     * Déclaration des variables pour stocker les informations
-                     * du CSV 
-                     */
-                    HashMap<String, String> listeSae = new HashMap<>();
-                    HashMap<String, String> listeRessource = new HashMap<>();
-                    ArrayList<String[][]> listeCompetence = new ArrayList<>();
-                    HashMap<String,ArrayList<Evaluation>> ressource = new HashMap<>();
-                    
-                    /* Parcours des lignes du CSV à partir de la troisième ligne */
-                    for (int i = 3; i < donnees.length && donneesValides; i++) {
-                        /* Si la ligne concerne une compétence */
-                        if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
-                            messageErreur = "Un conflit lors de l'importation d'une"
-                                          + " compétence a été trouvé ligne : " + i; 
-                            donneesValides = parametrage.getListeCompetences().containsKey(donnees[i][1])
-                                    && parametrage.getListeCompetences().get(donnees[i][1]).getLibelle() == donnees[i][2];
-                            if (donneesValides) {
-                                ArrayList<String[]> competence = new ArrayList<>();;
-                                String[] infoLigne = new String[2];
-                                infoLigne[0] = donnees[i][1];
-                                infoLigne[1] = donnees[i][2];
-                                competence.add(infoLigne.clone());
-                                int poids = 0;
-                                i++;
-                            
-                                /* Parcours des lignes suivantes pour récupérer les informations
-                                 * (ressources et saé) liés à la compétence
-                                 */
-                                while (poids != 100 && donneesValides) {
-                                    messageErreur = "Un conflit lors de "
-                                            + "l'importation des informations "
-                                            + "liées à une compétence a été "
-                                            + "trouvé ligne : " + i;
-                                    i++;
-                                    int iComp = i;
-                                    infoLigne[0] = donnees[i][1];
-                                    infoLigne[1] = donnees[i][3];
-                                    /* Vérifie si la ligne concerne une ressource ou une SAE */
-                                    if (donnees[i][0].equals("Ressource") 
-                                            && (parametrage.getListeCompetences()
-                                            .get(competence.get(competence.size() - 1)).getListeRessources().containsKey(parametrage.getListeRessources().get(infoLigne[0]))
-                                            && parametrage.getListeCompetences().get(competence.size() - 1).getListeRessources().containsValue(parametrage.getListeRessources().get(infoLigne[1]))) 
-                                            || parametrage.getListeCompetences().get(competence.get(competence.size() - 1)).getListeRessources().isEmpty()) {
-                                        listeRessource.put(infoLigne[0], donnees[i][2]); //ne pas ajouter si déjà présent FIXME
-                                    } else if ((donnees[i][0].equals("Portfolio") || donnees[i][0].equals("SAE"))
-                                            && (parametrage.getListeCompetences()
-                                            .get(competence.get(competence.size() - 1)).getListeSaes().containsKey(parametrage.getListeSaes().get(infoLigne[0])))) {
-                                        if (!listeSae.containsKey(infoLigne[0])) {
-                                            messageErreur = "Erreur lors de l'importation des informations de la sae/du portoflio ligne : " + i;
-                                            listeSae.put(infoLigne[0], donnees[i][2]);
-                                        }
-                                    } else {
-                                        messageErreur = "Erreur lors de l'importation des informations de la ressource/sae/du portoflio ligne : " + i;
-                                        donneesValides = false;
+            // Vérifie la validité des données réseau par rapport au paramétrage existant
+            if (isDonneesValideReseau(donnees)) {
+                for (int i = 3; i < donnees.length; i++) {
+                    if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource") &&
+                        (donnees[i + 1][0].equals("Type évaluation"))) {
+                        // Récupère la ressource à partir du paramétrage
+                        Ressource r = parametrage.getListeRessources().get(donnees[i][1]);
+                        i += 2;
+                        // Si la ressource a des évaluations existantes
+                        if (!r.getListeEvaluations().isEmpty()) {
+                            boolean trouve = false;
+                            // Parcours des évaluations dans les données importées
+                            while (donnees.length != i && donnees[i].length >= 1 &&
+                                   !(donnees[i].length == 0)) {
+                                // Vérifie si l'évaluation existe déjà
+                                for (Evaluation e : r.getListeEvaluations()) {
+                                    trouve = e.getNom().equals(donnees[i][0]);
+                                    // Si l'évaluation existe et n'a pas de date mais la date est présente dans les données
+                                    if (trouve && (e.getDate().isBlank() && !donnees[i][1].isBlank())) {
+                                        e.setDate(donnees[i][1]);
                                     }
-                                    messageErreur = "Erreur lors de l'importation des informations de la compétence : " + iComp;
-                                    competence.add(infoLigne.clone());
-                                    poids += Integer.parseInt(donnees[i][3]);
                                 }
                                 i++;
-                                /* Ajoute la compétence à la liste des compétences */
-                                listeCompetence.add(competence.toArray(new String[0][0]));
+                                // Si l'évaluation n'a pas été trouvée, l'ajoute à la ressource
+                                if (!trouve) {
+                                    r.ajouterEvaluation(new Evaluation(donnees[i][0],
+                                            Double.parseDouble(donnees[i][2]) / 100,
+                                            donnees[i][1]));
+                                }
                             }
-                        } else if (donnees[i].length >= 1 // Si la ligne concerne une ressource
-                                && donnees[i][0].equals("Ressource")
-                                && (parametrage.getListeCompetences()
-                                        .get(donnees[i][1]).getListeRessources().containsKey(parametrage.getListeRessources().get(infoLigne[0]))
-                                        && parametrage.getListeCompetences().get(competence.size() - 1).getListeRessources().containsValue(parametrage.getListeRessources().get(infoLigne[1]))) 
-                                        || parametrage.getListeCompetences().get(competence.get(competence.size() - 1)).getListeRessources().isEmpty()) { 
-                            int iRess = i;
-                            messageErreur = "erreur lors de l'importation de la ressource ligne : " + i; 
+                        } else {
+                            // Si la ressource n'a pas d'évaluations existantes
                             ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
-                            String[] infoEvaluation = new String[3];
-                            String key = donnees[i][1];
-                            int poids = 0;
-                            i++;
-                            /* Parcours des lignes suivantes pour récupérer les évaluations 
-                             * de la ressource */
-                            while (poids != 100 && donneesValides) {
+                            // Parcours des évaluations dans les données importées
+                            do {
+                                listeEvaluation.add(new Evaluation(donnees[i][0],
+                                        Double.parseDouble(donnees[i][2]) / 100,
+                                        donnees[i][1]));
                                 i++;
-                                messageErreur = "erreur lors de l'importation de la ressource ligne : " + i; 
-                                /* Vérifie si la composition de la ligne est bien :
-                                 * 1. Type d'évaluation, 2. poids
-                                 */
-                                donneesValides = donnees[i][0].length() != 0;
-                                donneesValides = donneesValides && isNumeric(donnees[i][2]);
-                                
-                                // Si la ligne est valide, ajoute le poids de l'évaluation au poids total
-                                if (donneesValides) {
-                                    poids += Integer.parseInt(donnees[i][2]);
-                                    infoEvaluation[0] = donnees[i][0];
-                                    infoEvaluation[1] = donnees[i][1];
-                                    infoEvaluation[2] = donnees[i][2];
-                                    listeEvaluation.add(new Evaluation(infoEvaluation[0],
-                                        Double.parseDouble(infoEvaluation[2]) / 100, 
-                                        infoEvaluation[1]));
-                                }
-                                
-                            }
-                            if (poids > 100) {
-                                messageErreur = "Le poids de la ressource ligne : " + iRess + " est pas correcte ( " + poids + " ).";
-                                donneesValide = false;
-                            }
-                            i++;
-                            /* Ajoute les évaluations de la ressource à la liste des ressources */
-                            ressource.put(key, listeEvaluation);
-                        }
-                    }
-                    if (!donneesValide) {
-                        throw new IllegalArgumentException("Le fichier n'est pas valide : " + messageErreur);
-                    }
-                    if (donneesValide) {
-                        /* Crée un nouveau paramétrage avec les informations récupérées */
-                        parametrage = new Parametrage(semestre, parcours, 
-                                listeCompetence.toArray(new String[0][0][0]) , 
-                                listeSae, listeRessource);
-                        
-                        /* Ajoute les évaluations des ressources au paramétrage */
-                        for (String key : ressource.keySet()) {
-                            for (Evaluation evaluation : ressource.get(key)) {
-                                parametrage.getListeRessources().get(key).ajouterEvaluation(evaluation);
+                            } while (donnees.length != i && donnees[i].length >= 1 &&
+                                     !(donnees[i].length == 0));
+
+                            // Ajoute les nouvelles évaluations à la ressource
+                            for (Evaluation e : listeEvaluation) {
+                                r.ajouterEvaluation(e);
                             }
                         }
-                        sauvegarder();
                     }
                 }
-            } catch (Exception e) {
-                throw new IllegalArgumentException("Le fichier n'est pas valide : " + messageErreur);
+            } else {
+                // Lance une exception si les données sont incompatibles avec le paramétrage
+                throw new IllegalArgumentException("Les données sont incompatibles !");
             }
         }
-    }
+    }   
 
-    /** 
+    /* 
      * Méthode permettant d'importer les informations depuis 
      * un tableau bidimensionnel de données. Ce cas spécifique, qui n'arrive que 
      * lors d'une importation via un autre ordinateur, ne nécessite pas de vérifier
@@ -642,7 +555,6 @@ public class Modele {
                     listeEvaluation.add(new Evaluation(infoEvaluation[0],
                         Double.parseDouble(infoEvaluation[2]) / 100, 
                         infoEvaluation[1]));
-                    i++;
                     /* Ajoute les évaluations de la ressource à la liste des ressources */
                     ressource.put(key, listeEvaluation);
                 }
@@ -660,8 +572,95 @@ public class Modele {
             }
         }
         sauvegarder();
-    }        
+    }
+    
+    /*
+     * Vérifie la validité des données réseau par rapport aux paramètres de
+     * configuration.
+     *
+     * @param donnees Un tableau bidimensionnel contenant les données réseau.
+     * Les données sont organisées de manière à ce que donnees[i][j] représente la 
+     * valeur à la ligne i et colonne j.
+     * @return true si les données sont valides par rapport aux paramètres de
+     * configuration, false sinon.
+     */
+    private static boolean isDonneesValideReseau(String[][] donnees) {
+        // Vérifie la validité du semestre et du parcours dans les données
+        if (!donnees[1][1].equals(parametrage.getSemestre()) ||
+            !donnees[2][1].equals(parametrage.getParcours())) {
+            return false;
+        }
 
+        // Variable indiquant si les données sont valides
+        boolean donneesValides = true;
+
+        // Parcours des lignes du tableau à partir de l'indice 4
+        for (int i = 4; i < donnees.length && donneesValides; i++) {
+            // Si la ligne concerne une compétence
+            if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
+                // Vérifie la validité de la compétence
+                donneesValides = parametrage.getListeCompetences().containsKey(donnees[i][1])
+                    && parametrage.getListeCompetences().get(donnees[i][1])
+                        .getLibelle().equals(donnees[i][2]);
+                int poids = 0;
+
+                Competence competence = parametrage.getListeCompetences().get(donnees[i][1]);
+                i++;
+
+                /* 
+                 * Parcours des lignes suivantes pour récupérer les informations
+                 * liées à la compétence
+                 */
+
+                while (poids != 100 && donneesValides) {
+                    i++;
+                    // Vérifie si la ligne concerne une ressource ou une SAE
+                    if (donnees[i][0].equals("Ressource")) {
+                        donneesValides = (competence.getListeRessources().containsKey(
+                                parametrage.getListeRessources().get(donnees[i][1]))
+                                && parametrage.getListeRessources().get(donnees[i][1])
+                                    .getLibelle().equals(donnees[i][2])
+                                && competence.getListeRessources()
+                                    .get(parametrage.getListeRessources().get(donnees[i][1]))
+                                    .equals(Double.parseDouble(donnees[i][3]) / 100))
+                                || competence.getListeRessources().isEmpty();
+                    } else if (donnees[i][0].equals("Portfolio") ||
+                               donnees[i][0].equals("SAE")) {
+                        donneesValides = competence.getListeSaes().containsKey(
+                                parametrage.getListeSaes().get(donnees[i][1]));
+                    }
+                    poids += Integer.parseInt(donnees[i][3]);
+                }
+                i++;
+            } else if (donnees[i][0].equals("Ressource")) { // Si la ligne concerne 
+                                                            // une ressource
+                Ressource r = parametrage.getListeRessources().get(donnees[i][1]);
+                donneesValides = r.getIdentifiant().equals(donnees[i][1]) &&
+                                 r.getLibelle().equals(donnees[i][2]);
+                i += 2;
+                boolean donneesValidesTmp = true;
+
+                // Vérifie la validité des évaluations de la ressource
+                if (!r.getListeEvaluations().isEmpty()) {
+                    do {
+                        donneesValidesTmp = false;
+                        for (Evaluation e : r.getListeEvaluations()) {
+                            if (e.getNom().equals(donnees[i][0]) &&
+                                e.getPoids().equals(Double.parseDouble(donnees[i][2]) / 100)
+                                && (e.getDate().equals(donnees[i][1]) || e.getDate().isBlank())) {
+                                donneesValidesTmp = true;
+                            }
+                        }
+                        i++;
+                    } while (donnees.length != i && (donnees[i].length != 0) &&
+                             donneesValidesTmp);
+                }
+                donneesValides = donneesValidesTmp;
+            }
+        }
+
+        return donneesValides;
+    }
 
     /* Méthode utilitaire pour vérifier si une chaîne est composés de chiffres */
     private static boolean isNumeric(String str) {

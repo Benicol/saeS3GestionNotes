@@ -1,0 +1,73 @@
+BUT Informatique - Modalité Contrôle de connaissances (programme national);;;
+Semestre;2;;
+Parcours;Tous;;
+;;;
+Compétence;U2.1;Réaliser un développement d’application;
+Type évaluation;Identifiant;Libellé;Poids
+Ressource;R2.01;Développement orienté objets;CONFLIT
+Ressource;R2.02;Développement d'applications avec IHM;21
+Ressource;R2.03;Qualité de développement;12
+Ressource;R2.13;Communication technique;6
+Portfolio;P2.01;Portfolio;2
+SAE;S2.01;Développement d'une application;38
+;;;
+Compétence;U2.2;Optimiser des applications;
+Type évaluation;Identifiant;Libellé;Poids
+Ressource;R2.01;Développement orienté objets;15
+Ressource;R2.04;Communication et fonctionnement bas niveau;12
+Ressource;R2.07;Graphes;21
+Ressource;R2.09;Méthodes numériques;12
+Portfolio;P2.01;Portfolio;2
+SAE;S2.02;Exploration algorithmique d'un problème;38
+;;;
+Compétence;U2.3;Administrer des systèmes informatiques communicants complexes;
+Type évaluation;Identifiant;Libellé;Poids
+Ressource;R2.04;Communication et fonctionnement bas niveau;36
+Ressource;R2.05;Introduction aux services réseaux;15
+Ressource;R2.12;Anglais;6
+Ressource;R2.13;Communication technique;3
+Portfolio;P2.01;Portfolio;2
+SAE;S2.03;Installation de services réseaux;38
+;;;
+Compétence;U2.4;Gérer des données de l’information;
+Type évaluation;Identifiant;Libellé;Poids
+Ressource;R2.06;Exploitation d'une base de données;30
+Ressource;R2.08;Outils numériques pour les statistiques descriptives;12
+Ressource;R2.10;Introduction à la gestion des systèmes d'information;12
+Ressource;R2.12;Anglais;6
+Portfolio;P2.01;Portfolio;2
+SAE;S2.04;Exploitation d'une base de données;38
+;;;
+Compétence;U2.5;Conduire un projet;
+Type évaluation;Identifiant;Libellé;Poids
+Ressource;R2.02;Développement d'applications avec IHM;3
+Ressource;R2.03;Qualité de développement;6
+Ressource;R2.07;Graphes;6
+Ressource;R2.10;Introduction à la gestion des systèmes d'information;30
+Ressource;R2.12;Anglais;6
+Ressource;R2.13;Communication technique;9
+Portfolio;P2.01;Portfolio;2
+SAE;S2.05;Gestion d'un projet;38
+;;;
+Compétence;U2.6;Collaborer au sein d’une équipe informatique;
+Type évaluation;Identifiant;Libellé;Poids
+Ressource;R2.02;Développement d'applications avec IHM;4
+Ressource;R2.11;Introduction au droit;17
+Ressource;R2.12;Anglais;17
+Ressource;R2.13;Communication technique;11
+Ressource;R2.14;PPP;11
+Portfolio;P2.01;Portfolio;2
+SAE;S2.06;Organisation d'un travail d'équipe;38
+;;;
+Ressource;R2.01;Développement orienté objets;
+Type évaluation;Date;Poids;
+QCM;Mi septembre;15;
+Ecrit;15 octobre;40;
+Relevés TPs;;5;
+Ecrit;15/12/23;40;
+;;;
+Ressource;R2.02; Développement d'applications avec IHM;
+Type évaluation;Date;Poids;
+Relevés TPs;;20;
+Exam sur machine;Mi octobre;40;
+Exam sur machine;Début décembre;40;
