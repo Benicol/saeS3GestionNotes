@@ -123,17 +123,22 @@ public class VuePopUpConnexionControleur {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
-            BigInteger p = new BigInteger(reader.readLine());
-            BigInteger g = new BigInteger(reader.readLine());
+            int p = Integer.parseInt(reader.readLine());
+            int g = Integer.parseInt(reader.readLine());
             BigInteger ga = new BigInteger(reader.readLine());
-            BigInteger b = OutilCryptographie.genererAB(p);
-            BigInteger gb = g.pow(b.intValue());
+            int b = OutilCryptographie.genererAB(p);
+            BigInteger bIG = new BigInteger(Integer.toString(g));
+            BigInteger gb = bIG.pow(b);
             writer.println(gb.toString());
-            BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("\\\\n", "\n"));
+            BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("@@@@@@@@@@", "\n"));
             String cle = OutilCryptographie.decoderCle(cleCodee, ga, b, p);
-            String donneesCrypte = reader.readLine().replaceAll("\\\\n", "\n");
+            OutilFichier.ecrire("cle2.txt", "|" + cle + "|");
+            String donneesCrypte = reader.readLine().replaceAll("@@@@@@@@@@", "\n");
+            OutilFichier.ecrire("contenuCrypte2.txt", "|" + donneesCrypte + "|");
             String decrypter = OutilCryptographie.decoder(cle, donneesCrypte);
-            OutilFichier.ecrire("test2.txt", decrypter);
+            OutilFichier.ecrire("contenu2.txt", "|" + decrypter + "|");
+            OutilFichier.ecrire("test5.txt", decrypter);
+            OutilFichier.ecrire("test6.txt", OutilCryptographie.decoder(cle, donneesCrypte));
             enAttente.interrupt();
             texte.setText("Transmission Terminé !");
             Thread.sleep(5000);
@@ -173,7 +178,7 @@ public class VuePopUpConnexionControleur {
             serveur.close();
         } catch (IOException e) {}
         enAttente.interrupt();
-        if (transfertOk) {
+        if (false) { //transfertOk
             EchangeurDeVue.getPopUpStage().close();
         } else {
             EchangeurDeVue.echangerAvecPopUp("vpui", "importer");

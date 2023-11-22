@@ -63,6 +63,9 @@ public class Main extends Application {
      * @param args non utilisé
      */
     public static void main(String[] args) {
+        String test = "coucou\n";
+        System.out.println(test.length());
+        System.out.println("|" + test.indexOf('\n') + "|");
         launch(args); // appelera la méthode start
     }
 }

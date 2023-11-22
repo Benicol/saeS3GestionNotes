@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import modele.Modele;
 import modele.OutilCSV;
 import modele.OutilCryptographie;
+import modele.OutilFichier;
 
 /** 
  * Controleur de la vue vue.VueExporter.fxml
@@ -162,19 +163,26 @@ public class VuePopUpExporterControleur {
                     socket.connect(new InetSocketAddress(adresseIpInput.getText(), PORT), 1000);
                     BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                     PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-                    BigInteger p = OutilCryptographie.genererP();
-                    writer.println(p.toString());
-                    BigInteger g = OutilCryptographie.genererG(p);
-                    writer.println(g.toString());
-                    BigInteger a = OutilCryptographie.genererAB(p);
-                    BigInteger ga = g.pow(a.intValue());
+                    int p = OutilCryptographie.genererP();
+                    writer.println(p);
+                    int g = OutilCryptographie.genererG(p);
+                    writer.println(g);
+                    int a = OutilCryptographie.genererAB(p);
+                    BigInteger bIG = new BigInteger(Integer.toString(g));
+                    BigInteger ga = bIG.pow(a);
                     writer.println(ga.toString());
                     BigInteger gb = new BigInteger(reader.readLine());
                     String cle = OutilCryptographie.creerCleVigenere();
+                    OutilFichier.ecrire("cle1.txt", "|" + cle + "|");
                     BigInteger cleCodee = OutilCryptographie.coderCle(cle, a, gb, p);
-                    writer.println(cleCodee.toString().replaceAll("\n", "\\\\n"));
-                    String donneesCrypte = OutilCryptographie.encoder(cle, OutilCSV.formaterToCSV(Modele.exporter(programme, modalites)));
-                    writer.println(donneesCrypte.replaceAll("\n", "\\\\n"));
+                    writer.println(cleCodee.toString().replaceAll("\n", "@@@@@@@@@@"));
+                    String tmp = OutilCSV.formaterToCSV(Modele.exporter(programme, modalites));
+                    OutilFichier.ecrire("contenu1.txt", "|" + tmp + "|");
+                    String donneesCrypte = OutilCryptographie.encoder(cle, tmp);
+                    OutilFichier.ecrire("contenuCrypte1.txt", "|" + donneesCrypte + "|");
+                    OutilFichier.ecrire("test1.txt", donneesCrypte.replaceAll("\n", "@@@@@@@@@@"));
+                    OutilFichier.ecrire("test15.txt", OutilCryptographie.decoder(cle, donneesCrypte));
+                    writer.println(donneesCrypte.replaceAll("\n", "@@@@@@@@@@"));
                     socket.close();
                     // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {

@@ -64,6 +64,7 @@ public class OutilCryptographie {
             if (isCaractereValide(c)) {
                 int decalage = getDecalage(cle, j);
                 char cDecode = decoderCaractere(c, decalage);
+                System.out.println(i + " : " + (int) c + " : " + decalage + " : " + cDecode);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
             }
@@ -154,7 +155,7 @@ public class OutilCryptographie {
      * @param p entier premier modulo
      * @return cle_codee
      */
-    public static BigInteger coderCle(String cle, BigInteger a, BigInteger gb, BigInteger p) {
+    public static BigInteger coderCle(String cle, int a, BigInteger gb, int p) {
         StringBuilder cle_codee_str = new StringBuilder();
         int index = 0;
         for (int i = 0; i < cle.length(); i++) {
@@ -163,7 +164,7 @@ public class OutilCryptographie {
         }
         
         BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
-        BigInteger code = gb.pow(a.intValue()).mod(p);
+        BigInteger code = gb.pow(a).mod(new BigInteger(Integer.toString(p)));
         cle_codee = cle_codee.multiply(code);
         return cle_codee;
     }
@@ -176,8 +177,8 @@ public class OutilCryptographie {
      * @param p entier premier modulo
      * @return cle_decodee
      */
-    public static String decoderCle(BigInteger cle_codee, BigInteger ga, BigInteger b, BigInteger p) {
-        BigInteger code = ga.pow(b.intValue()).mod(p);
+    public static String decoderCle(BigInteger cle_codee, BigInteger ga, int b, int p) {
+        BigInteger code = ga.pow(b).mod(new BigInteger(Integer.toString(p)));
         BigInteger cle_codee_divisee = cle_codee.divide(code);
         
         int index = 0;
@@ -198,9 +199,8 @@ public class OutilCryptographie {
      * @param p entier premier modulo
      * @return nombre généré
      */
-    public static BigInteger genererAB(BigInteger p) {
-        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * Math.sqrt(p.intValue()))));
-        return nb;
+    public static int genererAB(int p) {
+        return (int)(Math.random() * Math.sqrt(p));
     }
     
     /** 
@@ -208,10 +208,10 @@ public class OutilCryptographie {
      * un entier premier p entre 1000 et 1000000
      * @return p un entier premier entre 1000 et 1000000
      */
-    public static BigInteger genererP() {
-        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 1000000 - 1000) + 1000));
+    public static int genererP() {
+        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 500000) + 1000));
         BigInteger p = nb.nextProbablePrime();
-        return p;
+        return p.intValue();
     }
     
     /**
@@ -220,33 +220,30 @@ public class OutilCryptographie {
      * @param p un entier premier servant de modulo
      * @return g un entier générateur aléàtoire de p
      */
-    public static BigInteger genererG(BigInteger p) {
+    public static int genererG(int p) {
         //Initialisation des variables
-        ArrayList<BigInteger> listeG = new ArrayList<>();
-        TreeSet<Integer> listeResultats = new TreeSet<>(); 
+        TreeSet<Long> listeResultats = new TreeSet<>(); 
         boolean ajoutOk;
-        int exposant;
-        
-        //Boucle permettant de parcourir tout les entiers entre 1 et p
-        for (int i = 1; i < p.intValue(); i++) {
+        long exposant;
+        int g;
+        boolean gTrouve = false;
+        do {
             listeResultats.clear();
             ajoutOk = true;
             exposant = 1;
+            g = (int)(Math.random() * p);
             //Boucle permettant de calculer tout les i exposant j
             //pour tout j entre 1 et p
-            for (int j = 1 ; j < p.intValue() && ajoutOk ; j++) {
-                exposant = (exposant * i) % p.intValue();
+            for (int j = 1 ; j < p && ajoutOk ; j++) {
+                exposant = (exposant * g) % p;
                 ajoutOk = listeResultats.add(exposant);
             }
             //Vérifie que i est un entier générateur de p,
             //et si oui, l'ajoute à listeG
-            if (listeResultats.size() == (p.intValue() - 1)) {
-                BigInteger gOk = new BigInteger(Integer.toString(i));
-                listeG.add(gOk);
+            if (listeResultats.size() == (p - 1)) {
+                gTrouve = true;
             }
-        }
-        //Prend un g aléàtoirement dans listeG
-        BigInteger g = listeG.get((int)(Math.random() * listeG.size()));
+        } while (!gTrouve);
         return g;
     }
 }
