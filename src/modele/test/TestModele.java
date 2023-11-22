@@ -12,7 +12,6 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import modele.OutilFichier;
 import modele.Parametrage;
-import modele.Utilisateur;
 import modele.Ressource;
 import modele.Sae;
 import modele.Competence;
@@ -114,7 +113,7 @@ public class TestModele {
 	}
 	
 	/**
-	 * Test de la méthode 
+	 * Test de la méthode importer
 	 */
 	@Test
 	public void testImporter() {
@@ -176,6 +175,109 @@ public class TestModele {
             Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide8.csv");
         });
 	}
+	
+	/**
+     * Test de la méthode importerReseau
+     */
+    @Test
+    public void testImporterReseau() {
+        String chemin = ".\\src\\modele\\test\\csv\\";
+        /* INSERTION DES DONNEES COMPATIBLES */
+        Modele.reset();
+        Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv");
+        // Quand on importe le même paramétrage
+        assertDoesNotThrow(
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin 
+                                + "testModeleParametrage.csv"))));
+        
+        /* 
+         * Quand on ajoute des dates (précédemment non renseignées) aux 
+         * modalités d'évaluations
+         */
+        assertEquals("", 
+                Modele.getParametrage().getListeRessources()
+                .get("R2.02").getListeEvaluations().get(0).getDate());
+        assertDoesNotThrow(() -> Modele.importerReseau(
+                OutilCSV.formaterToDonnees(OutilFichier.lire(chemin + 
+                        "testModeleParametrageReseauDateModifiee.csv"))));
+        assertEquals("DATE MODIFIEE", 
+                Modele.getParametrage().getListeRessources()
+                .get("R2.02").getListeEvaluations().get(0).getDate());
+        
+        /* 
+         * Quand on ajoute des modalités d'évaluations qui n'étaient 
+         * pas paramétrées 
+         */
+        Modele.reset();
+        Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv");
+        assertDoesNotThrow(
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                       OutilFichier.lire(chemin 
+                       + "testModeleParametrageReseauNouvelleRessource.csv"))));
+        
+        // Quand on importe via le réseau alors que le paramétrage est vide
+        Modele.reset();
+        assertDoesNotThrow(
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin
+                                + "testModeleParametrage.csv"))));
+
+        /* INSERTION DES DONNEES INCOMPATIBLES */
+        // Quand on importe un fichier qui ne correspond pas au semestre
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin 
+                               + "testModeleParametrageReseauInvalide1.csv"))));
+        // Quand on importe un fichier qui ne correspond pas au parcours
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin 
+                               + "testModeleParametrageReseauInvalide2.csv"))));
+        /* 
+         * Quand on importe un fichier où les identifiants, libellés ou poids 
+         * des compétences et des ressources  ne sont pas identiques
+         */
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin + 
+                                "testModeleParametrageReseauInvalide3.csv"))));
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin + 
+                                "testModeleParametrageReseauInvalide4.csv"))));
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin
+                               + "testModeleParametrageReseauInvalide5.csv"))));
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin 
+                               + "testModeleParametrageReseauInvalide6.csv"))));
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin
+                               + "testModeleParametrageReseauInvalide7.csv"))));
+        
+        /* 
+         * Quand on importe un fichier où les identifiants, libellés ou poids 
+         * des évaluations  ne sont pas identiques
+         */
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin 
+                               + "testModeleParametrageReseauInvalide8.csv"))));
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin 
+                               + "testModeleParametrageReseauInvalide9.csv"))));
+        assertThrows(IllegalArgumentException.class, 
+                () -> Modele.importerReseau(OutilCSV.formaterToDonnees(
+                        OutilFichier.lire(chemin
+                              + "testModeleParametrageReseauInvalide10.csv"))));
+
+    }
+	
 	
 	/**
 	 * Test de la méthode isParametrageInitialise()
