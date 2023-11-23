@@ -17,10 +17,10 @@ import modele.OutilCryptographie;
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class TestOutilCryptographie {
-    private static final BigInteger P = new BigInteger("9739");
-    private static final BigInteger G = new BigInteger("1527");
-    private static final BigInteger A = new BigInteger("17");
-    private static final BigInteger B = new BigInteger("4");
+    private static final int P = 9739;
+    private static final int G = 1527;
+    private static final int A = 17;
+    private static final int B = 4;
 
     /** 
      * Test de la methode encoder() de la classe outilCryptographie
@@ -88,7 +88,7 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testCoderCle() {
-        BigInteger gb = G.pow(B.intValue());
+        BigInteger gb = new BigInteger(Integer.toString(G)).pow(B);
         String cle = "4Êtw£° $@²*~^`j0*éç.";
         BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
         System.out.println(OutilCryptographie.coderCle(cle, A, gb, P));
@@ -100,7 +100,7 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testDecoderCle() {
-        BigInteger ga = G.pow(A.intValue());
+        BigInteger ga = new BigInteger(Integer.toString(G)).pow(A);
         BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
         String cle = "4Êtw£° $@²*~^`j0*éç.";
         //System.out.println(OutilCryptographie.decoderCle(cle_codee, ga, B, P));
@@ -112,8 +112,8 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testGenererAB() {
-        BigInteger ab = OutilCryptographie.genererAB(P);
-        assertTrue(ab.intValue() >= 0 && ab.intValue() <= Math.sqrt(P.intValue()));
+        int ab = OutilCryptographie.genererAB(P);
+        assertTrue(ab >= 0 && ab <= Math.sqrt(P));
     }
     
     /**
@@ -121,9 +121,8 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testGenererP() {
-        BigInteger p = OutilCryptographie.genererP();
-        assertTrue(p.intValue() >= 1000 && p.intValue() <= 1000000);
-        assertTrue(p.isProbablePrime(0));
+        int p = OutilCryptographie.genererP();
+        assertTrue(p >= 1000 && p <= 1000000);
     }
     
     /**
@@ -131,9 +130,9 @@ public class TestOutilCryptographie {
      */
     @Test
     public void testGenererG() {
-        BigInteger g1 = OutilCryptographie.genererG(new BigInteger("5"));
-        BigInteger g2 = OutilCryptographie.genererG(new BigInteger("7"));
-        assertTrue(g1.intValue() == 2 || g1.intValue() == 3);
-        assertTrue(g2.intValue() == 3 || g1.intValue() == 5);
+        int g1 = OutilCryptographie.genererG(5);
+        int g2 = OutilCryptographie.genererG(7);
+        assertTrue(g1 == 2 || g1 == 3);
+        assertTrue(g2 == 3 || g2 == 5);
     }
 }
