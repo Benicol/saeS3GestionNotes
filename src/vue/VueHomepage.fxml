@@ -76,28 +76,54 @@
                      </children>
                   </HBox>
                   <Line endX="38.0" rotate="90.0" stroke="WHITE" translateY="16.0" />
-                  <Button mnemonicParsing="false" onAction="#reinitialiserPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" prefWidth="150.0" text="RÉINITIALISER" textFill="#9555e8">
-                     <font>
-                        <Font name="Verdana Bold" size="12.0" />
-                     </font>
-                     <graphic>
-                        <ImageView pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../vue/ressources/icone_reinitialiser.png" />
-                           </image>
+                  <HBox spacing="16.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#reinitialiserPresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" prefWidth="150.0" text="REINITIALISER" textFill="#9555e8">
+                           <font>
+                              <Font name="Verdana Bold" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../vue/ressources/icone_reinitialiser.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <styleClass>
+                              <String fx:value="secondary-button" />
+                              <String fx:value="secondary-button-not-hover" />
+                           </styleClass>
                            <cursor>
-                              <Cursor fx:constant="DEFAULT" />
+                              <Cursor fx:constant="HAND" />
                            </cursor>
-                        </ImageView>
-                     </graphic>
-                     <styleClass>
-                        <String fx:value="secondary-button" />
-                        <String fx:value="secondary-button-not-hover" />
-                     </styleClass>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#aidePresser" onMouseEntered="#secondaryButtonEntered" onMouseExited="#secondaryButtonExited" prefHeight="40.0" prefWidth="150.0" text="BESOIN D'AIDE" textFill="#9555e8">
+                           <font>
+                              <Font name="Verdana Bold" size="12.0" />
+                           </font>
+                           <graphic>
+                              <ImageView pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../vue/ressources/icone_aide.png" />
+                                 </image>
+                                 <cursor>
+                                    <Cursor fx:constant="DEFAULT" />
+                                 </cursor>
+                              </ImageView>
+                           </graphic>
+                           <styleClass>
+                              <String fx:value="secondary-button" />
+                              <String fx:value="secondary-button-not-hover" />
+                           </styleClass>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </children>

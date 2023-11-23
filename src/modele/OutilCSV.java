@@ -49,7 +49,11 @@ public class OutilCSV {
         String[] lignes = donneesCSV.split("\n");
         String[][] donnees = new String[lignes.length][0];
         for (int i = 0; i < lignes.length; i++) {
-            donnees[i] = lignes[i].split(";");
+            if (lignes[i].isBlank()) {
+                donnees[i] = new String[0];
+            } else {
+                donnees[i] = lignes[i].split(";");
+            }
         }
         return donnees;
     }

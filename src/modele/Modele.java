@@ -232,6 +232,13 @@ public class Modele {
     	for (int i = 0; i < donneesFinal.length; i++) {
     	    donneesFinal[i] = donnees.get(i).toArray(new String[0]);
     	}
+    	for (String[] tab : donneesFinal) {
+    	    System.out.print("[");
+    	    for (String elt : tab) {
+    	        System.out.print(elt + ", ");
+    	    }
+    	    System.out.println("]");
+    	}
     	return donneesFinal;
     }
     
@@ -425,6 +432,14 @@ public class Modele {
      * l'application.
      */
     public static void importerReseau(String[][] donnees) {
+        String[][] tmp1 = Modele.exporter(true, true);
+        for (String[] tab : donnees) {
+            System.out.print("[");
+            for (String elt : tab) {
+                System.out.print(elt + ", ");
+            }
+            System.out.println("]");
+        }
         /* Vérifie si le paramétrage est déjà initialisé */
         if (!isParametrageInitialise()) {
             // Si le paramétrage n'est pas initialisé, appelle la méthode générique d'importation
@@ -447,8 +462,12 @@ public class Modele {
                                 // Vérifie si l'évaluation existe déjà
                                 for (Evaluation e : r.getListeEvaluations()) {
                                     trouve = e.getNom().equals(donnees[i][0]);
+                                    if (trouve) {
+                                        System.out.println("TROUVE");
+                                    }
                                     // Si l'évaluation existe et n'a pas de date mais la date est présente dans les données
                                     if (trouve && (e.getDate().isBlank() && !donnees[i][1].isBlank())) {
+                                        System.out.println("JE CHANGE UNE DATE LA");
                                         e.setDate(donnees[i][1]);
                                     }
                                 }
@@ -483,6 +502,7 @@ public class Modele {
                 throw new IllegalArgumentException("Les données sont incompatibles !");
             }
         }
+        Modele.exporter(true, true);
     }   
 
     /* 
