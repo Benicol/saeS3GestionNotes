@@ -117,7 +117,8 @@ public class OutilCryptographie {
      */
     private static char decoderCaractere(char c, int decalage) {
         int index = alphabet.indexOf(c);
-        int indexDecode = (index - decalage + (alphabet.length())) % (alphabet.length());
+        int indexDecode = (index - decalage + (alphabet.length())) % (
+                alphabet.length());
         return alphabet.charAt(indexDecode);
     }
     
@@ -189,7 +190,8 @@ public class OutilCryptographie {
         StringBuilder cle_decodee = new StringBuilder();
         int taille_finale = cle_codee_str.length();
         for (int i = 0; i < taille_finale - 2; i+=3) {
-            index = Integer.parseInt("" + cle_codee_str.charAt(i) + cle_codee_str.charAt(i + 1) + cle_codee_str.charAt(i + 2));
+            index = Integer.parseInt("" + cle_codee_str.charAt(i) 
+            + cle_codee_str.charAt(i + 1) + cle_codee_str.charAt(i + 2));
             cle_decodee.append(alphabet.charAt(index));
         }
         return cle_decodee.toString();
@@ -210,7 +212,8 @@ public class OutilCryptographie {
      * @return p un entier premier entre 1000 et 1000000
      */
     public static int genererP() {
-        BigInteger nb = new BigInteger(Integer.toString((int)(Math.random() * 500000) + 1000));
+        BigInteger nb = new BigInteger(
+                Integer.toString((int)(Math.random() * 500000) + 1000));
         BigInteger p = nb.nextProbablePrime();
         return p.intValue();
     }

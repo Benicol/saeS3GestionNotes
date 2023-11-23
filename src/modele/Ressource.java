@@ -135,7 +135,8 @@ public class Ressource implements Enseignement, Serializable {
         moyenne = 0.0;
         if (isCalculable()) {
             for (int i = 0; i < listeEvaluations.size(); i++) {
-                moyenne += listeEvaluations.get(i).getNote() * listeEvaluations.get(i).getPoids();
+                moyenne += listeEvaluations.get(i).getNote() 
+                        * listeEvaluations.get(i).getPoids();
             }
         }
         return moyenne;

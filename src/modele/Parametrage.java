@@ -52,21 +52,29 @@ public class Parametrage implements Serializable{
         this.parcours = parcours;
         this.listeRessources = new HashMap<>();
         for (String identifiant : donneesRessources.keySet()) {
-            listeRessources.put(identifiant, new Ressource(identifiant, donneesRessources.get(identifiant)));
+            listeRessources.put(identifiant, new Ressource(
+                    identifiant, donneesRessources.get(identifiant)));
         }
         this.listeSaes = new HashMap<>();
         for (String identifiant : donneesSaes.keySet()) {
-            listeSaes.put(identifiant, new Sae(identifiant, donneesSaes.get(identifiant)));
+            listeSaes.put(identifiant, new Sae(identifiant, donneesSaes.get(
+                    identifiant)));
         }
         this.listeCompetences = new HashMap<>();
         for (String[][] competence : donneesCompetences) {
             String identifiant = competence[0][0];
-            listeCompetences.put(identifiant, new Competence(identifiant, competence[0][1]));
+            listeCompetences.put(identifiant, new Competence(
+                    identifiant, competence[0][1]));
             for (int i = 1; i < competence.length; i++) {
                 if (competence[i][0].charAt(0) == 'R') {
-                    listeCompetences.get(identifiant).getListeRessources().put(listeRessources.get(competence[i][0]), Double.parseDouble(competence[i][1])/100);
-                } else if (competence[i][0].charAt(0) == 'S' || competence[i][0].charAt(0) == 'P') {
-                    listeCompetences.get(identifiant).getListeSaes().put(listeSaes.get(competence[i][0]), Double.parseDouble(competence[i][1])/100);
+                    listeCompetences.get(identifiant).getListeRessources().put(
+                            listeRessources.get(competence[i][0]), 
+                            Double.parseDouble(competence[i][1])/100);
+                } else if (competence[i][0].charAt(0) == 'S' 
+                        || competence[i][0].charAt(0) == 'P') {
+                    listeCompetences.get(identifiant).getListeSaes().put(
+                            listeSaes.get(competence[i][0]), Double.parseDouble(
+                                    competence[i][1])/100);
                 } else {
                     throw new IllegalArgumentException("Le type est inconnu.");
                 }
@@ -108,8 +116,8 @@ public class Parametrage implements Serializable{
     }
     
     /**
-     * Retourne la table de hachage des SAE (Situations d'Apprentissage et d'Évaluation) 
-     * associées au semestre.
+     * Retourne la table de hachage des SAE (Situations d'Apprentissage et 
+     * d'Évaluation) associées au semestre.
      * @return La liste des SAE associées.
      */
     public HashMap<String, Sae> getListeSaes() {

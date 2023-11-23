@@ -70,8 +70,11 @@ public class VuePopUpConnexionControleur {
                     // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {
                         texte.setText(texte.getText() + ".");
-                        if (texte.getText().substring(texte.getText().length() - 4, texte.getText().length() - 1).equals("...")) {
-                            texte.setText(texte.getText().substring(0,texte.getText().length() - 4));
+                        if (texte.getText().substring(
+                                texte.getText().length() - 4,
+                                texte.getText().length() - 1).equals("...")) {
+                            texte.setText(texte.getText().substring(
+                                    0,texte.getText().length() - 4));
                         }
                     });
                 }
@@ -97,8 +100,10 @@ public class VuePopUpConnexionControleur {
     
     private void handleConnection(Socket clientSocket) {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter writer = new PrintWriter(new OutputStreamWriter(clientSocket.getOutputStream()), true);
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(clientSocket.getInputStream()));
+            PrintWriter writer = new PrintWriter(
+                    new OutputStreamWriter(clientSocket.getOutputStream()), true);
             int p = Integer.parseInt(reader.readLine());
             int g = Integer.parseInt(reader.readLine());
             BigInteger ga = new BigInteger(reader.readLine());
@@ -106,7 +111,8 @@ public class VuePopUpConnexionControleur {
             BigInteger bIG = new BigInteger(Integer.toString(g));
             BigInteger gb = bIG.pow(b);
             writer.println(gb.toString());
-            BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("‣․", "\n"));
+            BigInteger cleCodee = new BigInteger(
+                    reader.readLine().replaceAll("‣․", "\n"));
             String cle = OutilCryptographie.decoderCle(cleCodee, ga, b, p);
             String donneesCrypte = reader.readLine().replaceAll("‣․", "\n");
             String decrypter = OutilCryptographie.decoder(cle, donneesCrypte);

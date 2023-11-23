@@ -26,7 +26,8 @@ public class Competence implements Enseignement, Serializable{
      * @param libelle
      */
     public Competence(String identifiant, String libelle) {
-        if (libelle == null || libelle.equals("") || identifiant == null || identifiant.equals("")) {
+        if (libelle == null || libelle.equals("") || identifiant == null 
+                || identifiant.equals("")) {
             throw new IllegalArgumentException();
         }
         this.libelle = libelle.trim();

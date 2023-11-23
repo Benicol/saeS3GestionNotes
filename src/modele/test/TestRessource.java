@@ -80,10 +80,14 @@ class TestRessource {
     
     @Test
     public void testAjouterEvaluation() {
-        Assertions.assertTrue(ressource1.ajouterEvaluation(new Evaluation("controle",0.5,"05/04/23")));
-        Assertions.assertTrue(ressource2.ajouterEvaluation(new Evaluation("controle",0.5,"05/05/23")));
-        Assertions.assertFalse(ressource5.ajouterEvaluation(new Evaluation("controle",0.3,"05/08/23")));
-        Assertions.assertFalse(ressource4.ajouterEvaluation(new Evaluation("controle",0.35,"01/08/23")));
+        Assertions.assertTrue(ressource1.ajouterEvaluation(
+                new Evaluation("controle",0.5,"05/04/23")));
+        Assertions.assertTrue(ressource2.ajouterEvaluation(
+                new Evaluation("controle",0.5,"05/05/23")));
+        Assertions.assertFalse(ressource5.ajouterEvaluation(
+                new Evaluation("controle",0.3,"05/08/23")));
+        Assertions.assertFalse(ressource4.ajouterEvaluation(
+                new Evaluation("controle",0.35,"01/08/23")));
     }
     
     

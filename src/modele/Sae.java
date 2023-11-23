@@ -22,7 +22,8 @@ public class Sae implements Enseignement, Serializable{
      * @param libelle
      */
     public Sae(String identifiant, String libelle) {
-        if (libelle == null || libelle.equals("") || identifiant == null || identifiant.equals("")) {
+        if (libelle == null || libelle.equals("") || identifiant == null 
+                || identifiant.equals("")) {
             throw new IllegalArgumentException();
         }
         this.libelle = libelle;

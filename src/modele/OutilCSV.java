@@ -13,12 +13,14 @@ package modele;
  */
 public class OutilCSV {
     
-    /** Prend en argument un tableau de données et le converti en une String au format CSV;
+    /** Prend en argument un tableau de données et le converti en une String au 
+     * format CSV;
      * @param donnees fournis pour être transformer au format CSV
      * @return String contenant les donnees dans le tableau donnees formater en csv
      * @throws IllegalArgumentException si les donnees son null 
      */
-    public static String formaterToCSV(String[][] donnees) throws IllegalArgumentException {
+    public static String formaterToCSV(String[][] donnees) 
+            throws IllegalArgumentException {
         if (donnees == null) {
             throw new IllegalArgumentException("donnees vides");
         }
@@ -35,12 +37,14 @@ public class OutilCSV {
         return donneesCSV.toString().substring(0, donneesCSV.length() - 1);
     }
 
-    /** Prend en argument une String au format CSV et la converti en un tableau de données.
+    /** Prend en argument une String au format CSV et la converti en un tableau 
+     * de données.
      * @param donneesCSV donnees formater en csv
      * @return String[][] donnees formater en tableau de tableau
      * @throws IllegalArgumentException si les donnees son null
      */
-    public static String[][] formaterToDonnees(String donneesCSV) throws IllegalArgumentException {
+    public static String[][] formaterToDonnees(String donneesCSV) 
+            throws IllegalArgumentException {
         if (donneesCSV == null || donneesCSV.equals("")) {
             throw new IllegalArgumentException("donnees vides");
         }

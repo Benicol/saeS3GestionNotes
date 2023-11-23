@@ -52,7 +52,8 @@ public class TestParametrage {
         donneesRessources.put("R2.01", "ressource de test 1");
         donneesRessources.put("R2.02", "ressource de test 2");
         
-        parametrage = new Parametrage(semestre, parcours, donneesCompetences, donneesSaes, donneesRessources);
+        parametrage = new Parametrage(semestre, parcours, donneesCompetences,
+                donneesSaes, donneesRessources);
     }
     
     /**

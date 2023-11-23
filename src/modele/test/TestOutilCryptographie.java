@@ -33,10 +33,12 @@ public class TestOutilCryptographie {
         String[] messagesInvalides = {"åøØøå", "J'aime l'argent 💸", "57×39"};
         try {
             for (int i = 0; i < messagesValides.length; i++) {
-                assertEquals(OutilCryptographie.encoder(cle, messagesValides[i]), chiffrerValides[i]);
+                assertEquals(OutilCryptographie.encoder(cle, messagesValides[i]),
+                        chiffrerValides[i]);
             }
             for (String elt : messagesInvalides) {
-                assertThrows(IllegalArgumentException.class, () -> OutilCryptographie.encoder(cle, elt));
+                assertThrows(IllegalArgumentException.class, 
+                        () -> OutilCryptographie.encoder(cle, elt));
             }
         } catch (Exception e) {
             System.err.println("erreur du Scanner");
@@ -51,14 +53,17 @@ public class TestOutilCryptographie {
     public void testDecoder() {
         String cle = "tests junits";
         String[] chiffrementsValides = {"&î]\\1,jc§@\\Yf", "", " î$ "};
-        String[] chiffrementsInvalides = {"fghgåøØøåhfgjhk²", "gdfgb,;:!:!💸:;", "45jogji×cxfh7"};
+        String[] chiffrementsInvalides = {"fghgåøØøåhfgjhk²", "gdfgb,;:!:!💸:;",
+                "45jogji×cxfh7"};
         String[] messagesValides = {"Hello, world!", "", "test"};
         try {
             for (int i = 0; i < chiffrementsValides.length; i++) {
-                assertEquals(OutilCryptographie.decoder(cle, chiffrementsValides[i]), messagesValides[i]);
+                assertEquals(OutilCryptographie.decoder(cle,
+                        chiffrementsValides[i]), messagesValides[i]);
             }
             for (String elt : chiffrementsInvalides) {
-                assertThrows(IllegalArgumentException.class, () -> OutilCryptographie.decoder(cle, elt));
+                assertThrows(IllegalArgumentException.class,
+                        () -> OutilCryptographie.decoder(cle, elt));
             }
         } catch (Exception e) {
             System.err.println("erreur du Scanner");
@@ -90,7 +95,8 @@ public class TestOutilCryptographie {
     public void testCoderCle() {
         BigInteger gb = new BigInteger(Integer.toString(G)).pow(B);
         String cle = "4Êtw£° $@²*~^`j0*éç.";
-        BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
+        BigInteger cle_codee = new BigInteger("60882158449929312843767150952411"
+                + "1765773571052896181357932355128");
         assertEquals(OutilCryptographie.coderCle(cle, A, gb, P), cle_codee);
     }
     
@@ -100,7 +106,8 @@ public class TestOutilCryptographie {
     @Test
     public void testDecoderCle() {
         BigInteger ga = new BigInteger(Integer.toString(G)).pow(A);
-        BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
+        BigInteger cle_codee = new BigInteger("60882158449929312843767150952411"
+                + "1765773571052896181357932355128");
         String cle = "4Êtw£° $@²*~^`j0*éç.";
         assertEquals(OutilCryptographie.decoderCle(cle_codee, ga, B, P), cle);
     }

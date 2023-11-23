@@ -161,7 +161,9 @@ public class Modele {
             		    donneesTmp.add(ressource.getIdentifiant());
             	    	    donneesTmp.add(ressource.getLibelle());
             	    	    /*Mets le poids au bon format*/
-            	    	    donneesTmp.add(String.format("%.0f",competence.getListeRessources().get(ressource)*100));	
+            	    	    donneesTmp.add(String.format(
+            	    	            "%.0f",competence.getListeRessources().get(
+            	    	                    ressource)*100));	
             	    	    donnees.add((ArrayList<String>) donneesTmp.clone());
             	    	    donneesTmp.clear();
             		}
@@ -181,7 +183,8 @@ public class Modele {
             		    donneesTmp.add(sae.getIdentifiant());
             	    	    donneesTmp.add(sae.getLibelle());
             	    	    /*Mets le poids au bon format*/
-            	    	    donneesTmp.add(String.format("%.0f",competence.getListeSaes().get(sae)*100));	
+            	    	    donneesTmp.add(String.format(
+            	    	            "%.0f",competence.getListeSaes().get(sae)*100));	
             	    	    donnees.add((ArrayList<String>) donneesTmp.clone());
             	    	    donneesTmp.clear();
             		}
@@ -213,7 +216,8 @@ public class Modele {
         	            donneesTmp.add(evaluation.getNom());
         	            donneesTmp.add(evaluation.getDate());
         	            /*Mets le poids au bon format*/
-        	            donneesTmp.add(String.format("%.0f",evaluation.getPoids()*100));
+        	            donneesTmp.add(String.format(
+        	                    "%.0f",evaluation.getPoids()*100));
         	            donnees.add((ArrayList<String>) donneesTmp.clone());
         	            donneesTmp.clear();
         	        }
@@ -224,7 +228,8 @@ public class Modele {
         	    }
         	}
     	}
-    	/*initialisation du tableau bidimensionnel qui contiendras les données à renvoyer*/
+    	/*initialisation du tableau bidimensionnel qui contiendras les données à
+    	 * renvoyer*/
     	String[][] donneesFinal = new String[donnees.size()][0];
     	
     	/* On insère l'arrayList contenant les donnés du paramétrage
@@ -270,7 +275,8 @@ public class Modele {
                                                  && donnees[2][0].equals("Parcours") 
                                                  && donnees[2][1].length() != 0)) {
                 donneesValide = false;
-                messageErreur = "des données sont éroné ligne 1 et 2 (semestre et parcours)";
+                messageErreur = "des données sont éroné ligne 1 et 2 "
+                        + "(semestre et parcours)";
             }
             /* Déclaration des variables pour stocker les informations du CSV */
             String semestre = "";
@@ -287,14 +293,16 @@ public class Modele {
                 for (int i = 3; i < donnees.length && donneesValide; i++) {
                     /* Si la ligne concerne une compétence */
                     if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
-                        messageErreur = "erreur lors de l'importation de la compétence ligne : " + i; 
+                        messageErreur = "erreur lors de l'importation de la"
+                                + " compétence ligne : " + i; 
                         ArrayList<String[]> competence = new ArrayList<>();;
                         String[] infoLigne = new String[2];
                         infoLigne[0] = donnees[i][1];
                         infoLigne[1] = donnees[i][2];
                         if (!isIdentifiant(infoLigne[0])) {
                             donneesValide = false;
-                            messageErreur = "l'identifiant ligne " + i + "est invalide";
+                            messageErreur = "l'identifiant ligne " + i 
+                                    + "est invalide";
                         }
                         competence.add(infoLigne.clone());
                         int poids = 0;
@@ -314,7 +322,8 @@ public class Modele {
                             infoLigne[0] = donnees[i][1];
                             if (!isIdentifiant(infoLigne[0])) {
                                 donneesValide = false;
-                                messageErreur = "l'identifiant ligne " + i + "est invalide";
+                                messageErreur = "l'identifiant ligne " + i 
+                                        + "est invalide";
                             }
                             infoLigne[1] = donnees[i][3];
                             /* Vérifie si la ligne concerne une ressource ou une SAE */
@@ -325,7 +334,8 @@ public class Modele {
                                             + "ligne : " + i;
                                     listeRessource.put(infoLigne[0], donnees[i][2]);
                                 }
-                            } else if ((donnees[i][0].equals("Portfolio") || donnees[i][0].equals("SAE"))) {
+                            } else if ((donnees[i][0].equals("Portfolio") 
+                                    || donnees[i][0].equals("SAE"))) {
                                 if (!listeSae.containsKey(infoLigne[0])) {
                                     messageErreur = "Erreur lors de l'importation "
                                             + "des informations de la sae/du "
@@ -377,7 +387,8 @@ public class Modele {
                             donneesValide = donnees[i][0].length() != 0;
                             donneesValide = donneesValide && isNumeric(donnees[i][2]);
                             
-                            // Si la ligne est valide, ajoute le poids de l'évaluation au poids total
+                            // Si la ligne est valide, ajoute le poids de 
+                            // l'évaluation au poids total
                             if (donneesValide) {
                                 poids += Integer.parseInt(donnees[i][2]);
                                 infoEvaluation[0] = donnees[i][0];
@@ -395,7 +406,8 @@ public class Modele {
                             donneesValide = false;
                         }
                         i++;
-                        /* Ajoute les évaluations de la ressource à la liste des ressources */
+                        /* Ajoute les évaluations de la ressource à la liste 
+                         * des ressources */
                         ressource.put(key, listeEvaluation);
                     }
                 }
@@ -413,7 +425,8 @@ public class Modele {
                 /* Ajoute les évaluations des ressources au paramétrage */
                 for (String key : ressource.keySet()) {
                     for (Evaluation evaluation : ressource.get(key)) {
-                        parametrage.getListeRessources().get(key).ajouterEvaluation(evaluation);
+                        parametrage.getListeRessources().get(key)
+                        .ajouterEvaluation(evaluation);
                     }
                 }
                 sauvegarder();
@@ -439,16 +452,19 @@ public class Modele {
     public static void importerReseau(String[][] donnees) {
         /* Vérifie si le paramétrage est déjà initialisé */
         if (!isParametrageInitialise()) {
-            // Si le paramétrage n'est pas initialisé, appelle la méthode générique d'importation
+            // Si le paramétrage n'est pas initialisé, appelle la méthode 
+            // générique d'importation
             importer(donnees);
         } else {
-            // Vérifie la validité des données réseau par rapport au paramétrage existant
+            // Vérifie la validité des données réseau par rapport au paramétrage
+            // existant
             if (isDonneesValideReseau(donnees)) {
                 for (int i = 3; i < donnees.length; i++) {
-                    if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource") &&
-                        (donnees[i + 1][0].equals("Type évaluation"))) {
+                    if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource") 
+                            && (donnees[i + 1][0].equals("Type évaluation"))) {
                         // Récupère la ressource à partir du paramétrage
-                        Ressource r = parametrage.getListeRessources().get(donnees[i][1]);
+                        Ressource r = 
+                                parametrage.getListeRessources().get(donnees[i][1]);
                         i += 2;
                         // Si la ressource a des évaluations existantes
                         if (!r.getListeEvaluations().isEmpty()) {
@@ -461,8 +477,10 @@ public class Modele {
                                     trouve = e.getNom().equals(donnees[i][0]);
                                     if (trouve) {
                                     }
-                                    // Si l'évaluation existe et n'a pas de date mais la date est présente dans les données
-                                    if (trouve && (e.getDate().isBlank() && !donnees[i][1].isBlank())) {
+                                    // Si l'évaluation existe et n'a pas de date
+                                    // mais la date est présente dans les données
+                                    if (trouve && (e.getDate().isBlank() 
+                                            && !donnees[i][1].isBlank())) {
                                         e.setDate(donnees[i][1]);
                                     }
                                 }
@@ -568,7 +586,8 @@ public class Modele {
                     listeEvaluation.add(new Evaluation(infoEvaluation[0],
                         Double.parseDouble(infoEvaluation[2]) / 100, 
                         infoEvaluation[1]));
-                    /* Ajoute les évaluations de la ressource à la liste des ressources */
+                    /* Ajoute les évaluations de la ressource à la liste des
+                     *  ressources */
                     ressource.put(key, listeEvaluation);
                 }
             }
@@ -612,12 +631,14 @@ public class Modele {
             // Si la ligne concerne une compétence
             if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
                 // Vérifie la validité de la compétence
-                donneesValides = parametrage.getListeCompetences().containsKey(donnees[i][1])
+                donneesValides = parametrage.getListeCompetences().containsKey(
+                        donnees[i][1])
                     && parametrage.getListeCompetences().get(donnees[i][1])
                         .getLibelle().equals(donnees[i][2]);
                 int poids = 0;
 
-                Competence competence = parametrage.getListeCompetences().get(donnees[i][1]);
+                Competence competence = parametrage.getListeCompetences().get(
+                        donnees[i][1]);
                 i++;
 
                 /* 
@@ -629,13 +650,18 @@ public class Modele {
                     i++;
                     // Vérifie si la ligne concerne une ressource ou une SAE
                     if (donnees[i][0].equals("Ressource")) {
-                        donneesValides = (competence.getListeRessources().containsKey(
-                                parametrage.getListeRessources().get(donnees[i][1]))
-                                && parametrage.getListeRessources().get(donnees[i][1])
+                        donneesValides = (
+                                competence.getListeRessources().containsKey(
+                                parametrage.getListeRessources().get(
+                                        donnees[i][1]))
+                                && parametrage.getListeRessources().get(
+                                        donnees[i][1])
                                     .getLibelle().equals(donnees[i][2])
                                 && competence.getListeRessources()
-                                    .get(parametrage.getListeRessources().get(donnees[i][1]))
-                                    .equals(Double.parseDouble(donnees[i][3]) / 100))
+                                    .get(parametrage.getListeRessources().get(
+                                            donnees[i][1]))
+                                    .equals(Double.parseDouble(
+                                            donnees[i][3]) / 100))
                                 || competence.getListeRessources().isEmpty();
                     } else if (donnees[i][0].equals("Portfolio") ||
                                donnees[i][0].equals("SAE")) {
@@ -659,8 +685,10 @@ public class Modele {
                         donneesValidesTmp = false;
                         for (Evaluation e : r.getListeEvaluations()) {
                             if (e.getNom().equals(donnees[i][0]) &&
-                                e.getPoids().equals(Double.parseDouble(donnees[i][2]) / 100)
-                                && (e.getDate().equals(donnees[i][1]) || e.getDate().isBlank())) {
+                                e.getPoids().equals(Double.parseDouble(
+                                        donnees[i][2]) / 100)
+                                && (e.getDate().equals(donnees[i][1]) 
+                                        || e.getDate().isBlank())) {
                                 donneesValidesTmp = true;
                             }
                         }

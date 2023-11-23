@@ -154,9 +154,12 @@ public class VuePopUpExporterControleur {
                 try {
                     Socket socket = new Socket();
                     socket.setSoTimeout(1000);
-                    socket.connect(new InetSocketAddress(adresseIpInput.getText(), PORT), 1000);
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                    PrintWriter writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+                    socket.connect(new InetSocketAddress(
+                            adresseIpInput.getText(), PORT), 1000);
+                    BufferedReader reader = new BufferedReader(
+                            new InputStreamReader(socket.getInputStream()));
+                    PrintWriter writer = new PrintWriter(
+                            new OutputStreamWriter(socket.getOutputStream()), true);
                     int p = OutilCryptographie.genererP();
                     writer.println(p);
                     int g = OutilCryptographie.genererG(p);
@@ -167,26 +170,33 @@ public class VuePopUpExporterControleur {
                     writer.println(ga.toString());
                     BigInteger gb = new BigInteger(reader.readLine());
                     String cle = OutilCryptographie.creerCleVigenere();
-                    BigInteger cleCodee = OutilCryptographie.coderCle(cle, a, gb, p);
+                    BigInteger cleCodee = OutilCryptographie.coderCle(
+                            cle, a, gb, p);
                     writer.println(cleCodee.toString().replaceAll("\n", "‣․"));
-                    String tmp = OutilCSV.formaterToCSV(Modele.exporter(programme, modalites));
+                    String tmp = OutilCSV.formaterToCSV(Modele.exporter(
+                            programme, modalites));
                     String donneesCrypte = OutilCryptographie.encoder(cle, tmp);
                     writer.println(donneesCrypte.replaceAll("\n", "‣․"));
                     socket.close();
-                    // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                    // Mettez à jour l'interface utilisateur dans le thread 
+                    // de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {
                         Alert alert = new Alert(AlertType.INFORMATION);
                         alert.setTitle("Transfert réussi");
                         alert.setHeaderText("Données transférées!");
-                        alert.setContentText("Verifiez que l'importation s'est bien passer sur l'autre ordinateur !");
+                        alert.setContentText("Verifiez que l'importation "
+                                + "s'est bien passer sur l'autre ordinateur !");
                         alert.showAndWait();
                     });
                 } catch (IOException e) {
                     javafx.application.Platform.runLater(() -> {
                         Alert alert = new Alert(AlertType.ERROR);
                         alert.setTitle("IP ERROR");
-                        alert.setHeaderText("aucune application n'attend des données à cette adresse");
-                        alert.setContentText("Consultez l'aide pour plus d'informations sur comment transmettre vos données");
+                        alert.setHeaderText("aucune application n'attend "
+                                + "des données à cette adresse");
+                        alert.setContentText("Consultez l'aide pour "
+                                + "plus d'informations sur comment "
+                                + "transmettre vos données");
                         alert.showAndWait();
                     });
                 }
@@ -204,7 +214,8 @@ public class VuePopUpExporterControleur {
     	Button bouton = (Button) event.getSource();
     	Image image;
         if(bouton.getStyleClass().contains("secondary-button")) {
-        	image = new Image(getClass().getResource("../vue/ressources/icone_moins.png").toExternalForm());
+        	image = new Image(getClass().getResource(
+        	        "../vue/ressources/icone_moins.png").toExternalForm());
         	bouton.getStyleClass().remove("secondary-button");
         	bouton.getStyleClass().remove("secondary-button-hover");
         	bouton.getStyleClass().add("primary-button");
@@ -212,7 +223,8 @@ public class VuePopUpExporterControleur {
         	onMouseSwitch(bouton, "primary");
         	
         } else {
-        	image = new Image(getClass().getResource("../vue/ressources/icone_plus.png").toExternalForm());
+        	image = new Image(getClass().getResource(
+        	        "../vue/ressources/icone_plus.png").toExternalForm());
         	bouton.getStyleClass().remove("primary-button");
         	bouton.getStyleClass().remove("primary-button-hover");
         	bouton.getStyleClass().add("secondary-button");

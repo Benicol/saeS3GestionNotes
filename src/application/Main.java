@@ -29,9 +29,11 @@ public class Main extends Application {
         EchangeurDeVue.setPrimaryStage(primaryStage);
         FXMLLoader chargeurFXML = new FXMLLoader();
         if (Modele.isParametrageInitialise()) {
-            chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("h")));
+            chargeurFXML.setLocation(getClass().getResource(
+                    EchangeurDeVue.getNomVue("h")));
         } else {
-            chargeurFXML.setLocation(getClass().getResource(EchangeurDeVue.getNomVue("i")));
+            chargeurFXML.setLocation(getClass().getResource(
+                    EchangeurDeVue.getNomVue("i")));
         }
         Parent racine;
         try {
@@ -42,7 +44,8 @@ public class Main extends Application {
             // On définit les caractéristiques de la fenêtre et lui associe la scène
             primaryStage.setTitle("Grade Tracker");
             EchangeurDeVue.setSceneCourante(scene);
-            primaryStage.getIcons().add(new Image("vue/ressources/icone_application.png"));
+            primaryStage.getIcons().add(new Image(
+                    "vue/ressources/icone_application.png"));
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (IOException e) {

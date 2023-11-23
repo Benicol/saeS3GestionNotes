@@ -80,8 +80,10 @@ public class TestModele {
         donneesRessources2.put("R2.01", "ressource de test 1");
         
         
-        parametrage = new Parametrage(semestre, parcours, donneesCompetences, donneesSaes, donneesRessources);
-        parametrage2 = new Parametrage(semestre, parcours, donneesCompetences2, donneesSaes2, donneesRessources2);
+        parametrage = new Parametrage(semestre, parcours, donneesCompetences,
+                donneesSaes, donneesRessources);
+        parametrage2 = new Parametrage(semestre, parcours, donneesCompetences2,
+                donneesSaes2, donneesRessources2);
         Modele.setParametrage(parametrage);
     }
 	
@@ -93,7 +95,8 @@ public class TestModele {
 		Modele.reset();
 		Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv");
 		assertDoesNotThrow(() -> Modele.exporter(true, true));
-		OutilFichier.ecrire("test.csv", OutilCSV.formaterToCSV(Modele.exporter(true, true)));
+		OutilFichier.ecrire("test.csv", OutilCSV.formaterToCSV(
+		        Modele.exporter(true, true)));
 		Modele.reset();
 		
 		Modele.importer("test.csv");
@@ -103,11 +106,16 @@ public class TestModele {
         assertEquals(14, Modele.getRessources().size());
         assertEquals(7, Modele.getSae().size());
         assertEquals("U2.1",Modele.getCompetences().get("U2.1").getIdentifiant());
-        assertEquals("Réaliser un développement d’application",Modele.getCompetences().get("U2.1").getLibelle());
-        assertEquals(4,Modele.getCompetences().get("U2.1").getListeRessources().size());
-        assertEquals(2,Modele.getCompetences().get("U2.1").getListeSaes().size());
-        assertEquals(4,Modele.getRessources().get("R2.01").getListeEvaluations().size());
-        assertEquals(0,Modele.getRessources().get("R2.03").getListeEvaluations().size());
+        assertEquals("Réaliser un développement d’application",
+                Modele.getCompetences().get("U2.1").getLibelle());
+        assertEquals(4,
+                Modele.getCompetences().get("U2.1").getListeRessources().size());
+        assertEquals(2,
+                Modele.getCompetences().get("U2.1").getListeSaes().size());
+        assertEquals(4,
+                Modele.getRessources().get("R2.01").getListeEvaluations().size());
+        assertEquals(0,
+                Modele.getRessources().get("R2.03").getListeEvaluations().size());
 		
 	
 	}
@@ -119,31 +127,41 @@ public class TestModele {
 	public void testImporter() {
 	    Modele.reset();
 	    //Modele.importer(".\\src\\modele\\test\\testModeleParametrage.csv");
-        assertDoesNotThrow(() -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv"));
+        assertDoesNotThrow(() -> Modele.importer(
+                ".\\src\\modele\\test\\csv\\testModeleParametrage.csv"));
         assertEquals("2", Modele.getParametrage().getSemestre());
         assertEquals("Tous", Modele.getParametrage().getParcours());
         assertEquals(6, Modele.getCompetences().size());
         assertEquals(14, Modele.getRessources().size());
         assertEquals(7, Modele.getSae().size());
         assertEquals("U2.1",Modele.getCompetences().get("U2.1").getIdentifiant());
-        assertEquals("Réaliser un développement d’application",Modele.getCompetences().get("U2.1").getLibelle());
-        assertEquals(4,Modele.getCompetences().get("U2.1").getListeRessources().size());
-        assertEquals(2,Modele.getCompetences().get("U2.1").getListeSaes().size());
-        assertEquals(4,Modele.getRessources().get("R2.01").getListeEvaluations().size());
-        assertEquals(0,Modele.getRessources().get("R2.03").getListeEvaluations().size());
+        assertEquals("Réaliser un développement d’application",
+                Modele.getCompetences().get("U2.1").getLibelle());
+        assertEquals(4,
+                Modele.getCompetences().get("U2.1").getListeRessources().size());
+        assertEquals(2,
+                Modele.getCompetences().get("U2.1").getListeSaes().size());
+        assertEquals(4,
+                Modele.getRessources().get("R2.01").getListeEvaluations().size());
+        assertEquals(0,
+                Modele.getRessources().get("R2.03").getListeEvaluations().size());
         assertThrows(IllegalArgumentException.class,
-                () -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrage.csv"));
+                () -> Modele.importer(
+                        ".\\src\\modele\\test\\csv\\testModeleParametrage.csv"));
         Modele.reset();
         assertThrows(IllegalArgumentException.class,
-                () -> Modele.importer(".\\src\\modele\\test\\csv\\fichierEvidemmentInvalide.csv"));
+                () -> Modele.importer(
+                        ".\\src\\modele\\test\\csv\\fichierEvidemmentInvalide.csv"));
         Modele.reset();
         
         // tests sans semestre
-        assertThrows(IllegalArgumentException.class, () -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide1.csv"));
+        assertThrows(IllegalArgumentException.class, () -> Modele.importer(
+                ".\\src\\modele\\test\\csv\\testModeleParametrageInvalide1.csv"));
         Modele.reset();
         
         // tests sans parcours
-        assertThrows(IllegalArgumentException.class, () -> Modele.importer(".\\src\\modele\\test\\csv\\testModeleParametrageInvalide2.csv"));
+        assertThrows(IllegalArgumentException.class, () -> Modele.importer(
+                ".\\src\\modele\\test\\csv\\testModeleParametrageInvalide2.csv"));
         
         // tests sans ligne vide entre 2 tableaux
         assertThrows(IllegalArgumentException.class, () -> {

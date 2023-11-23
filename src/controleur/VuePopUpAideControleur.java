@@ -77,9 +77,11 @@ public class VuePopUpAideControleur {
                         EchangeurDeVue.getModule("MAM")));
                 Parent root = fxmlloader.load();
                 VBox vboxP = (VBox) root;
-                VBox vbox = (VBox) ((HBox) vboxP.getChildren().get(0)).getChildren().get(0);
+                VBox vbox = (VBox) 
+                        ((HBox) vboxP.getChildren().get(0)).getChildren().get(0);
                 Text text = (Text) vbox.getChildren().get(0);
-                text.setText(section.getAttributes().getNamedItem("nom").getNodeValue());
+                text.setText(
+                        section.getAttributes().getNamedItem("nom").getNodeValue());
                 VBox contenu = (VBox) vbox.getChildren().get(1);
                 menu.getChildren().add(vboxP);
                 NodeList parties = section.getChildNodes();
@@ -89,14 +91,16 @@ public class VuePopUpAideControleur {
                         Element eElement = (Element) partie;
                         // Charge le module
                         fxmlloader = new FXMLLoader(getClass().getResource(
-                                                         EchangeurDeVue.getModule("MSMB")));
+                                             EchangeurDeVue.getModule("MSMB")));
                         root = fxmlloader.load();
                         Button button = (Button) root;
                         // Configure le module
                         if (partie.getNodeName() == "partie") {
                             button.setText(eElement.getAttribute("nom"));
-                            button.setOnMouseEntered((event) -> sideNavButtonInactiveEntered(event));
-                            button.setOnMouseExited((event) -> sideNavButtonInactiveExited(event));
+                            button.setOnMouseEntered(
+                                    (event) -> sideNavButtonInactiveEntered(event));
+                            button.setOnMouseExited(
+                                    (event) -> sideNavButtonInactiveExited(event));
                             button.setOnAction((event) -> {
                                 try {
                                     eltMenuSelectionner(button);
@@ -148,7 +152,8 @@ public class VuePopUpAideControleur {
                             root = fxmlloader.load();
                             hbox = (HBox) root;
                             Label text = (Label) hbox.getChildren().get(0);
-                            text.prefWidthProperty().bind(text.textProperty().length().multiply(7));
+                            text.prefWidthProperty().bind(
+                                    text.textProperty().length().multiply(7));
                             text.setWrapText(true);
                             text.setText(textContent);
                             listePrincipale.getChildren().add(hbox);
@@ -168,7 +173,8 @@ public class VuePopUpAideControleur {
                 root = fxmlloader.load();
                 hbox = (HBox) root;
                 Label text = (Label) hbox.getChildren().get(0);
-                text.prefWidthProperty().bind(text.textProperty().length().multiply(7));
+                text.prefWidthProperty().bind(
+                        text.textProperty().length().multiply(7));
                 text.setWrapText(true);
                 text.setText(textContent);
                 listePrincipale.getChildren().add(hbox);

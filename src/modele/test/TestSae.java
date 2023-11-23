@@ -54,8 +54,10 @@ class TestSae {
     
     @Test
     public void testSetNote() {
-        assertThrows(IllegalArgumentException.class, () -> saeTest.setNote(noteIncorrecte1));
-        assertThrows(IllegalArgumentException.class, () -> saeTest.setNote(noteIncorrecte2));
+        assertThrows(IllegalArgumentException.class, 
+                () -> saeTest.setNote(noteIncorrecte1));
+        assertThrows(IllegalArgumentException.class, 
+                () -> saeTest.setNote(noteIncorrecte2));
         assertDoesNotThrow(() -> saeTest.setNote(noteCorrecte));
     }
     

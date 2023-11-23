@@ -35,7 +35,8 @@ class TestOutilCSV {
         }
         donneesIncorrectes = null;
         
-        donneesCSVCorrectes = "test1;test2;test3\ntest4;test5;test6\ntest7;test8;test9";
+        donneesCSVCorrectes = "test1;test2;test3\ntest4;test5;test6\ntest7;test8"
+                + ";test9";
         donneesCSVIncorrectes1 = null;
         donneesCSVIncorrectes2 = "";
     }
@@ -44,12 +45,14 @@ class TestOutilCSV {
     public void testFormaterToCSV() {
         assertDoesNotThrow(() -> OutilCSV.formaterToCSV(donneesCorrectes));
         try {
-            assertEquals(donneesCSVCorrectes, OutilCSV.formaterToCSV(donneesCorrectes));
+            assertEquals(donneesCSVCorrectes, 
+                    OutilCSV.formaterToCSV(donneesCorrectes));
         } catch (IllegalArgumentException e) {
             System.out.println("erreur de donnees");
         }
         
-        assertThrows(IllegalArgumentException.class, () -> OutilCSV.formaterToCSV(donneesIncorrectes));
+        assertThrows(IllegalArgumentException.class, 
+                () -> OutilCSV.formaterToCSV(donneesIncorrectes));
     }
     
     @Test
@@ -61,7 +64,9 @@ class TestOutilCSV {
             System.out.println("erreur de donnees");
         }
         
-        assertThrows(IllegalArgumentException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes1));
-        assertThrows(IllegalArgumentException.class, () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes2));
+        assertThrows(IllegalArgumentException.class, 
+                () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes1));
+        assertThrows(IllegalArgumentException.class, 
+                () -> OutilCSV.formaterToDonnees(donneesCSVIncorrectes2));
     }
 }

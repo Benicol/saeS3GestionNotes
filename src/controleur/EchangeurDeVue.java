@@ -30,7 +30,8 @@ public class EchangeurDeVue {
      */
     public static String getNomVue(String codeVue) {
         if (!vues.containsKey(codeVue)) {
-            throw new IllegalArgumentException("Code vue " + codeVue + " invalide");
+            throw new IllegalArgumentException("Code vue " + codeVue 
+                                                           + " invalide");
         }
         return vues.get(codeVue);
     }
@@ -44,7 +45,8 @@ public class EchangeurDeVue {
      */
     public static String getModule(String codeModule) {
         if (!modules.containsKey(codeModule)) {
-            throw new IllegalArgumentException("Code vue " + modules + " invalide");
+            throw new IllegalArgumentException("Code vue " + modules 
+                                                           + " invalide");
         }
         return modules.get(codeModule);
     }
@@ -210,7 +212,8 @@ public class EchangeurDeVue {
      */
     public static void launchPopUp(String codeVue, String nomFenetre) {
         try {
-            Parent racine = FXMLLoader.load(EchangeurDeVue.class.getResource(getNomVue(codeVue)));
+            Parent racine = FXMLLoader.load(
+                    EchangeurDeVue.class.getResource(getNomVue(codeVue)));
             if (scenePopUp == null) {
                 setScenePopUp(new Scene(racine));
             } else {
