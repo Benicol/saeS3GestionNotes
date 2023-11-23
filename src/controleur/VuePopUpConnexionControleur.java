@@ -46,6 +46,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import modele.Modele;
+import modele.OutilCSV;
 import modele.OutilCryptographie;
 import modele.OutilFichier;
 import modele.OutilReseau;
@@ -141,6 +142,7 @@ public class VuePopUpConnexionControleur {
             OutilFichier.ecrire("test6.txt", OutilCryptographie.decoder(cle, donneesCrypte));
             enAttente.interrupt();
             texte.setText("Transmission Terminé !");
+            Modele.importerReseau(OutilCSV.formaterToDonnees(decrypter));
             Thread.sleep(5000);
             transfertOk = true;
             clientSocket.close();
