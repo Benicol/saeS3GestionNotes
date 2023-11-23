@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import modele.Evaluation;
-import modele.OutilReseau;
 
 /**
  * Tests en JUnit de la classe "Evaluation".

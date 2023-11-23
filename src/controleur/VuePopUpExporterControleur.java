@@ -1,16 +1,11 @@
 package controleur;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.math.BigInteger;
-import java.net.ConnectException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
@@ -27,7 +22,6 @@ import javafx.scene.input.MouseEvent;
 import modele.Modele;
 import modele.OutilCSV;
 import modele.OutilCryptographie;
-import modele.OutilFichier;
 
 /** 
  * Controleur de la vue vue.VueExporter.fxml
@@ -173,16 +167,11 @@ public class VuePopUpExporterControleur {
                     writer.println(ga.toString());
                     BigInteger gb = new BigInteger(reader.readLine());
                     String cle = OutilCryptographie.creerCleVigenere();
-                    OutilFichier.ecrire("cle1.txt", "|" + cle + "|");
                     BigInteger cleCodee = OutilCryptographie.coderCle(cle, a, gb, p);
-                    writer.println(cleCodee.toString().replaceAll("\n", "@@@@@@@@@@"));
+                    writer.println(cleCodee.toString().replaceAll("\n", "‣․"));
                     String tmp = OutilCSV.formaterToCSV(Modele.exporter(programme, modalites));
-                    OutilFichier.ecrire("contenu1.txt", "|" + tmp + "|");
                     String donneesCrypte = OutilCryptographie.encoder(cle, tmp);
-                    OutilFichier.ecrire("contenuCrypte1.txt", "|" + donneesCrypte + "|");
-                    OutilFichier.ecrire("test1.txt", donneesCrypte.replaceAll("\n", "@@@@@@@@@@"));
-                    OutilFichier.ecrire("test15.txt", OutilCryptographie.decoder(cle, donneesCrypte));
-                    writer.println(donneesCrypte.replaceAll("\n", "@@@@@@@@@@"));
+                    writer.println(donneesCrypte.replaceAll("\n", "‣․"));
                     socket.close();
                     // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {

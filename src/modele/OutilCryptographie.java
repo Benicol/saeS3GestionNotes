@@ -6,7 +6,6 @@
 package modele;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.TreeSet;
 
 /** Classe outil permettant de : 
@@ -64,7 +63,6 @@ public class OutilCryptographie {
             if (isCaractereValide(c)) {
                 int decalage = getDecalage(cle, j);
                 char cDecode = decoderCaractere(c, decalage);
-                System.out.println(i + " : " + (int) c + " : " + decalage + " : " + cDecode);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
             }
@@ -179,16 +177,19 @@ public class OutilCryptographie {
      */
     public static String decoderCle(BigInteger cle_codee, BigInteger ga, int b, int p) {
         BigInteger code = ga.pow(b).mod(new BigInteger(Integer.toString(p)));
+        OutilFichier.ecrire("code.txt", code.toString());
+        String test = code + "\n";
         BigInteger cle_codee_divisee = cle_codee.divide(code);
+        test += cle_codee_divisee;
+        OutilFichier.ecrire("idk.txt", test);
+        
         
         int index = 0;
-        int compteur = 0;
         String cle_codee_str = cle_codee_divisee.toString();
         StringBuilder cle_decodee = new StringBuilder();
-        int taille_finale = cle_codee.toString().length()/3;
-        for (int i = 0; i < taille_finale-1; i++) {
-            compteur = i*3;
-            index = Integer.parseInt("" + cle_codee_str.charAt(compteur) + cle_codee_str.charAt(compteur + 1) + cle_codee_str.charAt(compteur + 2));
+        int taille_finale = cle_codee_str.length();
+        for (int i = 0; i < taille_finale - 2; i+=3) {
+            index = Integer.parseInt("" + cle_codee_str.charAt(i) + cle_codee_str.charAt(i + 1) + cle_codee_str.charAt(i + 2));
             cle_decodee.append(alphabet.charAt(index));
         }
         return cle_decodee.toString();

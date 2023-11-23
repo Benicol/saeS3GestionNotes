@@ -5,50 +5,24 @@
 package controleur;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
 import modele.Modele;
 import modele.OutilCSV;
 import modele.OutilCryptographie;
-import modele.OutilFichier;
 import modele.OutilReseau;
 
 /** 
@@ -109,9 +83,10 @@ public class VuePopUpConnexionControleur {
         serveurSocket = new Thread() {
             public void run() {
                 try {
-                    System.out.println("serveur started");
-                    Socket client = serveur.accept();
-                    handleConnection(client);
+                    while (true) {
+                        Socket client = serveur.accept();
+                        handleConnection(client);
+                    }
                 } catch (IOException e) {
                     return;
                 }
@@ -131,25 +106,16 @@ public class VuePopUpConnexionControleur {
             BigInteger bIG = new BigInteger(Integer.toString(g));
             BigInteger gb = bIG.pow(b);
             writer.println(gb.toString());
-            BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("@@@@@@@@@@", "\n"));
+            BigInteger cleCodee = new BigInteger(reader.readLine().replaceAll("‣․", "\n"));
             String cle = OutilCryptographie.decoderCle(cleCodee, ga, b, p);
-            OutilFichier.ecrire("cle2.txt", "|" + cle + "|");
-            String donneesCrypte = reader.readLine().replaceAll("@@@@@@@@@@", "\n");
-            OutilFichier.ecrire("contenuCrypte2.txt", "|" + donneesCrypte + "|");
+            String donneesCrypte = reader.readLine().replaceAll("‣․", "\n");
             String decrypter = OutilCryptographie.decoder(cle, donneesCrypte);
-            OutilFichier.ecrire("contenu2.txt", "|" + decrypter + "|");
-            OutilFichier.ecrire("test5.txt", decrypter);
-            OutilFichier.ecrire("test6.txt", OutilCryptographie.decoder(cle, donneesCrypte));
             enAttente.interrupt();
             texte.setText("Transmission Terminé !");
             Modele.importerReseau(OutilCSV.formaterToDonnees(decrypter));
-            Thread.sleep(5000);
             transfertOk = true;
             clientSocket.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -180,7 +146,7 @@ public class VuePopUpConnexionControleur {
             serveur.close();
         } catch (IOException e) {}
         enAttente.interrupt();
-        if (false) { //transfertOk
+        if (transfertOk) { //transfertOk
             EchangeurDeVue.getPopUpStage().close();
         } else {
             EchangeurDeVue.echangerAvecPopUp("vpui", "importer");

@@ -7,7 +7,6 @@ package modele;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -103,6 +102,7 @@ public class Modele {
      * @return donneesFinal
      * @throws IllegalArgumentException Si le paramétrage n'est pas déjà initialisé
      */
+    @SuppressWarnings("unchecked")
     public static String[][] exporter(boolean programme, boolean modalite) {
     	/*initialisation de la liste qui contiendras toute les données*/
     	ArrayList<ArrayList<String>> donnees = new ArrayList<>();
@@ -232,13 +232,6 @@ public class Modele {
     	for (int i = 0; i < donneesFinal.length; i++) {
     	    donneesFinal[i] = donnees.get(i).toArray(new String[0]);
     	}
-    	for (String[] tab : donneesFinal) {
-    	    System.out.print("[");
-    	    for (String elt : tab) {
-    	        System.out.print(elt + ", ");
-    	    }
-    	    System.out.println("]");
-    	}
     	return donneesFinal;
     }
     
@@ -299,6 +292,10 @@ public class Modele {
                         String[] infoLigne = new String[2];
                         infoLigne[0] = donnees[i][1];
                         infoLigne[1] = donnees[i][2];
+                        if (!isIdentifiant(infoLigne[0])) {
+                            donneesValide = false;
+                            messageErreur = "l'identifiant ligne " + i + "est invalide";
+                        }
                         competence.add(infoLigne.clone());
                         int poids = 0;
                         i++;
@@ -315,6 +312,10 @@ public class Modele {
                             i++;
                             int iComp = i;
                             infoLigne[0] = donnees[i][1];
+                            if (!isIdentifiant(infoLigne[0])) {
+                                donneesValide = false;
+                                messageErreur = "l'identifiant ligne " + i + "est invalide";
+                            }
                             infoLigne[1] = donnees[i][3];
                             /* Vérifie si la ligne concerne une ressource ou une SAE */
                             if (donnees[i][0].equals("Ressource")) {
@@ -358,6 +359,10 @@ public class Modele {
                         ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
                         String[] infoEvaluation = new String[3];
                         String key = donnees[i][1];
+                        if (!isIdentifiant(key)) {
+                            donneesValide = false;
+                            messageErreur = "l'identifiant ligne " + i + "est invalide";
+                        }
                         int poids = 0;
                         i++;
                         /* Parcours des lignes suivantes pour récupérer les évaluations 
@@ -432,14 +437,6 @@ public class Modele {
      * l'application.
      */
     public static void importerReseau(String[][] donnees) {
-        String[][] tmp1 = Modele.exporter(true, true);
-        for (String[] tab : donnees) {
-            System.out.print("[");
-            for (String elt : tab) {
-                System.out.print(elt + ", ");
-            }
-            System.out.println("]");
-        }
         /* Vérifie si le paramétrage est déjà initialisé */
         if (!isParametrageInitialise()) {
             // Si le paramétrage n'est pas initialisé, appelle la méthode générique d'importation
@@ -463,11 +460,9 @@ public class Modele {
                                 for (Evaluation e : r.getListeEvaluations()) {
                                     trouve = e.getNom().equals(donnees[i][0]);
                                     if (trouve) {
-                                        System.out.println("TROUVE");
                                     }
                                     // Si l'évaluation existe et n'a pas de date mais la date est présente dans les données
                                     if (trouve && (e.getDate().isBlank() && !donnees[i][1].isBlank())) {
-                                        System.out.println("JE CHANGE UNE DATE LA");
                                         e.setDate(donnees[i][1]);
                                     }
                                 }
@@ -502,7 +497,6 @@ public class Modele {
                 throw new IllegalArgumentException("Les données sont incompatibles !");
             }
         }
-        Modele.exporter(true, true);
     }   
 
     /* 
@@ -542,7 +536,6 @@ public class Modele {
                  */
                 while (poids != 100) {
                     i++;
-                    int iComp = i;
                     infoLigne[0] = donnees[i][1];
                     infoLigne[1] = donnees[i][3];
                     /* Vérifie si la ligne concerne une ressource ou une SAE */
@@ -558,8 +551,7 @@ public class Modele {
                 /* Ajoute la compétence à la liste des compétences */
                 listeCompetence.add(competence.toArray(new String[0][0]));
             } else if (donnees[i].length >= 1 // Si la ligne concerne une ressource
-                    && donnees[i][0].equals("Ressource")) { 
-                int iRess = i;
+                    && donnees[i][0].equals("Ressource")) {
                 ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
                 String[] infoEvaluation = new String[3];
                 String key = donnees[i][1];

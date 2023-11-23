@@ -91,7 +91,6 @@ public class TestOutilCryptographie {
         BigInteger gb = new BigInteger(Integer.toString(G)).pow(B);
         String cle = "4Êtw£° $@²*~^`j0*éç.";
         BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
-        System.out.println(OutilCryptographie.coderCle(cle, A, gb, P));
         assertEquals(OutilCryptographie.coderCle(cle, A, gb, P), cle_codee);
     }
     
@@ -103,7 +102,6 @@ public class TestOutilCryptographie {
         BigInteger ga = new BigInteger(Integer.toString(G)).pow(A);
         BigInteger cle_codee = new BigInteger("608821584499293128437671509524111765773571052896181357932355128");
         String cle = "4Êtw£° $@²*~^`j0*éç.";
-        //System.out.println(OutilCryptographie.decoderCle(cle_codee, ga, B, P));
         assertEquals(OutilCryptographie.decoderCle(cle_codee, ga, B, P), cle);
     }
     

@@ -7,20 +7,13 @@ package application;
 import java.io.IOException;
 
 import controleur.EchangeurDeVue;
-import controleur.VueHomepageController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import modele.Modele;
-import modele.OutilCSV;
-import modele.OutilFichier;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 
 /**
  * Classe de main, point d'entrée de l'application
@@ -63,9 +56,6 @@ public class Main extends Application {
      * @param args non utilisé
      */
     public static void main(String[] args) {
-        String test = "coucou\n";
-        System.out.println(test.length());
-        System.out.println("|" + test.indexOf('\n') + "|");
         launch(args); // appelera la méthode start
     }
 }

@@ -14,7 +14,6 @@ import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import modele.Modele;
-import modele.Ressource;
 
 /** 
  * Contrôleur de la vue vue.VueImportation.fxml

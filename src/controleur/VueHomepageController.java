@@ -268,7 +268,6 @@ public class VueHomepageController {
                 selected.getStyleClass().add("side-nav-element-active-not-hover");
                 selected.setOnMouseEntered(null);
                 selected.setOnMouseExited(null);
-                System.out.println(selected.getStyleClass());
             }
         }
     }
@@ -1045,7 +1044,6 @@ public class VueHomepageController {
      */
     private void noteChangerEvaluation(Evaluation eval, Label feedback, TextField noteText, Ressource ressource) {
         try {
-            System.out.println(feedback.getStyleClass());
             if (feedback.getStyleClass().contains("negatif")) {
                 feedback.getStyleClass().remove("negatif");
             }
@@ -1445,7 +1443,6 @@ public class VueHomepageController {
                                                               .getChildren().get(1);
         try {
             if (sae.getNote() == null || reponse.getText().equals("") ||Double.parseDouble(reponse.getText().replace(",", ".")) != sae.getNote()) {
-                System.out.println("test");
                 sae.setNote(reponse.getText().equals("") ? null : Double.parseDouble(reponse.getText().replace(",", ".")));
                 Modele.sauvegarder();
                 if (feedback.getStyleClass().contains("negatif")) {

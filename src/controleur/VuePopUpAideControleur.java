@@ -15,19 +15,16 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.io.File;
 
-import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextBoundsType;
 import modele.Modele;
 
 /** 
@@ -142,7 +139,6 @@ public class VuePopUpAideControleur {
                     Element currentElement = (Element) partie;
                     
                     if (currentElement.getNodeName() == "paragraphe") {
-                        System.out.println(currentElement.getNodeName() + "||" + currentElement.getTextContent());
                         textContent += currentElement.getTextContent() + "\n";
                     }
                     if (currentElement.getNodeName() == "image") {
@@ -178,7 +174,6 @@ public class VuePopUpAideControleur {
                 listePrincipale.getChildren().add(hbox);
                 textContent ="";
             }
-            System.out.println(nListe.getLength());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -215,7 +210,6 @@ public class VuePopUpAideControleur {
             selected.getStyleClass().add("side-nav-element-active-not-hover");
             selected.setOnMouseEntered(null);
             selected.setOnMouseExited(null);
-            System.out.println(selected.getStyleClass());
         }
     }
     

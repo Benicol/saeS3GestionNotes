@@ -24,8 +24,6 @@ public class OutilCSV {
         }
         StringBuilder donneesCSV = new StringBuilder();
         for (String[] ligne : donnees) {
-            for (String elt : ligne ) {
-            }
             for (int i = 0; i < ligne.length; i++) {
                 donneesCSV.append(ligne[i] + ";");
                 if (i == ligne.length - 1) {
