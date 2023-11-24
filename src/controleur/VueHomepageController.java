@@ -19,7 +19,6 @@ import java.util.HashMap;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -1603,16 +1602,5 @@ public class VueHomepageController {
         // Démarrez la tâche dans un nouveau thread
             currentThreads.put(feedback, new Thread(task));
             currentThreads.get(feedback).start();
-    }
-    private void quitter() {
-        if (dansModifierModalite()) {
-            quitterModaliter();
-        }
-        System.out.println(dansModifierModalite());
-        if (!dansModifierModalite()) {
-            System.out.println("closed by me :)");
-            EchangeurDeVue.getPrimaryStage().close();
-        }
-
     }
  }

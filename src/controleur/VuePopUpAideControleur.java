@@ -21,6 +21,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -137,49 +139,39 @@ public class VuePopUpAideControleur {
             listePrincipale.getChildren().add(label);
             NodeList nListe = eElement.getChildNodes();
             String textContent = "";
+            fxmlloader = new FXMLLoader(getClass().getResource(
+                    EchangeurDeVue.getModule("MAT")));
+            root = fxmlloader.load();
+            VBox vbox = (VBox) root;
             for (int j = 0; j < nListe.getLength(); j++) {
                 Node partie = nListe.item(j);
                 if (partie.getNodeType() == Node.ELEMENT_NODE) {
                     Element currentElement = (Element) partie;
                     
                     if (currentElement.getNodeName() == "paragraphe") {
-                        textContent += currentElement.getTextContent() + "\n";
+                        Label texte = new Label();
+                        texte.getStyleClass().add("text-aide");
+                        texte.setWrapText(true);
+                        texte.setText(currentElement.getTextContent());
+                        vbox.getChildren().add(texte);
                     }
                     if (currentElement.getNodeName() == "image") {
-                        if (!textContent.equals("")) {
-                            fxmlloader = new FXMLLoader(getClass().getResource(
-                                    EchangeurDeVue.getModule("MAT")));
-                            root = fxmlloader.load();
-                            hbox = (HBox) root;
-                            Label text = (Label) hbox.getChildren().get(0);
-                            text.prefWidthProperty().bind(
-                                    text.textProperty().length().multiply(7));
-                            text.setWrapText(true);
-                            text.setText(textContent);
-                            listePrincipale.getChildren().add(hbox);
-                            textContent ="";
-                        }
-                        fxmlloader = new FXMLLoader(getClass().getResource(
-                                EchangeurDeVue.getModule("MAI")));
-                        root = fxmlloader.load();
-                        hbox = (HBox) root;
-                        listePrincipale.getChildren().add(hbox);
+                        String chemin = currentElement.getAttribute("chemin");
+                        String width = currentElement.getAttribute("width");
+                        String height = currentElement.getAttribute("height");
+                        ImageView imageView = new ImageView();
+                        imageView.setPickOnBounds(true);
+                        imageView.setPreserveRatio(true);
+                        imageView.setFitHeight(150);
+                        imageView.setFitWidth(600);
+                        Image image = new Image(getClass().getResource(
+                                chemin).toExternalForm());
+                        imageView.setImage(image);
+                        vbox.getChildren().add(imageView);
                     }
                 }
             }
-            if (!textContent.equals("")) {
-                fxmlloader = new FXMLLoader(getClass().getResource(
-                        EchangeurDeVue.getModule("MAT")));
-                root = fxmlloader.load();
-                hbox = (HBox) root;
-                Label text = (Label) hbox.getChildren().get(0);
-                text.prefWidthProperty().bind(
-                        text.textProperty().length().multiply(7));
-                text.setWrapText(true);
-                text.setText(textContent);
-                listePrincipale.getChildren().add(hbox);
-                textContent ="";
-            }
+            listePrincipale.getChildren().add(vbox);
         } catch (IOException e) {
             e.printStackTrace();
         }
