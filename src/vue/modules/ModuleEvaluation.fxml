@@ -41,11 +41,11 @@
                         <Font name="Verdana Bold" size="16.0" />
                      </font>
                   </Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Mi-septembre">
+                  <Label maxWidth="1000.0" styleClass="label-noir" text="Label">
                      <font>
                         <Font name="Verdana" size="16.0" />
                      </font>
-                  </Text>
+                  </Label>
                </children>
             </HBox>
          </children>

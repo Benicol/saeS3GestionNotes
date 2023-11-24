@@ -42,8 +42,7 @@ public class OutilCryptographie {
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
             } else {
-                throw new IllegalArgumentException(c + " ne fait pas partie de "
-                                                     + "l'alphabet autorisé");
+                sb.append(c);
             }
         }
         return sb.toString();
@@ -65,10 +64,8 @@ public class OutilCryptographie {
                 char cDecode = decoderCaractere(c, decalage);
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
-            }
-            else {
-                throw new IllegalArgumentException(c + " ne fait pas partie de "
-                                                     + "l'alphabet autorisé");
+            } else {
+                sb.append(c);
             }
         }
         return sb.toString();

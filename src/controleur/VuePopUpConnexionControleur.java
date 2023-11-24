@@ -17,6 +17,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -42,7 +43,7 @@ public class VuePopUpConnexionControleur {
     
     private Thread enAttente;
     
-    private Thread serveurSocket;
+    private Thread serveurThread;
     private ServerSocket serveur;
     private boolean transfertOk = false;
     
@@ -80,25 +81,44 @@ public class VuePopUpConnexionControleur {
                 }
             }
         };
-        enAttente = new Thread(task);
-        enAttente.start();
-        serveur = new ServerSocket(20232);
-        serveurSocket = new Thread() {
-            public void run() {
-                try {
-                    while (true) {
+        Task<Void> task2 = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                while (true) {
+                    try {
                         Socket client = serveur.accept();
                         handleConnection(client);
+                        transfertOk = true;
+                        javafx.application.Platform.runLater(() -> {
+                            texte.setText("Données valide ! Importation terminé !");
+                            boutonAnnuler.setText("Retour à l'application");
+                            Image image = new Image(getClass().getResource(
+                                    "../vue/ressources/icone_retour.png").toExternalForm());
+                            boutonImageAnnuler.setImage(image);
+                        });
+                    } catch (IOException e) {
+                        return null;
+                    } catch (IllegalArgumentException e) {
+                        javafx.application.Platform.runLater(() -> {
+                            texte.setText("Données invalide ! Importation échoué !");
+                            boutonAnnuler.setText("Retour à l'importation");
+                            Image image = new Image(getClass().getResource(
+                                    "../vue/ressources/icone_retour.png").toExternalForm());
+                            boutonImageAnnuler.setImage(image);
+                        });
                     }
-                } catch (IOException e) {
-                    return;
+                    
                 }
             }
         };
-        serveurSocket.start();
+        enAttente = new Thread(task);
+        enAttente.start();
+        serveur = new ServerSocket(20232);
+        serveurThread = new Thread(task2);
+        serveurThread.start();
     }
     
-    private void handleConnection(Socket clientSocket) {
+    private void handleConnection(Socket clientSocket) throws IllegalArgumentException {
         try {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(clientSocket.getInputStream()));
@@ -117,9 +137,7 @@ public class VuePopUpConnexionControleur {
             String donneesCrypte = reader.readLine().replaceAll("‣․", "\n");
             String decrypter = OutilCryptographie.decoder(cle, donneesCrypte);
             enAttente.interrupt();
-            texte.setText("Transmission Terminé !");
             Modele.importerReseau(OutilCSV.formaterToDonnees(decrypter));
-            transfertOk = true;
             clientSocket.close();
         } catch (IOException e) {
             e.printStackTrace();

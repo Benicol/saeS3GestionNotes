@@ -16,8 +16,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -31,6 +34,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.WindowEvent;
 import javafx.scene.layout.HBox;
 
 /** 
@@ -91,6 +95,18 @@ public class VueHomepageController {
      */
     @FXML
     void initialize() throws Exception {
+        Platform.setImplicitExit(false);
+        EchangeurDeVue.getPrimaryStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                if (dansModifierModalite()) {
+                    quitterModaliter();
+                }
+                if (dansModifierModalite()) {
+                    e.consume();
+                }
+            }
+        });
         // initialise le semestre et parcours
         nbSemestreParcours.setText("Semestre " + Modele.getParametrage()
                                    .getSemestre() + " - Parcours " + 
@@ -438,6 +454,7 @@ public class VueHomepageController {
             }
             EchangeurDeVue.launchPopUp("vpui", "Importer");
         }
+        EchangeurDeVue.echangerAvec("h", false);
         
     }
     
@@ -1068,7 +1085,7 @@ public class VueHomepageController {
                     ((HBox) ligneHaute.getChildren().get(0)).getChildren().get(0);
             Label nomEval = (Label) ligneHaute.getChildren().get(1);
             HBox ligneBasse = (HBox) colonneGauche.getChildren().get(1);
-            Text date = (Text) ligneBasse.getChildren().get(1);
+            Label date = (Label) ligneBasse.getChildren().get(1);
             HBox colonneDroite = (HBox) 
                     ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
             Label feedback = (Label) colonneDroite.getChildren().get(0);
@@ -1587,4 +1604,15 @@ public class VueHomepageController {
             currentThreads.put(feedback, new Thread(task));
             currentThreads.get(feedback).start();
     }
-}
+    private void quitter() {
+        if (dansModifierModalite()) {
+            quitterModaliter();
+        }
+        System.out.println(dansModifierModalite());
+        if (!dansModifierModalite()) {
+            System.out.println("closed by me :)");
+            EchangeurDeVue.getPrimaryStage().close();
+        }
+
+    }
+ }
