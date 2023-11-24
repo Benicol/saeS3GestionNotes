@@ -10,24 +10,24 @@
 		</partie>
 	</section>
 	<section nom="Structure et explications des pages">
-		<partie nom="Structure du site">
-			<paragraphe>GradeTracker fonctionne au travers d’une seule vue principale qui s’adapte aux actions de l’utilisateur et de plusieurs Pop-Up qui s'ouvrent selon les boutons sur lesquels l’utilisateur appuie. La vue principale, qui va permettre de voir et saisir toutes les notes, s’articule en plusieurs zones différentes :</paragraphe>
+		<partie nom="Structure de l'application">
+			<paragraphe>GradeTracker fonctionne au travers d’une seule fenêtre principale qui s’adapte aux actions de l’utilisateur et de plusieurs Pop-Up qui s'ouvrent selon les boutons sur lesquels l’utilisateur appuie. La fenêtre principale, qui va permettre de voir et saisir toutes les notes, s’articule en plusieurs zones différentes :</paragraphe>
 			<paragraphe>    - Une barre de navigation linéaire</paragraphe>
 			<paragraphe>    - Une barre de navigation latérale</paragraphe>
 			<paragraphe>    - La zone principale qui va afficher les différents enseignements</paragraphe>
-		<image chemin="../vue/ressources/icone_ajouter.png" width="" height="" /></partie>
+		<image chemin="../vue/ressources/aide_main_view.png" width="1024" height="576" /></partie>
 		
 		<partie nom="L'importation en drag-and-drop">
-			<paragraphe>Il existe en réalité une unique vue secondaire auquel l’utilisateur peut accéder en dehors de la vue principale et des différentes pop-ups. Il s’agit de la vue ‘Importation’.</paragraphe>
-			<image chemin="../vue/ressources/icone_annuler.png" width="" height=""/>
-			<paragraphe>Cette vue ne se lance que dans l’unique cas où l’utilisateur n’a aucun programme national sauvegardé sur son application. La seule action qui lui est disponible est alors d’importer un programme national. Pour ce faire, deux solutions sont possibles :</paragraphe>
+			<paragraphe>Il existe en réalité une unique fenêtre secondaire auquel l’utilisateur peut accéder en dehors de la fenêtre principale et des différentes pop-ups. Il s’agit de la fenêtre ‘Importation’.</paragraphe>
+			<image chemin="../vue/ressources/aide_importation.png" width="900" height="500"/>
+			<paragraphe>Cette fenêtre s'affiche uniquement dans le cas où l’utilisateur n’a aucun programme national sauvegardé sur son application. La seule action qui lui est disponible est alors d’importer un programme national. Pour ce faire, deux solutions sont possibles :</paragraphe>
 			<paragraphe>    - Cliquer sur la zone : cela ouvre une pop-up pour l’importation des données dont le fonctionnement sera expliqué par la suite</paragraphe>
 			<paragraphe>    - Faire glisser un fichier .csv dans l’application : auquel cas, une vérification est faite concernant le fichier déposé, et s’il est correct, les données du programme national sont importées. Sinon, une pop-up informe l’utilisateur des raisons qui ont provoqué l’impossibilité d’importer. Cela peut être lié à une mauvaise extension,  à un format inadéquat du csv, … </paragraphe>
-			<paragraphe>Dès l’instant où un programme national est inséré dans l’application, l’utilisateur est redirigé vers la vue principale. </paragraphe>
+			<paragraphe>Dès l’instant où un programme national est inséré dans l’application, l’utilisateur est redirigé vers la fenêtre principale. </paragraphe>
 		</partie>
 		<partie nom="Page principale : Barre de navigation linéaire">
 			<titre>Titre de l'application</titre>
-			<paragraphe>L'application s'appelle "GradeTracker", et c'est ce nom que vous pouvez voir en haut à droite. Celui-ci n'a pas d'utilité à proprement parler, hormis celle de se souvenir quel est le nom de l’application…</paragraphe>
+			<paragraphe>L'application s'appelle "GradeTracker", et c'est ce nom que vous pouvez voir en haut à gauche. Celui-ci n'a pas d'utilité à proprement parler, hormis celle de se souvenir quel est le nom de l’application…</paragraphe>
 			<titre>Nom de l'utilisateur</titre>
 			<paragraphe>Le nom affiché permet de voir, mais aussi de modifier le nom de l’utilisateur. Pour modifier ce nom, il suffit simplement à l’utilisateur de cliquer sur le texte. Une pop-up apparaît alors pour permettre à l’utilisateur de changer son nom. Certaines règles sont à respecter quant au choix de ce pseudo : </paragraphe>
 			<paragraphe>    - Il faut impérativement un pseudo : si l’utilisateur essaye de modifier son pseudo pour ne rien mettre, l’application ne le permettra pas.</paragraphe>
@@ -49,7 +49,7 @@
 			<paragraphe>    - Les modalités d’évaluation que l’étudiant exportateur a déjà saisi. De cette manière, l’étudiant importateur n’a pas à ajouter à la main toutes les modalités d’évaluation (qui ne sont pas fournies par le csv).</paragraphe>
 
 			<titre>Bouton réinitialiser</titre>
-			<paragraphe>Ce bouton permet d’ouvrir une pop-up nommée ‘Réinitialiser les données’. Son fonctionnement est simple : toutes les données sauvegardées dans l’application, que ce soit le programme national ou les modalités d’évaluations sont remises à zéro. Comme plus aucune donnée n’est présente dans l’application, la vue change alors pour se mettre sur la vue ‘importation’ permettant le drag and drop. </paragraphe>
+			<paragraphe>Ce bouton permet d’ouvrir une pop-up nommée ‘Réinitialiser les données’. Son fonctionnement est simple : toutes les données sauvegardées dans l’application, que ce soit le programme national ou les modalités d’évaluations sont remises à zéro. Comme plus aucune donnée n’est présente dans l’application, la fenêtre change alors pour se mettre sur la fenêtre ‘importation’ permettant le drag and drop. </paragraphe>
 			<paragraphe>Cette fonctionnalité est utile à la fin d’un semestre, lorsque l’utilisateur souhaite vider son application afin de charger le programme national d’un nouveau semestre.</paragraphe> 
 			<paragraphe>A noter toutefois qu’une unique donnée est sauvegardée en cas de réinitialisation : le pseudo de l’utilisateur.</paragraphe>
 
@@ -58,25 +58,26 @@
 			<paragraphe>Cette barre de navigation, située sur la gauche de l’écran, permet tout simplement de naviguer entre les différents enseignements disponibles (les différentes compétences, les différentes ressources, les différentes SAé). Pour se faire, il suffit de cliquer sur l’enseignement que nous souhaitons voir s’afficher. Il va alors changer de couleur dans la liste pour indiquer que l’utilisateur est actuellement en train de visionner cet élément spécifique, et les détails de cet enseignement vont s’afficher dans la zone principale. Bien sûr, ces détails varient en fonction du type d’enseignement sélectionné. Cependant, les notes sont toutes gérées de la même manière : toutes les notes sont sur vingt, et il est impossible de changer une note pour mettre une valeur négative ou une valeur supérieure à vingt. Les nombres à virgule sont bien évidemment acceptés.</paragraphe>
 			<titre>Cliquer sur une SAE</titre>
 			<paragraphe>Cet affichage est le plus simple de tous. En effet, la seule action disponible pour l’utilisateur sera de modifier la note obtenue à cette SAE. Pour ce faire, il suffit de cliquer sur l’encadré ‘saisir une note’ et de rentrer la note de son choix. Il reste possible de modifier cette note, voire de la supprimer en entrant à nouveau dans l’encadré.</paragraphe>
-			<image chemin="../vue/ressources/icone_application.png" width="" height=""/>
+			<image chemin="../vue/ressources/aide_sae.png" width="1024" height="576"/>
 			
 			<titre>Cliquer sur une ressource</titre>
 			<paragraphe>Cet affichage permet d’afficher une ressource. Or, une ressource est composée de différentes évaluations. Ainsi, c’est via cet écran que l’utilisateur va pouvoir saisir de nouvelles modalités d’évaluation. Pour ce faire, il faut cliquer sur ‘Editer les modalités d’évaluation’.</paragraphe>
-			<image chemin="../vue/ressources/icone_moyenne.png" width="" height=""/>
+			<image chemin="../vue/ressources/aide_ressource.png" width="1024" height="576"/>
 			<paragraphe>Il suffit alors d’ajouter des évaluations, qui sont composées de trois éléments : </paragraphe>
 			<paragraphe>    - Une description, qui fait office de titre et peut également détailler les prérequis liés à l’évaluation, par exemple.</paragraphe>
 			<paragraphe>    - Une pondération, qui doit impérativement être égale à pile 100 une fois cumulée avec toutes les évaluations.</paragraphe>
 			<paragraphe>    - Une date, qui peut être saisie mais qui n’est pas obligatoire.</paragraphe>
-			<paragraphe>Un bouton ‘Ajouter’ permet d’ajouter autant d’évaluation que nécessaire. Lorsque toutes les évaluations sont renseignées (il faut bien faire attention au total des pondérations !), l’utilisateur peut choisir de valider, ce qui sauvegarde ses changements. Annuler ou changer de vue ne sauvegarde pas les changements effectués. </paragraphe>
+			<paragraphe>Un bouton ‘Ajouter’ permet d’ajouter autant d’évaluation que nécessaire. Lorsque toutes les évaluations sont renseignées (il faut bien faire attention au total des pondérations !), l’utilisateur peut choisir de valider, ce qui sauvegarde ses changements. Annuler ou changer de fenêtre ne sauvegarde pas les changements effectués. </paragraphe>
+			<image chemin="../vue/ressources/aide_ressources_modalitees.png" width="1024" height="576"/>
 			<paragraphe>Lorsque toutes les modalités sont renseignées, l’utilisateur peut alors entrer une note par évaluation, de la même manière que pour entrer une note de SAE. La différence fondamentale est lié à la moyenne : il y aura un calcul de la moyenne de la ressource dès lors que toutes les notes de toutes les évaluations liées à cette ressource seront renseignées.</paragraphe>
-			<image chemin="../vue/ressources/icone_pseudo.png" width="" height=""/>
+			<image chemin="../vue/ressources/aide_ressource_moyenne.png" width="1024" height="576"/>
 
 			<titre>Cliquer sur une compétence</titre>
-			<image chemin="../vue/ressources/icone_reinitialiser.png" width="" height=""/>
+			<image chemin="../vue/ressources/aide_competence.png" width="1024" height="576"/>
 			<paragraphe>Cet affichage ne permet pas directement de saisir une note. En effet, une compétence dépend de ressources, dont la moyenne n’est calculée que si les évaluations qu’elles contiennent sont toutes renseignées, et de SAE. Si toutes les notes de toutes les ressources et SAE sont renseignées, alors la note de la compétence est affichée. Sinon, seule la liste des ressources et SAE qui composent la compétence sont visibles (avec leurs notes s’il y en a). Un bouton lié à chaque ressource et SAE permet de rejoindre rapidement la ressource/SAE en question : il suffit de cliquer sur le bouton en forme d'œil. </paragraphe>
 
 			<titre>Cliquer sur le bouton 'Afficher mes moyennes'</titre>
-			<image chemin="../vue/ressources/icone_exporter.png" width="" height=""/>
+			<image chemin="../vue/ressources/aide_afficher_moyennes.png" width="1024" height="576"/>
 			<paragraphe>En cliquant sur ce bouton, le dernier élément important de la barre de navigation latérale, on lance une fonctionnalité qui permet d’afficher absolument toutes les moyennes calculables, que ce soient celles liées à une compétence, à une ressource, ou à une SAE. Pour plus de clarté, elles sont triées par type et classées dans l’ordre alphabétique.</paragraphe>
 		</partie>
 		<partie nom="Les pop-ups">

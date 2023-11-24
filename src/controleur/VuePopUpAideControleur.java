@@ -154,20 +154,25 @@ public class VuePopUpAideControleur {
                         texte.setWrapText(true);
                         texte.setText(currentElement.getTextContent());
                         vbox.getChildren().add(texte);
-                    }
-                    if (currentElement.getNodeName() == "image") {
+                    } else if (currentElement.getNodeName() == "image") {
                         String chemin = currentElement.getAttribute("chemin");
                         String width = currentElement.getAttribute("width");
                         String height = currentElement.getAttribute("height");
                         ImageView imageView = new ImageView();
                         imageView.setPickOnBounds(true);
                         imageView.setPreserveRatio(true);
-                        imageView.setFitHeight(150);
-                        imageView.setFitWidth(600);
+                        imageView.setFitHeight(Integer.parseInt(height));
+                        imageView.setFitWidth(Integer.parseInt(width));
                         Image image = new Image(getClass().getResource(
                                 chemin).toExternalForm());
                         imageView.setImage(image);
                         vbox.getChildren().add(imageView);
+                    } else if (currentElement.getNodeName() == "titre") {
+                        Label texte = new Label();
+                        texte.getStyleClass().add("titre-aide");
+                        texte.setWrapText(true);
+                        texte.setText(currentElement.getTextContent());
+                        vbox.getChildren().add(texte);
                     }
                 }
             }

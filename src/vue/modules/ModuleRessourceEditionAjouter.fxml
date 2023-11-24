@@ -17,7 +17,7 @@
          <graphic>
             <ImageView pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../vue/ressources/icone_plus_blanc.png" />
+                  <Image url="@../vue/ressources/icone_ajouter.png" />
                </image>
             </ImageView>
          </graphic>
