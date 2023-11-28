@@ -49,7 +49,7 @@ public class OutilCryptographie {
     }
 
     /**
-     * Méthode qui permet de dechiffrer un message.
+     * Méthode qui permet de déchiffrer un message.
      * @param cle la clé de déchiffrement.
      * @param message le message a déchiffrer.
      * @return le message dechiffré.
@@ -82,7 +82,7 @@ public class OutilCryptographie {
         return alphabet.indexOf(c);
     }
     /**
-     * Vérifie si un caractère est valide, c'est à dire qu'il est présent dans
+     * Vérifie si un caractère est valide, c'est-à-dire qu'il est présent dans
      * l'alphabet de la classe.
      * @param c caractère à vérifier.
      * @return true si le caractère est valide, false sinon.
@@ -119,15 +119,17 @@ public class OutilCryptographie {
         return alphabet.charAt(indexDecode);
     }
     
-    /** Getter de l'attribut alphabet
+    /** 
+     * Getter de l'attribut alphabet
      * @return alphabet
      */
     public static String getAlphabet() {
         return alphabet;
     }
     
-    /** Permet de générer aléatoirement une clé de cryptage pour Vigenere
-     * @return cle
+    /** 
+     * Permet de générer aléatoirement une clé de cryptage pour Vigenere
+     * @return cle la clé créée
      */
     public static String creerCleVigenere() {
         StringBuilder cle = new StringBuilder();
@@ -143,13 +145,14 @@ public class OutilCryptographie {
         return cle.toString();
     }
     
-    /** Méthode permettant de coder la clé de l'algorithme de Vigenère
+    /** 
+     * Méthode permettant de coder la clé de l'algorithme de Vigenère
      * afin de l'envoyer via l'échange de Diffie-Hellman
-     * @param cle 
+     * @param cle la clé de chiffrement
      * @param a entier choisi
      * @param gb entier reçu
      * @param p entier premier modulo
-     * @return cle_codee
+     * @return cle_codee la clé une fois celle-ci cryptée.
      */
     public static BigInteger coderCle(String cle, int a, BigInteger gb, int p) {
         StringBuilder cle_codee_str = new StringBuilder();
@@ -165,9 +168,10 @@ public class OutilCryptographie {
         return cle_codee;
     }
     
-    /** Méthode permettant de décoder la clé de l'algorithme de Vigenère
+    /** 
+     * Méthode permettant de décoder la clé de l'algorithme de Vigenère
      * reçue avec l'échange de Diffie-Hellman
-     * @param cle_codee
+     * @param cle_codee la clé cryptée 
      * @param ga entier reçu
      * @param b entier choisi
      * @param p entier premier modulo
@@ -216,13 +220,13 @@ public class OutilCryptographie {
     }
     
     /**
-     * Méthode permettant de génerer aléàtoirement
+     * Méthode permettant de génerer aléatoirement
      * un entier générateur g du modulo p
      * @param p un entier premier servant de modulo
      * @return g un entier générateur aléàtoire de p
      */
     public static int genererG(int p) {
-        //Initialisation des variables
+        // Initialisation des variables
         TreeSet<Long> listeResultats = new TreeSet<>(); 
         boolean ajoutOk;
         long exposant;
@@ -233,14 +237,16 @@ public class OutilCryptographie {
             ajoutOk = true;
             exposant = 1;
             g = (int)(Math.random() * p);
-            //Boucle permettant de calculer tout les i exposant j
-            //pour tout j entre 1 et p
+            /* Boucle permettant de calculer tout les i exposant j
+             * pour tout j entre 1 et p
+             */
             for (int j = 1 ; j < p && ajoutOk ; j++) {
                 exposant = (exposant * g) % p;
                 ajoutOk = listeResultats.add(exposant);
             }
-            //Vérifie que i est un entier générateur de p,
-            //et si oui, l'ajoute à listeG
+            /* Vérifie que i est un entier générateur de p,
+             * et si oui, l'ajoute à listeG
+             */
             if (listeResultats.size() == (p - 1)) {
                 gTrouve = true;
             }

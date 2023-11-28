@@ -1,12 +1,13 @@
 /*
- * Sae.java                                  2 nov. 2023
+ * Sae.java                                                              2 nov. 2023
  * IUT Rodez, info1 2022-2023, ni copyright ni "copyleft"
  */
 package modele;
 
 import java.io.Serializable;
 
-/** Classe objet permettant de représenter une Sae
+/** 
+ * Classe objet permettant de représenter une SAE
  * à partir d'un identifiant et d'un libelle,
  * et permettant d'y associer une note.
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
@@ -17,7 +18,8 @@ public class Sae implements Enseignement, Serializable{
     private String identifiant;
     private Double note;
 
-    /** Constructeur de la classe Sae
+    /** 
+     * Constructeur de la classe SAE
      * @param identifiant
      * @param libelle
      */
@@ -31,14 +33,16 @@ public class Sae implements Enseignement, Serializable{
         this.note = null;
     }
     
-    /** Getter de l'attribut note
+    /** 
+     * Getter de l'attribut note
      * @return note
      */
     public Double getNote() {
         return note;
     }
     
-    /** Setter de l'attribut note
+    /** 
+     * Setter de l'attribut note
      * @param note
      */
     public void setNote(Double note) {
@@ -50,21 +54,24 @@ public class Sae implements Enseignement, Serializable{
         this.note = note;
     }
     
-    /** Getter de l'attribut libelle
+    /** 
+     * Getter de l'attribut libelle
      * @return libelle
      */
     public String getLibelle() {
         return libelle;
     }
     
-    /** Getter de l'attribut identifiant
+    /** 
+     * Getter de l'attribut identifiant
      * @return identifiant
      */
     public String getIdentifiant() {
         return identifiant;
     }
     
-    /** Renvoie la combinaison de l'identifiant et du libelle
+    /** 
+     * Renvoie la combinaison de l'identifiant et du libelle
      * @return intitule
      */
     public String creerIntitule() {

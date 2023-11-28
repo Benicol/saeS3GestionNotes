@@ -1,3 +1,7 @@
+/*
+ * VuePopUpExporterControleur.java                                        9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 
 import java.io.BufferedReader;
@@ -28,7 +32,7 @@ import modele.OutilCryptographie;
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class VuePopUpExporterControleur {
-    /** TexteField contenant l'adresse ip */
+    /** TexteField contenant l'adresse IP */
     @FXML
     private TextField adresseIpInput;
     @FXML
@@ -42,24 +46,24 @@ public class VuePopUpExporterControleur {
     private boolean programme = false;
     
     /**
-     * Methode appeler lors du clic sur le bouton "annuler"
+     * Méthode appelée lors du clic sur le bouton "annuler"
      */
     @FXML
     void annulerPresser(ActionEvent event) {
         EchangeurDeVue.getPopUpStage().close();
     }
     /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton plein (bouton violet)
-     * afin de le rendre plus foncer
+     * Méthode appelée lors de l'entrée de la souris sur un bouton plein (bouton violet)
+     * afin de le rendre plus foncé
      * Boutons utilisant cette méthode : 
      * - Bouton "Etablir une connexion"
      */
     @FXML
     void primaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("primary-button-not-hover");
         bouton.getStyleClass().add("primary-button-hover");
     }
@@ -71,41 +75,41 @@ public class VuePopUpExporterControleur {
      */
     @FXML
     void primaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
     /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton vide (bouton blanc)
+     * Méthode appelée lors de l'entrée de la souris sur un bouton vide (bouton blanc)
      * afin de le rendre plus foncer
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
     @FXML
     void secondaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
     
     /**
-     * Methode appeler lors de la sortie de la souris d'un bouton vide (bouton blanc)
+     * Methode appelée lors de la sortie de la souris d'un bouton vide (bouton blanc)
      * afin de le rééclaircir
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
     @FXML
     void secondaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
@@ -114,13 +118,13 @@ public class VuePopUpExporterControleur {
      * Méthode appelée lors de l'entrée de la souris dans un bouton de 
      * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
-     * - oeuil (Competences et afficher les moyennes)
+     * - oeil (Competences et afficher les moyennes)
      */
     @FXML
     void secondaryButtonWhiteEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-white-hover");
     }
@@ -129,20 +133,20 @@ public class VuePopUpExporterControleur {
      * Méthode appelé lors de la sortie de la souris dans un bouton de 
      * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
-     * - oeuil (Competences et afficher les moyennes)
+     * - oeil (Competences et afficher les moyennes)
      */
     @FXML
     void secondaryButtonWhiteExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-white-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
 
     
     /**
-     * Methode appeler lors du clic sur le bouton "Etablir une connexion"
+     * Methode appelée lors du clic sur le bouton "Etablir une connexion"
      * @throws InterruptedException 
      */
     @FXML
@@ -207,7 +211,7 @@ public class VuePopUpExporterControleur {
     }
     
     /**
-     * Methode appeler lors du clic sur le bouton "Modalités d'évaluation"
+     * Méthode appelée lors du clic sur le bouton "Modalités d'évaluation"
      */
     @FXML
     void boutonSelectionPresser(ActionEvent event) {

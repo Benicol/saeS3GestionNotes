@@ -1,5 +1,5 @@
 /*
- * EchangeurDeVue.java                                                    26/05/2023
+ * EchangeurDeVue.java                                                    26/10/2023
  * IUT Rodez, info1 2022-2023, pas de copyright ni "copyleft"
  */
 package controleur;
@@ -51,9 +51,7 @@ public class EchangeurDeVue {
         return modules.get(codeModule);
     }
 
-    /**
-     * Table de hachage
-     */
+    /** Table de hachage */
     private static Map<String, Parent> cache;
     
     /** Scene courante, ou scène qui est associée à la fenêtre principale */
@@ -136,7 +134,6 @@ public class EchangeurDeVue {
     /**
      * Modifie la vue associée à la scène courante, pour qu'elle devienne celle dont
      * le code est donné en argument La scène courante doit avoir été initialisée
-     * 
      * @param codeVue code de la vue à placer sur la scène courante
      * @param garderEnMemoire true si on garde en mémoire la vue, false sinon
      */
@@ -169,7 +166,6 @@ public class EchangeurDeVue {
     /**
      * Modifie la vue associée à la scène courante, pour qu'elle devienne celle dont
      * le code est donné en argument La scène courante doit avoir été initialisée
-     * 
      * @param codeVue code de la vue à placer sur la scène courante
      * @param nomFenetre nom de la fenetre
      * @param garderEnMemoire true si on garde en mémoire la vue, false sinon
@@ -206,7 +202,6 @@ public class EchangeurDeVue {
      * Modifie la vue associée à la scène de pop up, pour qu'elle devienne celle 
      * dont le code est donné en argument. La scène pop up sera initialisée ssi 
      * elle n'est pas déjà initialisée
-     * 
      * @param codeVue code de la vue à placer sur la scène courante
      * @param nomFenetre nom de la fenetre
      */

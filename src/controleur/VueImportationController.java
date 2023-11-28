@@ -1,5 +1,5 @@
 /*
- * VueImportationController.java                                             9 nov 2023
+ * VueImportationController.java                                          9 nov 2023
  * IUT Rodez, pas de copyright
  */
 package controleur;
@@ -43,9 +43,9 @@ public class VueImportationController {
      */
     @FXML
     void userEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("utilisateur-not-hover");
         bouton.getStyleClass().add("utilisateur-hover");
     }
@@ -55,9 +55,9 @@ public class VueImportationController {
      */
     @FXML
     void userExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("utilisateur-hover");
         bouton.getStyleClass().add("utilisateur-not-hover");
     }
@@ -84,7 +84,7 @@ public class VueImportationController {
             Dragboard dragboard = event.getDragboard();
             boolean success = false;
             if (dragboard.hasFiles()) {
-                // Récupérer le fichier déposé
+                // Récupére le fichier déposé
                 String file = dragboard.getFiles().get(0).getPath();
                 Modele.importer(file);
                 success = true;

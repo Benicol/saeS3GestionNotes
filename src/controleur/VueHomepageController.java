@@ -46,26 +46,26 @@ public class VueHomepageController {
     /** Bouton invisible contenant le nom de l'utilisateur*/
     @FXML
     private Button boutonUtilisateur;
-    /** zone pour les tritre de la liste principale */
+    /** Zone pour les titres de la liste principale */
     @FXML
     private VBox zoneTitre;
-    /** listePrincipal, VBox central de l'application */
+    /** ListePrincipale, VBox centrale de l'application */
     @FXML
     private VBox listePrincipale;
-    /** liste des ressources à gauche */
+    /** Liste des ressources à gauche */
     @FXML
     private VBox listeRessources;
-    /** liste des saes à gauche */
+    /** Liste des SAE à gauche */
     @FXML
     private VBox listeSaes;
-    /** liste des competences à gauche */
+    /** Liste des competences à gauche */
     @FXML
     private VBox listesCompetences;
-    /** bouton Sélectionner dans le menu à gauche */
+    /** Bouton Sélectionner dans le menu à gauche */
     private Button selected;
-    /** Utiliser pour la modification des modalitées d'une évluation */
+    /** Utilisé pour la modification des modalitées d'une évaluation */
     private ArrayList<Integer> evalTmpId;
-    /** Utiliser pour la modification des modalitées d'une évluation */
+    /** Utilisé pour la modification des modalitées d'une évaluation */
     private ArrayList<Integer> evalTmpIdRemoved;
     private Label bienvenueX = null;
     private Ressource ressourceModifier = null;
@@ -81,14 +81,14 @@ public class VueHomepageController {
     
     /**
      * Effectue les traitement suivant dans cette ordre : 
-     * - initialise le semestre et parcours
+     * - Initialise le semestre et le parcours
      * - Initialise selected à null
      * - Si le paramétrage est null, alors lance la vue importer
      * - Met en grand la fenêtre
      * - Met à jour l'utilisateur
      * - Affiche les compétences
      * - Affiche les ressources
-     * - Affiche les saes
+     * - Affiche les SAE
      * - Affiche le message de bienvenue par défaut
      * @throws Exception 
      */
@@ -106,7 +106,7 @@ public class VueHomepageController {
                 }
             }
         });
-        // initialise le semestre et parcours
+        // Initialise le semestre et le parcours
         nbSemestreParcours.setText("Semestre " + Modele.getParametrage()
                                    .getSemestre() + " - Parcours " + 
                                    Modele.getParametrage().getParcours());
@@ -199,7 +199,7 @@ public class VueHomepageController {
     
     /* Rempli la liste des SAE dans le menu à gauche */
     private void setVBoxListeSaes() throws Exception {
-        // Récupère les saes et les tris
+        // Récupère les SAE et les trie
         String[] keys = Modele.getSae().keySet().toArray(new String[0]);
         Arrays.sort(keys);
         for (String key : keys) {
@@ -246,13 +246,13 @@ public class VueHomepageController {
         alert.setTitle("ATTENTION");
         alert.setHeaderText("Êtes-vous sûr de vouloir quitter sans sauvegarder ?");
 
-        // Ajoutez des boutons personnalisés
+        // Ajout de boutons personnalisés
         ButtonType buttonTypeOui = new ButtonType("Oui");
         ButtonType buttonTypeNon = new ButtonType("Non");
 
         alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
 
-        // Affichez la boîte de dialogue et attendez la réponse de l'utilisateur
+        // Affichage de la boîte de dialogue et attente d'une réponse utilisateur
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeOui) {
                 // L'utilisateur a cliqué sur "Oui"
@@ -300,7 +300,7 @@ public class VueHomepageController {
         }
     }
     
-    // Zone Reactivitée
+    // Zone Reactivité
     
     /**
      * Méthode appelée lors de l'entrée de la souris dans un bouton de 
@@ -378,7 +378,7 @@ public class VueHomepageController {
      * Méthode appelée lors de l'entrée de la souris dans un bouton de 
      * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
-     * - oeuil (Competences et afficher les moyennes)
+     * - oeil (Competences et afficher les moyennes)
      */
     @FXML
     void secondaryButtonWhiteEntered(MouseEvent event) {
@@ -393,7 +393,7 @@ public class VueHomepageController {
      * Méthode appelé lors de la sortie de la souris dans un bouton de 
      * style 'secondary-button' (bouton transparent avec contours violets)
      * Boutons utilisant cette méthode : 
-     * - oeuil (Competences et afficher les moyennes)
+     * - oeil (Competences et afficher les moyennes)
      */
     @FXML
     void secondaryButtonWhiteExited(MouseEvent event) {
@@ -509,7 +509,7 @@ public class VueHomepageController {
     }
     
     /**
-     * Methode appelée lors que la souris sort du bouton Utilisateur
+     * Methode appelée lorsque la souris sort du bouton Utilisateur
      */
     @FXML
     void userExited(MouseEvent event) {
@@ -545,6 +545,7 @@ public class VueHomepageController {
     
     /**
      * Méthode appelée lors de l'appui du bouton "afficher mes moyennes"
+     * @throws Exception
      */
     @FXML
     void afficherMesMoyennesPresser(ActionEvent event) throws Exception {
@@ -592,7 +593,7 @@ public class VueHomepageController {
     }
     
     /*
-     * Ajoute le titre de la sae
+     * Ajoute le titre de la SAE
      */
     private void titreMoyennes() throws Exception {
         try {
@@ -691,7 +692,7 @@ public class VueHomepageController {
             // Lui associe le bon titre puis l'affiche
             titre.setText("RESSOURCES");
             listePrincipale.getChildren().add(hboxTitre);
-            // Verifie pour chaque ressources si ils sont calculables
+            // Verifie pour chaque ressource si elle est calculable
             String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
             Arrays.sort(cles);
             for (String cle : cles) {
@@ -732,7 +733,7 @@ public class VueHomepageController {
                         e.printStackTrace();
                     }
                     });
-                    // Met la HBox dans la liste principal
+                    // Met la HBox dans la liste principale
                     listePrincipale.getChildren().add(hbox);
                 }
             }
@@ -760,7 +761,7 @@ public class VueHomepageController {
             Label titre = (Label) hboxTitre.getChildren().get(0);
             titre.setText("SAE");
             listePrincipale.getChildren().add(hboxTitre);
-            // Vérifie pour chaque SAE si elles ont une note
+            // Vérifie pour chaque SAE si elle a une note
             String[] cles = Modele.getSae().keySet().toArray(new String[0]);
             Arrays.sort(cles);
             for (String cle : cles) {
@@ -829,7 +830,7 @@ public class VueHomepageController {
             viderZonePrincipale();
             // Ajoute le titre de la compétence
             ajouterTitreComeptence(competence);
-            // Pour chaque ressource associé, les affiche
+            // Pour chaque ressource associée, les affiche
             String[] cles = Modele.getRessources().keySet().toArray(new String[0]);
             Arrays.sort(cles);
             for(String cle : cles) {
@@ -889,7 +890,7 @@ public class VueHomepageController {
         }
     }
     /*
-     * Ajoute les ressources dans la compéténce
+     * Ajoute les ressources dans la compétence
      */
     private void ajouterRessourceComeptence(Ressource ressource, Double poids) 
             throws Exception {
@@ -1007,7 +1008,7 @@ public class VueHomepageController {
             ajouterTitreRessource(ressource);
             /*
              * Pour chaque évaluation associée, ajoute son cadre,
-             * et s'il n'y a pas d"évaluation, ajoute un cadre informatif 
+             * et s'il n'y a pas d'évaluation, ajoute un cadre informatif 
              */
             ArrayList<Evaluation> listeEvaluation = ressource.getListeEvaluations();
             if (listeEvaluation.isEmpty()){
@@ -1089,7 +1090,7 @@ public class VueHomepageController {
                     ((HBox) hbox.getChildren().get(1)).getChildren().get(0);
             Label feedback = (Label) colonneDroite.getChildren().get(0);
             TextField noteText = (TextField) colonneDroite.getChildren().get(1);
-            // Setter des éléments
+            // Setter des élements
             ponderation.setText(String.format("%.0f ", eval.getPoids() * 100) + "%");
             nomEval.setText(eval.getNom());
             date.setText(eval.getDate());
@@ -1151,10 +1152,10 @@ public class VueHomepageController {
                 threadFeedbackBack(feedback);
             }
         } catch (IllegalArgumentException e) {
-            // Vérifiez s'il existe déjà un thread en cours d'exécution
+            // Vérifie s'il existe déjà un thread en cours d'exécution
             if (currentThreads.containsKey(feedback) 
                     && currentThreads.get(feedback).isAlive()) {
-                // Interrompez le thread en cours d'exécution
+                // Interrompt le thread en cours d'exécution
                 currentThreads.get(feedback).interrupt();
             }
             feedback.getStyleClass().add("negatif");
@@ -1195,17 +1196,17 @@ public class VueHomepageController {
      */
     private void modaliteCliquer(Ressource ressource) throws Exception {
         /*
-         *  Set ces tableaux qui permettrons de suivre quelles évluations 
-         *  ont été supprimées etc.
+         *  Initialisation des tableaux qui permettrons de suivre quelles 
+         *  évaluations ont été supprimées etc.
          */
         ressourceModifier = ressource;
         evalTmpId = new ArrayList<>();
         evalTmpIdRemoved = new ArrayList<>();
         // Vide la vue principale
         viderZonePrincipale();
-        // Insere le titre
+        // Insère le titre
         modaliteTitre(ressource);
-        // Ajoute les évluations déjà existantes
+        // Ajoute les évaluations déjà existantes
         if (ressource.getListeEvaluations().size() > 0) {
             int i = 0;
             for (Evaluation eval : ressource.getListeEvaluations()) {
@@ -1216,9 +1217,7 @@ public class VueHomepageController {
         } else {
             modaliteBouton();
             ajouter();
-        }
-        // Ajoute le bouton ajouter
-        
+        }        
     }
     /*
      * Ajoute le titre
@@ -1562,10 +1561,10 @@ public class VueHomepageController {
                 threadFeedbackBack(feedback);
             }
         } catch (IllegalArgumentException e) {
-            // Vérifiez s'il existe déjà un thread en cours d'exécution
+            // Vérifie s'il existe déjà un thread en cours d'exécution
             if (currentThreads.containsKey(feedback) 
                     && currentThreads.get(feedback).isAlive()) {
-                // Interrompez le thread en cours d'exécution
+                // Interrompt le thread en cours d'exécution
                 currentThreads.get(feedback).interrupt();
             }
             if (feedback.getStyleClass().contains("positif")) {
@@ -1580,18 +1579,18 @@ public class VueHomepageController {
         if (currentThreads.containsKey(feedback)) {
             currentThreads.get(feedback).interrupt();
         }
-        // Créez une tâche (Task) pour effectuer le travail en arrière-plan
+        // Crée une tâche (Task) pour effectuer le travail en arrière-plan
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                // Simulez un travail long (2 secondes dans cet exemple)
+                // Simule un travail long (2 secondes dans cet exemple)
                 Thread.sleep(2000);
-                // Vérifiez si la tâche a été interrompue (si un autre thread a été lancé)
+                // Vérifie si la tâche a été interrompue (si un autre thread a été lancé)
                 if (isCancelled()) {
-                    return null;  // Sortir de la tâche si elle a été interrompue
+                    return null;  // Sortie de la tâche si elle a été interrompue
                 }
                 
-                // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                // Met à jour l'interface utilisateur dans le thread correspondant
                 javafx.application.Platform.runLater(() -> {
                     feedback.setText("");
                 });
@@ -1599,7 +1598,7 @@ public class VueHomepageController {
                 return null;
             }
         };
-        // Démarrez la tâche dans un nouveau thread
+        // Démarre la tâche dans un nouveau thread
             currentThreads.put(feedback, new Thread(task));
             currentThreads.get(feedback).start();
     }

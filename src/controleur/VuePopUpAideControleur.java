@@ -1,3 +1,7 @@
+/*
+ * VuePopUpAideController.java                                            9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 
 import org.w3c.dom.Document;
@@ -190,7 +194,7 @@ public class VuePopUpAideControleur {
         }
     }
 
-    /* Change quel bouton est visuellement sélectionné dans le menu */
+    /* Change quel est le bouton visuellement sélectionné dans le menu */
     private void eltMenuSelectionner(Button button) {
         if (selected != button) {
             if (selected != null) {
@@ -224,23 +228,23 @@ public class VuePopUpAideControleur {
      */
     @FXML
     void secondaryButtonWhiteExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-white-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
     
     void sideNavButtonInactiveEntered(MouseEvent event) {
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("side-nav-element-inactive-not-hover");
         bouton.getStyleClass().add("side-nav-element-inactive-hover");
     }
     
     void sideNavButtonInactiveExited(MouseEvent event) {
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("side-nav-element-inactive-hover");
         bouton.getStyleClass().add("side-nav-element-inactive-not-hover");
     }
@@ -254,9 +258,9 @@ public class VuePopUpAideControleur {
      */
     @FXML
     void secondaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
@@ -270,26 +274,11 @@ public class VuePopUpAideControleur {
      */
     @FXML
     void secondaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
-    }
-
-    @FXML
-    void userEntered(MouseEvent event) {
-
-    }
-
-    @FXML
-    void userExited(MouseEvent event) {
-
-    }
-
-    @FXML
-    void utilisateurPresser(ActionEvent event) {
-
     }
     
     @FXML

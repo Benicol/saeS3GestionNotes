@@ -1,5 +1,5 @@
 /*
- * VuePopUpImporterController.java                                        9 nov 2023
+ * VuePopUpImporterControleur.java                                        9 nov 2023
  * IUT Rodez, pas de copyright
  */
 package controleur;
@@ -31,7 +31,7 @@ public class VuePopUpImporterControleur {
      */
     @FXML
     void afficherAdresseIPPresser(ActionEvent event) {        
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         if (bouton.getText().equals("AFFICHER L'ADRESSE IP")) {
             bouton.setText("ADRESSE: " + OutilReseau.getIp());
@@ -59,10 +59,10 @@ public class VuePopUpImporterControleur {
      */
     @FXML
     void primaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("primary-button-not-hover");
         bouton.getStyleClass().add("primary-button-hover");
     }
@@ -78,10 +78,10 @@ public class VuePopUpImporterControleur {
      */
     @FXML
     void primaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
@@ -95,10 +95,10 @@ public class VuePopUpImporterControleur {
      */
     @FXML
     void secondaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
@@ -112,18 +112,18 @@ public class VuePopUpImporterControleur {
      */
     @FXML
     void secondaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
     
     /**
      * Méthode appelée lors du clic sur le bouton "Etablir une connexion"
-     * Méthode NON IMPLEMENTEE 
-     * (change le texte du bouton en "Implémentation en cours"
+     * Permet d'ouvrir une nouvelle pop-up qui attend la transmission des données
+     * via un échange réseau.
      */
     @FXML
     void etablirUneConnexionPresser(ActionEvent event) {

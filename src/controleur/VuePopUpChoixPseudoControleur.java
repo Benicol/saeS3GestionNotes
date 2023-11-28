@@ -1,3 +1,7 @@
+/*
+ * VuePopUpChoixPseudoControleur.java                                          9 nov 2023
+ * IUT Rodez, pas de copyright
+ */
 package controleur;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,75 +24,75 @@ public class VuePopUpChoixPseudoControleur {
     
     
     /**
-     * Methode appeler lors du clic sur le bouton "annuler"
+     * Méthode appelée lors du clic sur le bouton "annuler"
      */
     @FXML
     void annulerPresser(ActionEvent event) {
         EchangeurDeVue.getPopUpStage().close();
     }
     /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton plein (bouton violet)
-     * afin de le rendre plus foncer
+     * Méthode appelée lors de l'entrée de la souris sur un bouton plein 
+     * (bouton violet) afin de le rendre plus foncé
      * Boutons utilisant cette méthode : 
      * - Bouton "Etablir une connexion"
      */
     @FXML
     void primaryButtonEntered(MouseEvent event) {
-     // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("primary-button-not-hover");
         bouton.getStyleClass().add("primary-button-hover");
     }
     /**
-     * Methode appeler lors de la sortie de la souris d'un bouton plein (bouton violet)
-     * afin de le rééclaircir
+     * Méthode appelée lors de la sortie de la souris d'un bouton plein 
+     * (bouton violet) afin de le rééclaircir
      * Boutons utilisant cette méthode : 
      * - Bouton "Etablir une connexion"
      */
     @FXML
     void primaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
     /**
-     * Methode appeler lors de l'entrée de la souris sur un bouton vide (bouton blanc)
-     * afin de le rendre plus foncer
+     * Méthode appelée lors de l'entrée de la souris sur un bouton vide 
+     * (bouton blanc) afin de le rendre plus foncé
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
     @FXML
     void secondaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
     
     /**
-     * Methode appeler lors de la sortie de la souris d'un bouton vide (bouton blanc)
-     * afin de le rééclaircir
+     * Methode appelée lors de la sortie de la souris d'un bouton vide 
+     * (bouton blanc) afin de le rééclaircir
      * Boutons utilisant cette méthode : 
      * - Bouton "Annuler"
      */
     @FXML
     void secondaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }
     /**
-     * Methode appeler lors du clic sur le bouton "Changer de Pseudo"
+     * Méthode appelée lors du clic sur le bouton "Changer de Pseudo"
      */
     @FXML
     void changerDePseudoPresser(ActionEvent event) {
@@ -99,7 +103,7 @@ public class VuePopUpChoixPseudoControleur {
     	        Modele.sauvegarder();
     	        EchangeurDeVue.getPopUpStage().close();
     	    } else {
-    	        messageErreur = "il fait plus de 40 lettres !";
+    	        messageErreur = "il ne doit pas dépasser les 40 caractères !";
     	    }
     	} else {
     	    messageErreur = "vous n'avez pas saisi de pseudo !";

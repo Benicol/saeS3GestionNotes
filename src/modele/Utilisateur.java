@@ -1,5 +1,5 @@
 /*
- * Modele.java                                                        21/10/2023
+ * Utilisateur.java                                                        21/10/2023
  * IUT de Rodez, pas de droit d'auteur.
  */
 package modele;
@@ -19,12 +19,12 @@ public class Utilisateur implements Serializable{
     /* Pseudo de l'utilisateur */
     private String pseudo;
 
-    /* Pseudo par defaut */
+    /* Pseudo par défaut */
     private static final String PSEUDO_PAR_DEFAUT = "Utilisateur";
 
     /**
      * Constructeur de la classe Utilisateur.
-     * Si le pseudo est null ou vide, le pseudonyme par defaut est attribué.
+     * Si le pseudo est null ou vide, le pseudonyme par défaut est attribué.
      * @param pseudo le pseudonyme utilisé pour désigner de l'utilisateur.
      */
     public Utilisateur(String pseudo) {

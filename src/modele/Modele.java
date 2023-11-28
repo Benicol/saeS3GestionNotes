@@ -104,39 +104,39 @@ public class Modele {
      */
     @SuppressWarnings("unchecked")
     public static String[][] exporter(boolean programme, boolean modalite) {
-    	/*initialisation de la liste qui contiendras toute les données*/
+    	/* Initialisation de la liste qui contiendra toute les données */
     	ArrayList<ArrayList<String>> donnees = new ArrayList<>();
-    	/*initialisation de la liste qui permetras d'insérer les données dans la précédente*/
+    	/* Initialisation de la liste qui permettra d'insérer les données dans la précédente */
     	ArrayList<String> donneesTmp = new ArrayList<>();
     	
-    	/*Ajout d'un entête au données*/
+    	/* Ajout d'une entête aux données */
     	donneesTmp.add("donnés exporter");
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
     	
-    	/*vérifie que le paramétrage est déja initialisé*/
+    	/* Vérifie que le paramétrage est déjà initialisé, lance une exception sinon */
     	if (!isParametrageInitialise()) {
     	    throw new IllegalArgumentException("L'application ne contient pas de données");
         }
     	
-    	/*ajoute les infos du semestre au données*/
+    	/* Ajoute les informations du semestre aux données*/
     	donneesTmp.add("Semestre");
     	donneesTmp.add(getParametrage().getSemestre());
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
     	
-    	/*ajoute les infos du parcours au données*/
+    	/* Ajoute les informations du parcours aux données*/
     	donneesTmp.add("Parcours");
     	donneesTmp.add(getParametrage().getParcours());
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
     	
-    	/*ajout d'une ligne vide*/
+    	/* Ajout d'une ligne vide */
     	donneesTmp.add("");
     	donnees.add((ArrayList<String>) donneesTmp.clone());
     	donneesTmp.clear();
     	
-    	/*boucle pour insérer les Compétence*/
+    	/* Boucle pour insérer les objets Compétence*/
     	if (programme) {
         	for(Competence competence : getCompetences().values()) {
         	    donneesTmp.add("Compétence");
@@ -169,27 +169,28 @@ public class Modele {
             		}
         	    }
         		
-        	    /*Boucle pour insérer les Sae de la compétence*/
+        	    /* Boucle pour insérer les SAE de la compétence */
         	    for(Sae sae : getSae().values()) {
-        	        /*vérifie que la Sae est bien dans la compétence*/
+        	        /* Vérifie que la SAE est bien liée à la compétence */
             		if(competence.getListeSaes().containsKey(sae)){
-            		    /*Si le nom de la sae est Portfolio, alors le type d'évaluations insérer est Portfolio*/
+            		    /* Si le nom de la sae est Portfolio, alors le type 
+            		     * d'évaluations insérer est Portfolio */
             		    if(sae.getLibelle().equals("Portfolio")) {
             			donneesTmp.add("Portfolio");
             		    }else {
             			donneesTmp.add("SAE");
             		    }	
-            		    /*Insère les informations de la Sae*/
+            		    /* Insère les informations de la SAE */
             		    donneesTmp.add(sae.getIdentifiant());
             	    	    donneesTmp.add(sae.getLibelle());
-            	    	    /*Mets le poids au bon format*/
+            	    	    /* Met le poids au bon format */
             	    	    donneesTmp.add(String.format(
             	    	            "%.0f",competence.getListeSaes().get(sae)*100));	
             	    	    donnees.add((ArrayList<String>) donneesTmp.clone());
             	    	    donneesTmp.clear();
             		}
         	    }
-        	    /*ajout d'une ligne vide*/
+        	    /* Ajout d'une ligne vide */
         	    donneesTmp.add("");
         	    donnees.add((ArrayList<String>) donneesTmp.clone());
         	    donneesTmp.clear();
@@ -197,43 +198,44 @@ public class Modele {
     	}
     	if (modalite) {
         	for(Ressource ressource : getRessources().values()) {
-        	    /*vérifie si la ressource posséde des évaluations*/
+        	    /* Vérifie si la ressource possède des évaluations */
         	    if(!ressource.getListeEvaluations().isEmpty()) {
-        	        /*Insère le nom et l'identifiant de la ressource*/
+        	        /* Insère le nom et l'identifiant de la ressource */
         	        donneesTmp.add("Ressource");
         	        donneesTmp.add(ressource.getIdentifiant());
         	        donneesTmp.add(ressource.getLibelle());
         	        donnees.add((ArrayList<String>) donneesTmp.clone());
         	        donneesTmp.clear();
-        	        /*Insère le nom des colonne des données de l'évaluations*/
+        	        /* Insère le nom des colonne des données de l'évaluations */
         	        donneesTmp.add("Type évaluations");
         	        donneesTmp.add("Date");
         	        donneesTmp.add("Poids");
         	        donnees.add((ArrayList<String>) donneesTmp.clone());
         	        donneesTmp.clear();
         	        for(Evaluation evaluation : ressource.getListeEvaluations()) {
-        	            /*Insère le nom la date et le poids de l'évaluations*/
+        	            /* Insère le nom la date et le poids de l'évaluations */
         	            donneesTmp.add(evaluation.getNom());
         	            donneesTmp.add(evaluation.getDate());
-        	            /*Mets le poids au bon format*/
+        	            /* Met le poids au bon format */
         	            donneesTmp.add(String.format(
         	                    "%.0f",evaluation.getPoids()*100));
         	            donnees.add((ArrayList<String>) donneesTmp.clone());
         	            donneesTmp.clear();
         	        }
-        	        /*ajout d'une ligne vide*/
+        	        /* Ajout d'une ligne vide */
         	        donneesTmp.add("");
         	        donnees.add((ArrayList<String>) donneesTmp.clone());
         	        donneesTmp.clear();
         	    }
         	}
     	}
-    	/*initialisation du tableau bidimensionnel qui contiendras les données à
-    	 * renvoyer*/
+    	/* Initialisation du tableau bidimensionnel qui contiendra les données à
+    	 * renvoyer 
+    	 */
     	String[][] donneesFinal = new String[donnees.size()][0];
     	
-    	/* On insère l'arrayList contenant les donnés du paramétrage
-    	 * dans le tableau bidimensionnel renvoyer */
+    	/* Insère l'arrayList contenant les donnés du paramétrage
+    	 * dans le tableau bidimensionnel renvoyé */
     	for (int i = 0; i < donneesFinal.length; i++) {
     	    donneesFinal[i] = donnees.get(i).toArray(new String[0]);
     	}
@@ -375,7 +377,7 @@ public class Modele {
                         }
                         int poids = 0;
                         i++;
-                        /* Parcours des lignes suivantes pour récupérer les évaluations 
+                        /* Parcourt des lignes suivantes pour récupérer les évaluations 
                          * de la ressource */
                         while (poids != 100 && donneesValide) {
                             i++;
@@ -620,7 +622,7 @@ public class Modele {
         sauvegarder();
     }
     
-    /*
+    /**
      * Vérifie la validité des données réseau par rapport aux paramètres de
      * configuration.
      *
@@ -685,8 +687,8 @@ public class Modele {
                     poids += Integer.parseInt(donnees[i][3]);
                 }
                 i++;
-            } else if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource")) { // Si la ligne concerne 
-                                                            // une ressource
+            } else if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource")) { 
+                // Si la ligne concerne une ressource
                 Ressource r = parametrage.getListeRessources().get(donnees[i][1]);
                 donneesValides = r.getIdentifiant().equals(donnees[i][1]) &&
                                  r.getLibelle().equals(donnees[i][2]);
@@ -759,7 +761,7 @@ public class Modele {
     }
     
     /**
-     * Getter de l'adresse ip de l'ordinateur 
+     * Getter de l'adresse IP de l'ordinateur 
      * @return adresseIp présent dans outilReseaux
      */
     public static String getIp() {
@@ -789,7 +791,7 @@ public class Modele {
         return utilisateur;
     }
      /**
-      * Setter du parametrage (A UTILISER UNIQUEMENT POUR LES TESTS)
+      * Setter du parametrage (UNIQUEMENT UTILISEE POUR LES TESTS)
      * @param parametre le parametrage a mettre
       */
     public static void setParametrage(Parametrage parametre) {

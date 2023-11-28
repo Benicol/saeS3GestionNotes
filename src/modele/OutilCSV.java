@@ -1,5 +1,5 @@
 /*
- * OutilCSV.java                                  2 nov. 2023
+ * OutilCSV.java                                                         2 nov. 2023
  * IUT Rodez, info1 2022-2023, ni copyright ni "copyleft"
  */
 package modele;
@@ -13,7 +13,8 @@ package modele;
  */
 public class OutilCSV {
     
-    /** Prend en argument un tableau de données et le converti en une String au 
+    /** 
+     * Prend en argument un tableau de données et le converti en une String au 
      * format CSV;
      * @param donnees fournis pour être transformer au format CSV
      * @return String contenant les donnees dans le tableau donnees formater en csv
@@ -37,7 +38,8 @@ public class OutilCSV {
         return donneesCSV.toString().substring(0, donneesCSV.length() - 1);
     }
 
-    /** Prend en argument une String au format CSV et la converti en un tableau 
+    /** 
+     * Prend en argument une String au format CSV et la converti en un tableau 
      * de données.
      * @param donneesCSV donnees formater en csv
      * @return String[][] donnees formater en tableau de tableau

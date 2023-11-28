@@ -1,5 +1,5 @@
 /*
- * VuePopUpImporterController.java                                        9 nov 2023
+ * VuePopUpConnexionControleur.java                                       9 nov 2023
  * IUT Rodez, pas de copyright
  */
 package controleur;
@@ -48,14 +48,15 @@ public class VuePopUpConnexionControleur {
     private boolean transfertOk = false;
     
     /**
-     * Effectue les traitement suivant dans cette ordre : 
+     * Effectue les traitements suivant dans cette ordre : 
+     * TODO
      * @throws Exception 
      */
     @FXML
     void initialize() throws Exception {
         EchangeurDeVue.getPopUpStage().setOnCloseRequest((event) -> close());
         texte.setText("En attente de connexion");
-        // Créez une tâche (Task) pour effectuer le travail en arrière-plan
+        // Crée une tâche (Task) pour effectuer le travail en arrière-plan
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -68,7 +69,7 @@ public class VuePopUpConnexionControleur {
                     } catch (InterruptedException e) {
                         return null;
                     }
-                    // Mettez à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                    // Met à jour l'interface utilisateur dans le thread de l'interface utilisateur
                     javafx.application.Platform.runLater(() -> {
                         texte.setText(texte.getText() + ".");
                         if (texte.getText().substring(
@@ -90,7 +91,7 @@ public class VuePopUpConnexionControleur {
                         handleConnection(client);
                         transfertOk = true;
                         javafx.application.Platform.runLater(() -> {
-                            texte.setText("Données valide ! Importation terminé !");
+                            texte.setText("Données valides ! Importation terminée !");
                             boutonAnnuler.setText("Retour à l'application");
                             Image image = new Image(getClass().getResource(
                                     "../vue/ressources/icone_retour.png").toExternalForm());
@@ -100,7 +101,7 @@ public class VuePopUpConnexionControleur {
                         return null;
                     } catch (IllegalArgumentException e) {
                         javafx.application.Platform.runLater(() -> {
-                            texte.setText("Données invalide ! Importation échoué !");
+                            texte.setText("Données invalides ! L'importation a échoué.");
                             boutonAnnuler.setText("Retour à l'importation");
                             Image image = new Image(getClass().getResource(
                                     "../vue/ressources/icone_retour.png").toExternalForm());
@@ -151,7 +152,7 @@ public class VuePopUpConnexionControleur {
      */
     @FXML
     void afficherAdresseIPPresser(ActionEvent event) {        
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         if (bouton.getText().equals("AFFICHER L'ADRESSE IP")) {
             bouton.setText("ADRESSE: " + OutilReseau.getIp());
@@ -197,10 +198,10 @@ public class VuePopUpConnexionControleur {
      */
     @FXML
     void primaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("primary-button-not-hover");
         bouton.getStyleClass().add("primary-button-hover");
     }
@@ -216,10 +217,10 @@ public class VuePopUpConnexionControleur {
      */
     @FXML
     void primaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("primary-button-hover");
         bouton.getStyleClass().add("primary-button-not-hover");
     }
@@ -233,10 +234,10 @@ public class VuePopUpConnexionControleur {
      */
     @FXML
     void secondaryButtonEntered(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour assombrir le bouton.
+        // Change de classe dans le css pour assombrir le bouton.
         bouton.getStyleClass().remove("secondary-button-not-hover");
         bouton.getStyleClass().add("secondary-button-hover");
     }
@@ -250,10 +251,10 @@ public class VuePopUpConnexionControleur {
      */
     @FXML
     void secondaryButtonExited(MouseEvent event) {
-        // On va chercher le bouton précis que la souris a survolé
+        // Va chercher le bouton précis que la souris a survolé
         Button bouton = (Button) event.getSource();
         
-        // On change de classe dans le css pour rendre son style originel au bouton.
+        // Change de classe dans le css pour rendre son style originel au bouton.
         bouton.getStyleClass().remove("secondary-button-hover");
         bouton.getStyleClass().add("secondary-button-not-hover");
     }

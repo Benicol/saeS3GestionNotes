@@ -1,5 +1,5 @@
 /*
- * Ressource.java                                                     7 nov 2023
+ * Ressource.java                                                         7 nov 2023
  * IUT de Rodez, pas de droit d'auteur
  */
 
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Cette classe représente une ressource liée à un enseignement. Elle permet de
- *  gérer des évaluations associées à cette ressource afin de pouvoir :
+ * gérer des évaluations associées à cette ressource afin de pouvoir :
  *      - en ajouter
  *      - en supprimer
  *      - en modifier
@@ -73,7 +73,6 @@ public class Ressource implements Enseignement, Serializable {
 
     /**
      * Vérifie si les pondérations des évaluations sont valides (somme entre 0 et 100).
-     *
      * @param ponderations La liste des pondérations des évaluations.
      * @return true si les pondérations sont valides, sinon false.
      */
@@ -83,7 +82,6 @@ public class Ressource implements Enseignement, Serializable {
     }
     /**
      * Vérifie si les pondérations des évaluations sont valides (somme entre 0 et 100).
-     *
      * @param ponderations La liste des pondérations des évaluations.
      * @return true si les pondérations sont valides, sinon false.
      */

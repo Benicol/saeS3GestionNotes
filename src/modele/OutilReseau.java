@@ -8,9 +8,8 @@ package modele;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-
 /**
- * Classe outil permettant :
+ * Classe outil permettant de :
  *     - récupérer l'adresse IP de la machine sur laquelle on se trouve
  *     - importer des données depuis un autre ordinateur
  *     - exporter des données vers un autre ordinateur

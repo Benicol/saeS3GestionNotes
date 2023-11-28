@@ -17,14 +17,14 @@ import javafx.scene.image.Image;
 
 /**
  * Classe de main, point d'entrée de l'application
- * 
  * @author noah.miquel, jodie.monterde, benjamin.nicol, ugo.schardt
  */
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         /*
-         * Création d'un chargeur de code FXML et chargement de la vue de l'application
+         * Création d'un chargeur de code FXML et chargement de la vue de 
+         * l'application
          */
         EchangeurDeVue.setPrimaryStage(primaryStage);
         FXMLLoader chargeurFXML = new FXMLLoader();
@@ -55,10 +55,9 @@ public class Main extends Application {
 
     /**
      * Programme principal
-     * 
      * @param args non utilisé
      */
     public static void main(String[] args) {
-        launch(args); // appelera la méthode start
+        launch(args); // appelle la méthode start
     }
 }

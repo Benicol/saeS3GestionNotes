@@ -27,8 +27,8 @@ public class Evaluation implements Serializable{
     
     /**
      * Constructeur d'une note, qui instancie par défaut la note comme étant nulle.
-     * @param nom de l'évaluation
-     * @param poids le poids d'une évaluation
+     * @param nom le nom qui désigne l'évaluation
+     * @param poids le poids de cette évaluation
      * @param date la date à laquelle doit se dérouler l'évaluation (peut s'écrire
      * sous différente forme : 10/05/2023, ou encore "mi-mai", ...)
      */

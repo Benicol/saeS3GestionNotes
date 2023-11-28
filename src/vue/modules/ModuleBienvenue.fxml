@@ -21,7 +21,7 @@
                   <Font name="Verdana Bold" size="48.0" />
                </font>
             </Label>
-            <Label text="Utilise le menu à gauche pour naviguer!" textFill="#9555e8">
+            <Label text="Utilisez le menu à gauche pour commencer la navigation" textFill="#9555e8">
                <font>
                   <Font name="Verdana Bold" size="24.0" />
                </font>
