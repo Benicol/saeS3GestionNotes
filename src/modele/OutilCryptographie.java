@@ -34,11 +34,16 @@ public class OutilCryptographie {
     public static String encoder(String cle, String message) {
         StringBuilder sb = new StringBuilder();
         int j = 0;
+        /* Boucle qui code le message */
         for (int i = 0; i < message.length(); i++) {
+        	/* On récupère le i emes carctère du message à coder*/
             char c = message.charAt(i);
             if (isCaractereValide(c)) {
+            	/* on calcule le décalage pour le caractère */
                 int decalage = getDecalage(cle, j);
+                /* On encode le caractère à l'aide du décalage */
                 char cEncode = encoderCaractere(c, decalage);
+                /* On l'ajoute à la StringBuilder*/
                 sb.append(cEncode);
                 j = (j + 1) % cle.length();
             } else {
@@ -99,7 +104,11 @@ public class OutilCryptographie {
      * @return le caractère une fois encodé en fonction du décalage.
      */
     private static char encoderCaractere(char c, int decalage) {
+    	
+    	// Récupération de l'index du caractère a encoder
         int index = alphabet.indexOf(c);
+        
+        // Calcul de l'index du caractère encoder
         int indexEncode = (index + decalage) % alphabet.length();
         return alphabet.charAt(indexEncode);
     }
@@ -113,7 +122,10 @@ public class OutilCryptographie {
      * @return le caractère une fois décodé en fonction du décalage.
      */
     private static char decoderCaractere(char c, int decalage) {
+    	/* Récupération de l'index du caractère à décoder */
         int index = alphabet.indexOf(c);
+        
+        /* Décodage du caractère*/
         int indexDecode = (index - decalage + (alphabet.length())) % (
                 alphabet.length());
         return alphabet.charAt(indexDecode);
@@ -133,12 +145,16 @@ public class OutilCryptographie {
      */
     public static String creerCleVigenere() {
         StringBuilder cle = new StringBuilder();
+        /* Génération d'une taille aléatoire pour la clé*/
         int taille = (int)(Math.random() * 50) + 20;
         
+        /* Ajout d'un caractère aléatoire de l'alphabet dans la clé */
         int index = (int)(Math.random() * (alphabet.length() - 100) + 100);
         cle.append(alphabet.charAt(index));
         
+        /* Boucle qui génère la clé aléatoirement*/
         for (int i = 1; i < taille; i++) {
+        	/* Ajout d'un caractère aléatoire de l'alphabet dans la clé */
             index = (int)(Math.random() * alphabet.length());
             cle.append(alphabet.charAt(index));
         }
@@ -155,15 +171,25 @@ public class OutilCryptographie {
      * @return cle_codee la clé une fois celle-ci cryptée.
      */
     public static BigInteger coderCle(String cle, int a, BigInteger gb, int p) {
-        StringBuilder cle_codee_str = new StringBuilder();
+        /*Création d'une StringBuilder pour coder la clé*/
+    	StringBuilder cle_codee_str = new StringBuilder();
         int index = 0;
+        
+        /* 
+         * Boucle qui ajoute l'index de chaque 
+         * caractère de la clé dans la clé codé
+         */
         for (int i = 0; i < cle.length(); i++) {
             index = alphabet.indexOf(cle.charAt(i));
             cle_codee_str.append(String.format("%03d", index));
         }
-        
+        /* création de la clé coder(récupère l'entier contenue dans la StringBuilder) */
         BigInteger cle_codee = new BigInteger(cle_codee_str.toString());
+        
+        /* calcul (gB) à la puissance A modulo P */ 
         BigInteger code = gb.pow(a).mod(new BigInteger(Integer.toString(p)));
+        
+        /* multiplie la clé par le code calculé avant */
         cle_codee = cle_codee.multiply(code);
         return cle_codee;
     }
@@ -178,6 +204,7 @@ public class OutilCryptographie {
      * @return cle_decodee
      */
     public static String decoderCle(BigInteger cle_codee, BigInteger ga, int b, int p) {
+    	
         BigInteger code = ga.pow(b).mod(new BigInteger(Integer.toString(p)));
         OutilFichier.ecrire("code.txt", code.toString());
         String test = code + "\n";
@@ -204,17 +231,23 @@ public class OutilCryptographie {
      * @return nombre généré
      */
     public static int genererAB(int p) {
+    	/* 
+    	 * prends un nombre aléatoire entre 1 et 
+    	 * 0 et le multiplie par la racine carré de P
+    	 */
         return (int)(Math.random() * Math.sqrt(p));
     }
     
     /** 
      * Méthode permettant de génerer aléatoirement
-     * un entier premier p entre 1000 et 1000000
-     * @return p un entier premier entre 1000 et 1000000
+     * un entier premier p entre 1000 et 500000
+     * @return p un entier premier entre 1000 et 500000
      */
     public static int genererP() {
+    	/* Génère un entier compris entre 1000 et 500000 */
         BigInteger nb = new BigInteger(
                 Integer.toString((int)(Math.random() * 500000) + 1000));
+        /* Récupère le nombre premier qui arrive aprés le nombre généré avant */
         BigInteger p = nb.nextProbablePrime();
         return p.intValue();
     }
@@ -236,17 +269,18 @@ public class OutilCryptographie {
             listeResultats.clear();
             ajoutOk = true;
             exposant = 1;
-            g = (int)(Math.random() * p);
-            /* Boucle permettant de calculer tout les i exposant j
+            /* Génération d'un nombre aléatoire */
+            g = (int)(Math.random() * (p - 4)) + 2;
+            /* 
+             * Boucle permettant de calculer g exposant j modulo p
              * pour tout j entre 1 et p
              */
             for (int j = 1 ; j < p && ajoutOk ; j++) {
                 exposant = (exposant * g) % p;
                 ajoutOk = listeResultats.add(exposant);
             }
-            /* Vérifie que i est un entier générateur de p,
-             * et si oui, l'ajoute à listeG
-             */
+            
+            /* On vérifie que la liste contiennent bien tout les entiers compris entre 1 et p et est égales à 1-p */
             if (listeResultats.size() == (p - 1)) {
                 gTrouve = true;
             }
