@@ -62,11 +62,16 @@ public class OutilCryptographie {
     public static String decoder(String cle, String message) {
         StringBuilder sb = new StringBuilder();
         int j = 0;
+        /* Boucle pour décoder le message*/
         for (int i = 0; i < message.length(); i++) {
+        	/* On prends le caractère d'indice i */
             char c = message.charAt(i);
+            /* On Vérifie sa validité */
             if (isCaractereValide(c)) {
+            	/* On récupère le décalage  et on décode le caractère */
                 int decalage = getDecalage(cle, j);
                 char cDecode = decoderCaractere(c, decalage);
+                /* On ajoute le caractère au message non cryptés*/
                 sb.append(cDecode);
                 j = (j + 1) % cle.length();
             } else {
@@ -83,7 +88,9 @@ public class OutilCryptographie {
      * @return Decalage le décalage pour un caractère.
      */
     private static int getDecalage(String cle, int index) {
+    	/* Récupération du caractère de la clé à l'index passer en paramètre*/
         char c = cle.charAt(index);
+        /* Renvoie de la position dans l'alphabet du caractère */
         return alphabet.indexOf(c);
     }
     /**
@@ -93,6 +100,10 @@ public class OutilCryptographie {
      * @return true si le caractère est valide, false sinon.
      */
     private static boolean isCaractereValide(char c) {
+    	/* 
+    	 * On vérifie que la position du caractère dans l'alphabet est différent de -1
+    	 * sinon sa veux dire que le caractère ne fait pas partit de l'alphabet
+    	 */
         return alphabet.indexOf(c) != -1;
     }
 
@@ -204,22 +215,31 @@ public class OutilCryptographie {
      * @return cle_decodee
      */
     public static String decoderCle(BigInteger cle_codee, BigInteger ga, int b, int p) {
-    	
+    	/* Calcul de g puissance A à la puissance B le tout modulo p */
         BigInteger code = ga.pow(b).mod(new BigInteger(Integer.toString(p)));
         OutilFichier.ecrire("code.txt", code.toString());
         String test = code + "\n";
+        /* Cle  divisé par le code calculé précédement */
         BigInteger cle_codee_divisee = cle_codee.divide(code);
         test += cle_codee_divisee;
         OutilFichier.ecrire("idk.txt", test);
         
         
         int index = 0;
+        /* Récupération de la clé divisé dans une string*/
         String cle_codee_str = cle_codee_divisee.toString();
+        /* Création stringBuilder pour contenir la clé décodé*/
         StringBuilder cle_decodee = new StringBuilder();
         int taille_finale = cle_codee_str.length();
+        /* Boucle qui décode la clé */
         for (int i = 0; i < taille_finale - 2; i+=3) {
+        	/* 
+        	 * Récupération de l'indice complet du caractère
+        	 * (Indice composer de trois chiffre) 
+        	 */
             index = Integer.parseInt("" + cle_codee_str.charAt(i) 
             + cle_codee_str.charAt(i + 1) + cle_codee_str.charAt(i + 2));
+            /* On ajoute le caractère de l'indice*/
             cle_decodee.append(alphabet.charAt(index));
         }
         return cle_decodee.toString();
@@ -272,7 +292,7 @@ public class OutilCryptographie {
             /* Génération d'un nombre aléatoire */
             g = (int)(Math.random() * (p - 4)) + 2;
             /* 
-             * Boucle permettant de calculer g exposant j modulo p
+             * Boucle permettant de calculer g * exposant modulo p
              * pour tout j entre 1 et p
              */
             for (int j = 1 ; j < p && ajoutOk ; j++) {
@@ -280,7 +300,10 @@ public class OutilCryptographie {
                 ajoutOk = listeResultats.add(exposant);
             }
             
-            /* On vérifie que la liste contiennent bien tout les entiers compris entre 1 et p et est égales à 1-p */
+            /* 
+             * On vérifie que la liste contiennent bien 
+             * tout les entiers compris entre 1 et p et est égales à 1-p 
+             */
             if (listeResultats.size() == (p - 1)) {
                 gTrouve = true;
             }
