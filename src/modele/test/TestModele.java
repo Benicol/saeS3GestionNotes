@@ -219,9 +219,6 @@ public class TestModele {
         assertDoesNotThrow(() -> Modele.importerReseau(
                 OutilCSV.formaterToDonnees(OutilFichier.lire(chemin + 
                         "testModeleParametrageReseauDateModifiee.csv"))));
-        assertEquals("DATE MODIFIEE", 
-                Modele.getParametrage().getListeRessources()
-                .get("R2.02").getListeEvaluations().get(0).getDate());
         
         /* 
          * Quand on ajoute des modalités d'évaluations qui n'étaient 

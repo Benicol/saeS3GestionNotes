@@ -452,47 +452,31 @@ public class Modele {
      * l'application.
      */
     public static void importerReseau(String[][] donnees) {
-        for (String[] tab : donnees) {
-            System.out.print("[");
-            for (String elt : tab) {
-                System.out.print(elt + ", ");
-            }
-            System.out.println("],");
-        }
         /* Vérifie si le paramétrage est déjà initialisé */
         if (!isParametrageInitialise()) {
             // Si le paramétrage n'est pas initialisé, appelle la méthode 
             // générique d'importation
             importer(donnees);
         } else {
-            System.out.println("0");
             // Vérifie la validité des données réseau par rapport au paramétrage
             // existant
             if (isDonneesValideReseau(donnees)) {
-                System.out.println(1);
                 for (int i = 3; i < donnees.length; i++) {
-                    System.out.println(2);
                     if (donnees[i].length >= 1 && donnees[i][0].equals("Ressource") 
                             && (donnees[i + 1][0].equals("Type évaluations"))) {
-                        System.out.println(3);
                         // Récupère la ressource à partir du paramétrage
                         Ressource r = 
                                 parametrage.getListeRessources().get(donnees[i][1]);
                         i += 2;
                         // Si la ressource a des évaluations existantes
                         if (!r.getListeEvaluations().isEmpty()) {
-                            System.out.println("evaluation non null");
                             boolean trouve = false;
                             // Parcours des évaluations dans les données importées
                             while (donnees.length != i && donnees[i].length >= 1 &&
                                    !(donnees[i].length == 0)) {
                                 // Vérifie si l'évaluation existe déjà
                                 for (Evaluation e : r.getListeEvaluations()) {
-                                    System.out.println("boucle lancée");
                                     trouve = e.getNom().equals(donnees[i][0]);
-                                    if (trouve) {
-                                        System.out.println("test");
-                                    }
                                     // Si l'évaluation existe et n'a pas de date
                                     // mais la date est présente dans les données
                                     if (trouve && (e.getDate().isBlank() 
