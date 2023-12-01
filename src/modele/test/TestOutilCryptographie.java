@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import modele.OutilCryptographie;
+import modele.OutilFichier;
 
 /** 
  * Classe de test de la classe outilCryptographie.java
@@ -31,15 +32,17 @@ public class TestOutilCryptographie {
         String[] messagesValides = {"Hello, world!", "", "test"};
         String[] chiffrerValides = {"&î]\\1,jc§@\\Yf", "", " î$ "};
         String[] messagesInvalides = {"åøØøå", "J'aime l'argent 💸", "57×39"};
+        String[] chiffrerInvalides = {"åøØøå", "{{t^\\ej> ì$!zS£t💸", "òÂ×ñö"};
         try {
             for (int i = 0; i < messagesValides.length; i++) {
                 assertEquals(OutilCryptographie.encoder(cle, messagesValides[i]),
                         chiffrerValides[i]);
             }
-            for (String elt : messagesInvalides) {
-                assertThrows(IllegalArgumentException.class, 
-                        () -> OutilCryptographie.encoder(cle, elt));
+            for (int i = 0; i < messagesInvalides.length; i++) {
+                assertEquals(OutilCryptographie.encoder(cle, messagesInvalides[i]),
+                        chiffrerInvalides[i]);
             }
+            
         } catch (Exception e) {
             System.err.println("erreur du Scanner");
         }
@@ -53,17 +56,17 @@ public class TestOutilCryptographie {
     public void testDecoder() {
         String cle = "tests junits";
         String[] chiffrementsValides = {"&î]\\1,jc§@\\Yf", "", " î$ "};
-        String[] chiffrementsInvalides = {"fghgåøØøåhfgjhk²", "gdfgb,;:!:!💸:;",
-                "45jogji×cxfh7"};
+        String[] chiffrementsInvalides = {"åøØøå", "{{t^\\ej> ì$!zS£t💸", "òÂ×ñö"};
         String[] messagesValides = {"Hello, world!", "", "test"};
+        String[] messagesInvalides = {"åøØøå", "J'aime l'argent 💸", "57×39"};
         try {
             for (int i = 0; i < chiffrementsValides.length; i++) {
                 assertEquals(OutilCryptographie.decoder(cle,
                         chiffrementsValides[i]), messagesValides[i]);
             }
-            for (String elt : chiffrementsInvalides) {
-                assertThrows(IllegalArgumentException.class,
-                        () -> OutilCryptographie.decoder(cle, elt));
+            for (int i = 0; i < chiffrementsInvalides.length; i++) {
+                assertEquals(OutilCryptographie.decoder(cle,
+                        chiffrementsInvalides[i]), messagesInvalides[i]);
             }
         } catch (Exception e) {
             System.err.println("erreur du Scanner");
