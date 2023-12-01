@@ -59,28 +59,28 @@ public class VuePopUpConnexionControleur {
         // Crée une tâche (Task) pour effectuer le travail en arrière-plan
         Task<Void> task = new Task<Void>() {
             @Override
-            protected Void call() throws Exception {
-                while (true) {
-                    try {
-                        if (enAttente.isInterrupted()) {
-                            return null;
-                        }
-                        Thread.sleep(400);
-                    } catch (InterruptedException e) {
+            protected Void call() throws Exception { 
+                try {
+                    if (enAttente.isInterrupted()) {
                         return null;
                     }
-                    // Met à jour l'interface utilisateur dans le thread de l'interface utilisateur
-                    javafx.application.Platform.runLater(() -> {
-                        texte.setText(texte.getText() + ".");
-                        if (texte.getText().substring(
-                                texte.getText().length() - 4,
-                                texte.getText().length() - 1).equals("...")) {
-                            texte.setText(texte.getText().substring(
-                                    0,texte.getText().length() - 4));
-                        }
-                    });
+                    Thread.sleep(400);
+                } catch (InterruptedException e) {
+                    return null;
                 }
+                // Met à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                javafx.application.Platform.runLater(() -> {
+                    texte.setText(texte.getText() + ".");
+                    if (texte.getText().substring(
+                            texte.getText().length() - 4,
+                            texte.getText().length() - 1).equals("...")) {
+                        texte.setText(texte.getText().substring(
+                                0,texte.getText().length() - 4));
+                    }
+                });
+				return null;
             }
+        
         };
         Task<Void> task2 = new Task<Void>() {
             @Override

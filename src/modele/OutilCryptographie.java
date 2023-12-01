@@ -265,11 +265,29 @@ public class OutilCryptographie {
      */
     public static int genererP() {
     	/* Génère un entier compris entre 1000 et 500000 */
-        BigInteger nb = new BigInteger(
-                Integer.toString((int)(Math.random() * 500000) + 1000));
+        int p = ((int)(Math.random() * 500000) + 1000);
         /* Récupère le nombre premier qui arrive aprés le nombre généré avant */
-        BigInteger p = nb.nextProbablePrime();
-        return p.intValue();
+        boolean isPrime = true;
+        do {
+            p++;
+            isPrime = true;
+            // vérifie que P est premier
+            if (p == 1 || p == 0) {
+                isPrime = false;
+            } else if (p != 2 && p % 2 == 0) {
+                isPrime = false;
+            } else if (p != 5 && p % 2 == 0) {
+                isPrime = false;
+            } else {
+                for (int i = 2; i <= Math.sqrt(p) && isPrime; i++) {
+                    if (p % i == 0) {
+                        isPrime = false;
+                    }
+                }
+            }
+           
+        } while (!isPrime);
+        return p;
     }
     
     /**
