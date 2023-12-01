@@ -60,25 +60,26 @@ public class VuePopUpConnexionControleur {
         Task<Void> task = new Task<Void>() {
             @Override
             protected Void call() throws Exception { 
-                try {
-                    if (enAttente.isInterrupted()) {
+                while (true) {
+                    try {
+                        if (enAttente.isInterrupted()) {
+                            return null;
+                        }
+                        Thread.sleep(400);
+                    } catch (InterruptedException e) {
                         return null;
                     }
-                    Thread.sleep(400);
-                } catch (InterruptedException e) {
-                    return null;
+                    // Met à jour l'interface utilisateur dans le thread de l'interface utilisateur
+                    javafx.application.Platform.runLater(() -> {
+                        texte.setText(texte.getText() + ".");
+                        if (texte.getText().substring(
+                                texte.getText().length() - 4,
+                                texte.getText().length() - 1).equals("...")) {
+                            texte.setText(texte.getText().substring(
+                                    0,texte.getText().length() - 4));
+                        }
+                    });
                 }
-                // Met à jour l'interface utilisateur dans le thread de l'interface utilisateur
-                javafx.application.Platform.runLater(() -> {
-                    texte.setText(texte.getText() + ".");
-                    if (texte.getText().substring(
-                            texte.getText().length() - 4,
-                            texte.getText().length() - 1).equals("...")) {
-                        texte.setText(texte.getText().substring(
-                                0,texte.getText().length() - 4));
-                    }
-                });
-				return null;
             }
         
         };
