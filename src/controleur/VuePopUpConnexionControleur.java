@@ -85,31 +85,30 @@ public class VuePopUpConnexionControleur {
         Task<Void> task2 = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                while (true) {
-                    try {
-                        Socket client = serveur.accept();
-                        handleConnection(client);
-                        transfertOk = true;
-                        javafx.application.Platform.runLater(() -> {
-                            texte.setText("Données valides ! Importation terminée !");
-                            boutonAnnuler.setText("Retour à l'application");
-                            Image image = new Image(getClass().getResource(
-                                    "../vue/ressources/icone_retour.png").toExternalForm());
-                            boutonImageAnnuler.setImage(image);
-                        });
-                    } catch (IOException e) {
-                        return null;
-                    } catch (IllegalArgumentException e) {
-                        javafx.application.Platform.runLater(() -> {
-                            texte.setText("Données invalides ! L'importation a échoué.");
-                            boutonAnnuler.setText("Retour à l'importation");
-                            Image image = new Image(getClass().getResource(
-                                    "../vue/ressources/icone_retour.png").toExternalForm());
-                            boutonImageAnnuler.setImage(image);
-                        });
-                    }
-                    
+                try {
+                    Socket client = serveur.accept();
+                    handleConnection(client);
+                    transfertOk = true;
+                    javafx.application.Platform.runLater(() -> {
+                        texte.setText("Données valides ! Importation terminée !");
+                        boutonAnnuler.setText("Retour à l'application");
+                        Image image = new Image(getClass().getResource(
+                                "../vue/ressources/icone_retour.png").toExternalForm());
+                        boutonImageAnnuler.setImage(image);
+                    });
+                } catch (IOException e) {
+                    return null;
+                } catch (IllegalArgumentException e) {
+                    javafx.application.Platform.runLater(() -> {
+                        texte.setText("Données invalides ! L'importation a échoué.");
+                        boutonAnnuler.setText("Retour à l'importation");
+                        Image image = new Image(getClass().getResource(
+                                "../vue/ressources/icone_retour.png").toExternalForm());
+                        boutonImageAnnuler.setImage(image);
+                    });
                 }
+                return null;
+                
             }
         };
         enAttente = new Thread(task);

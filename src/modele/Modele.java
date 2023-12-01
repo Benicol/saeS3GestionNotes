@@ -277,7 +277,7 @@ public class Modele {
                                                  && donnees[2][0].equals("Parcours") 
                                                  && donnees[2][1].length() != 0)) {
                 donneesValide = false;
-                messageErreur = "des données sont éroné ligne 1 et 2 "
+                messageErreur = "des données sont éroné ligne 2 et 3 "
                         + "(semestre et parcours)";
             }
             /* Déclaration des variables pour stocker les informations du CSV */
@@ -296,14 +296,14 @@ public class Modele {
                     /* Si la ligne concerne une compétence */
                     if (donnees[i].length >= 1 && donnees[i][0].equals("Compétence")) {
                         messageErreur = "erreur lors de l'importation de la"
-                                + " compétence ligne : " + i; 
+                                + " compétence ligne : " + (i + 1); 
                         ArrayList<String[]> competence = new ArrayList<>();;
                         String[] infoLigne = new String[2];
                         infoLigne[0] = donnees[i][1];
                         infoLigne[1] = donnees[i][2];
                         if (!isIdentifiant(infoLigne[0])) {
                             donneesValide = false;
-                            messageErreur = "l'identifiant ligne " + i 
+                            messageErreur = "l'identifiant ligne " + (i + 1) 
                                     + "est invalide";
                         }
                         competence.add(infoLigne.clone());
@@ -315,16 +315,16 @@ public class Modele {
                          */
                         while (poids != 100 && donneesValide) {
                             messageErreur = "Erreur lors de l'importation des "
-                                    + "informations de la compétence ligne : " + i;
+                                    + "informations de la compétence ligne : " + (i + 1);
                             if (donnees[i][2].length() == 0) {
                                 donneesValide = false;
                             }
                             i++;
-                            int iComp = i;
+                            int iComp = (i + 1);
                             infoLigne[0] = donnees[i][1];
                             if (!isIdentifiant(infoLigne[0])) {
                                 donneesValide = false;
-                                messageErreur = "l'identifiant ligne " + i 
+                                messageErreur = "l'identifiant ligne " + (i + 1) 
                                         + "est invalide";
                             }
                             infoLigne[1] = donnees[i][3];
@@ -333,7 +333,7 @@ public class Modele {
                                 if (!listeRessource.containsKey(infoLigne[0])) {
                                     messageErreur = "Erreur lors de l'importation "
                                             + "des informations de la ressource "
-                                            + "ligne : " + i;
+                                            + "ligne : " + (i + 1);
                                     listeRessource.put(infoLigne[0], donnees[i][2]);
                                 }
                             } else if ((donnees[i][0].equals("Portfolio") 
@@ -341,13 +341,13 @@ public class Modele {
                                 if (!listeSae.containsKey(infoLigne[0])) {
                                     messageErreur = "Erreur lors de l'importation "
                                             + "des informations de la sae/du "
-                                            + "portoflio ligne : " + i;
+                                            + "portoflio ligne : " + (i + 1);
                                     listeSae.put(infoLigne[0], donnees[i][2]);
                                 }
                             } else {
                                 messageErreur = "Erreur lors de l'importation des "
                                         + "informations de la ressource/sae/du "
-                                        + "portoflio ligne : " + i;
+                                        + "portoflio ligne : " + (i + 1);
                                 donneesValide = false;
                             }
                             messageErreur = "Erreur lors de l'importation des "
@@ -365,15 +365,15 @@ public class Modele {
                         listeCompetence.add(competence.toArray(new String[0][0]));
                     } else if (donnees[i].length >= 1 // Si la ligne concerne une ressource
                             && donnees[i][0].equals("Ressource")) { 
-                        int iRess = i;
+                        int iRess = (i + 1);
                         messageErreur = "erreur lors de l'importation de la "
-                                + "ressource ligne : " + i; 
+                                + "ressource ligne : " + (i + 1); 
                         ArrayList<Evaluation> listeEvaluation = new ArrayList<>();
                         String[] infoEvaluation = new String[3];
                         String key = donnees[i][1];
                         if (!isIdentifiant(key)) {
                             donneesValide = false;
-                            messageErreur = "l'identifiant ligne " + i + "est invalide";
+                            messageErreur = "l'identifiant ligne " + (i + 1) + "est invalide";
                         }
                         int poids = 0;
                         i++;
@@ -382,7 +382,7 @@ public class Modele {
                         while (poids != 100 && donneesValide) {
                             i++;
                             messageErreur = "erreur lors de l'importation de la "
-                                    + "ressource ligne : " + i; 
+                                    + "ressource ligne : " + (i + 1); 
                             /* Vérifie si la composition de la ligne est bien :
                              * 1. Type d'évaluation, 2. poids
                              */

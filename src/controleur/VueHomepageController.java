@@ -10,6 +10,7 @@ import modele.Modele;
 import modele.Ressource;
 import modele.Sae;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -98,6 +99,8 @@ public class VueHomepageController {
         EchangeurDeVue.getPrimaryStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent e) {
+                File executer = new File("executer.txt");
+                executer.delete();
                 if (dansModifierModalite()) {
                     quitterModaliter();
                 }

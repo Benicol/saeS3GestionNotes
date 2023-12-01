@@ -142,7 +142,6 @@ public class VuePopUpAideControleur {
             label.setText(eElement.getAttribute("nom"));
             listePrincipale.getChildren().add(label);
             NodeList nListe = eElement.getChildNodes();
-            String textContent = "";
             fxmlloader = new FXMLLoader(getClass().getResource(
                     EchangeurDeVue.getModule("MAT")));
             root = fxmlloader.load();

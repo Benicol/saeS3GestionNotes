@@ -4,7 +4,10 @@
  */
 package controleur;
 
+import java.io.File;
+
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,6 +16,7 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.stage.WindowEvent;
 import modele.Modele;
 
 /** 
@@ -23,6 +27,13 @@ public class VueImportationController {
     
     @FXML
     void initialize() {
+        EchangeurDeVue.getPrimaryStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                File executer = new File("executer.txt");
+                executer.delete();
+            }
+        });
         EchangeurDeVue.getPrimaryStage().setMaximized(false);
         EchangeurDeVue.getPrimaryStage().setHeight(600);
         EchangeurDeVue.getPrimaryStage().setWidth(1000);

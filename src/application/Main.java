@@ -4,6 +4,7 @@
  */
 package application;
 
+import java.io.File;
 import java.io.IOException;
 
 import controleur.EchangeurDeVue;
@@ -11,6 +12,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import modele.Modele;
+import modele.OutilFichier;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -58,6 +60,11 @@ public class Main extends Application {
      * @param args non utilisé
      */
     public static void main(String[] args) {
-        launch(args); // appelle la méthode start
+        File executer = new File("executer.txt");
+        if (!executer.exists()) {
+            OutilFichier.ecrire("executer.txt", "");
+            executer = new File("executer.txt");
+            launch(args); // appelle la méthode start
+        }
     }
 }
