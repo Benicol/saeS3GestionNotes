@@ -189,14 +189,14 @@ public class VuePopUpExporterControleur {
                         alert.setTitle("Transfert réussi");
                         alert.setHeaderText("Données transférées!");
                         alert.setContentText("Verifiez que l'importation "
-                                + "s'est bien passer sur l'autre ordinateur !");
+                                + "s'est bien passée sur l'autre ordinateur !");
                         alert.showAndWait();
                     });
                 } catch (IOException e) {
                     javafx.application.Platform.runLater(() -> {
                         Alert alert = new Alert(AlertType.ERROR);
                         alert.setTitle("IP ERROR");
-                        alert.setHeaderText("aucune application n'attend "
+                        alert.setHeaderText("Aucune application n'attend "
                                 + "des données à cette adresse");
                         alert.setContentText("Consultez l'aide pour "
                                 + "plus d'informations sur comment "
