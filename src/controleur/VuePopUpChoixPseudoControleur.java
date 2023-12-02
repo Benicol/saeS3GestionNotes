@@ -110,7 +110,7 @@ public class VuePopUpChoixPseudoControleur {
     	}
     	if (messageErreur != null) {
     	    Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("PSEUDO INVALIDES");
+            alert.setTitle("PSEUDO INVALIDE");
             alert.setHeaderText("Votre pseudo est invalide : " + messageErreur);
             alert.showAndWait();
     	}
